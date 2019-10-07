@@ -9,7 +9,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="-29dp"
+            tools:layout_editor_absoluteY="0dp">
         <TextView
             android:id="@+id/abtGroupName2"
             android:layout_width="match_parent"
@@ -59,18 +64,96 @@
             android:text="@string/abtGroupName"
             android:textSize="24sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="-29dp"
-            tools:layout_editor_absoluteY="0dp">
-
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/janineTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="@string/janineName"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/janineBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/janineBiography" />
+
+            <TextView
+                android:id="@+id/rafaelTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rafaelName"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/rafaelBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rafaelBiography" />
+
+            <TextView
+                android:id="@+id/syedTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/syedName"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/syedBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/syedBiography" />
+
+            <TextView
+                android:id="@+id/andreaTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/andreaName"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/andreaBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/andreaBiography" />
+
+            <TextView
+                android:id="@+id/lukeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lukeName"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/lukeBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lukeBiography" />
+
+            <TextView
+                android:id="@+id/kennyTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kennyName"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/kennyBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kennyBiography" />
+
+            <TextView
+                android:id="@+id/yasiraTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/yasiraName"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/yasiraBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/yasiraBiography" />
         </LinearLayout>
 
     </ScrollView>
