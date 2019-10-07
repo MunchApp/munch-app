@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_favorites"
         android:name="com.example.munch.ui.favorites.FavoritesFragment"
-        android:label="@string/title_favorties"
+        android:label="@string/title_favorites"
         tools:layout="@layout/fragment_favorites" />
 
     <fragment
