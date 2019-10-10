@@ -28,6 +28,7 @@
     <string name="title_map">Map</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_user_profile">User Profile</string>
+    <string name="title_login">Login</string>
     <string name="abtTitle">About Us</string>
     <string name="abtGroupName">Team Lavender</string>
 </resources>
