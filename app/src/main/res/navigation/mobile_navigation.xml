@@ -9,17 +9,39 @@
         android:id="@+id/navigation_map"
         android:name="com.example.munch.ui.map.MapFragment"
         android:label="@string/title_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_navigation_map_to_navigation_favorites"
+            app:destination="@id/navigation_favorites" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorites"
         android:name="com.example.munch.ui.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favorites_to_navigation_login"
+            app:destination="@id/navigation_login" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_user_profile"
         android:name="com.example.munch.ui.userProfile.UserProfileFragment"
         android:label="@string/title_user_profile"
-        tools:layout="@layout/fragment_user_profile" />
+        tools:layout="@layout/fragment_user_profile" >
+        <action
+            android:id="@+id/action_navigation_user_profile_to_navigation_map"
+            app:destination="@id/navigation_map" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.example.munch.ui.userProfile.UserProfileFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/activity_login" >
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_favorites"
+            app:destination="@id/navigation_favorites" />
+    </fragment>
 </navigation>
