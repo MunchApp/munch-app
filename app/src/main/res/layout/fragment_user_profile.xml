@@ -4,16 +4,286 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_user_profile"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/actionbar_height"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:paddingBottom="?attr/actionBarSize">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:elevation="20dp">
+
+                <ImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="102dp"
+                    android:layout_height="93dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/first_and_last_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/khand_medium"
+                        android:text="FirstName LastName"
+                        android:textColor="@color/munchGrey"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/city_and_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="0dp"
+                        android:fontFamily="@font/khand_medium"
+                        android:text="City, State"
+                        android:textColor="@color/munchOrangeDark"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="20dp"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/account_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/khand_medium"
+                android:text="Account Settings"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/personal_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/khand_medium"
+                android:text="Personal Information"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <View
+                    android:layout_weight="4.5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/munchGreyLight" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/your_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/khand_light"
+                android:text="Your Reviews"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <View
+                    android:layout_weight="4.5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/munchGreyLight" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/your_photos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/khand_light"
+                android:text="Your Photos"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <View
+                    android:layout_weight="4.5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/munchGreyLight" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/notifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/khand_light"
+                android:text="Notifications"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <View
+                    android:layout_weight="4.5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/munchGreyLight" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/owner_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/khand_medium"
+                android:text="Owner Settings"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/manage_trucks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/khand_light"
+                android:text="Manage Your Food Trucks"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <View
+                    android:layout_weight="4.5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/munchGreyLight" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/list_truck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/khand_light"
+                android:text="List a New Truck"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <View
+                    android:layout_weight="4.5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/munchGreyLight" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/learn_about_listing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/khand_light"
+                android:text="Learn About Listing"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <View
+                    android:layout_weight="4.5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/munchGreyLight" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/sign_in_out"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_shape"
+                android:layout_marginTop="20dp"
+                android:text="SIGN IN"
+                android:fontFamily="@font/khand_medium"
+                android:textColor="@color/munchOrangeDark"
+                android:layout_gravity="center"
+                android:textSize="25sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"></LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
