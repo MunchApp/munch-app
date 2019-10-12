@@ -1,14 +1,16 @@
 package com.example.munch.ui.login;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+
 import android.util.Patterns;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+import com.example.munch.R;
 import com.example.munch.data.LoginRepository;
 import com.example.munch.data.Result;
 import com.example.munch.data.model.LoggedInUser;
-import com.example.munch.R;
 
 public class LoginViewModel extends ViewModel {
 
