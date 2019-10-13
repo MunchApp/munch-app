@@ -297,6 +297,45 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/placesAPIInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="24dp"
+                android:text="@string/placesAPILink"
+                android:textSize="18sp"
+                android:autoLink="web"/>
+            <TextView
+                android:id="@+id/placesAPILink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="24dp"
+                android:text="(https://developers.google.com/places/web-service/intro)"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/yelpAPIInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="24dp"
+                android:text="@string/yelpAPILink"
+                android:textSize="18sp"
+                android:autoLink="web"/>
+            <TextView
+                android:id="@+id/yelpAPILink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="24dp"
+                android:text="(https://www.yelp.com/developers)"
+                android:textSize="18sp"/>
+
+            <TextView
                 android:id="@+id/toolsDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
