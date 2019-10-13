@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,14 +17,25 @@ import com.example.munch.R;
 public class MoreFragment extends Fragment {
 
     private MoreViewModel moreViewModel;
+    Button mSubmitButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
        moreViewModel =
                 ViewModelProviders.of(this).get(MoreViewModel.class);
-        View root = inflater.inflate(R.layout.activity_about_page, container, false);
-        Intent intent = new Intent(getActivity(), AboutPageActivity.class);
-        startActivity(intent);
+        View root = inflater.inflate(R.layout.fragment_more, container, false);
+
+//        Intent intent = new Intent(getActivity(), AboutPageActivity.class);
+//        startActivity(intent);
+
+        mSubmitButton = root.findViewById(R.id.button2);
+            mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AboutPageActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return root;
     }

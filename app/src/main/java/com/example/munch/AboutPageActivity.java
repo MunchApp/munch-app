@@ -91,6 +91,7 @@ public class AboutPageActivity extends AppCompatActivity {
 
                 //Parses JSON data
                 try {
+
                     JSONArray response = new JSONArray(buffer.toString()); //from doInBackground
                     Log.d("Response again: ", response.toString());
 
