@@ -21,8 +21,8 @@
         android:label="@string/title_favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
-            android:id="@+id/action_navigation_favorites_to_navigation_login"
-            app:destination="@id/navigation_login" />
+            android:id="@+id/action_navigation_favorites_to_navigation_user_profile"
+            app:destination="@id/navigation_user_profile" />
     </fragment>
 
     <fragment
@@ -31,17 +31,17 @@
         android:label="@string/title_user_profile"
         tools:layout="@layout/fragment_user_profile" >
         <action
-            android:id="@+id/action_navigation_user_profile_to_navigation_map"
-            app:destination="@id/navigation_map" />
+            android:id="@+id/action_navigation_user_profile_to_navigation_more"
+            app:destination="@id/navigation_more" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_login"
-        android:name="com.example.munch.ui.userProfile.UserProfileFragment"
-        android:label="@string/title_login"
-        tools:layout="@layout/activity_login" >
+        android:id="@+id/navigation_more"
+        android:name="com.example.munch.ui.more.MoreFragment"
+        android:label="@string/title_more"
+        tools:layout="@layout/fragment_more" >
         <action
-            android:id="@+id/action_navigation_login_to_navigation_favorites"
-            app:destination="@id/navigation_favorites" />
+            android:id="@+id/action_navigation_more_to_navigation_map"
+            app:destination="@id/navigation_map" />
     </fragment>
 </navigation>
