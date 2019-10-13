@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.register.RegisterActivity"
+    android:background="@color/munchOrange">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/munchOrange"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/init_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+
+                android:fontFamily="@font/khand_medium"
+                android:text="Tell Us About Yourself"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp" />
+            <TextView
+                android:id="@+id/first_name_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="FIRST NAME"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/first_name"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="1dp"
+                android:layout_gravity="center_horizontal"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/last_name_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="LAST NAME"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/last_name"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="1dp"
+                android:layout_gravity="center_horizontal"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/dob_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="DATE OF BIRTH"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+            <EditText
+                android:id="@+id/date_of_birth"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="1dp"
+                android:layout_gravity="center_horizontal"
+                android:inputType="text" />
+            <TextView
+                android:id="@+id/gender_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="GENDER"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/gender"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="1dp"
+                android:layout_gravity="center_horizontal"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/phone_number_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="PHONE NUMBER"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/phone_number"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="1dp"
+                android:layout_gravity="center_horizontal"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/button_shape_2"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:enabled="true"
+                android:fontFamily="@font/rambla"
+                android:textColor="@color/munchOrangeDark"
+                android:text="REGISTER" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
