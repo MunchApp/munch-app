@@ -8,4 +8,6 @@
     <color name="munchGrey">#707070</color>
     <color name="munchGreyLight">#AEB4B7</color>
 
+    <color name="black_overlay">#66000000</color>
+
 </resources>

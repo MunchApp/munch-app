@@ -1,6 +1,7 @@
 package com.example.munch.ui.login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,9 +21,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.R;
+import com.example.munch.ui.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
     private LoginViewModel loginViewModel;
 
     @Override
@@ -37,7 +41,16 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        loginButton.setOnClickListener(           //action triggered on button click
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        Intent toRegPage = new Intent(LoginActivity.this, RegisterActivity.class);
+                        toRegPage.putExtra(USERNAME,usernameEditText.getText());
+                        toRegPage.putExtra(PASSWORD,passwordEditText.getText());
+                        startActivity(toRegPage);
+                    }
+                });
+        /*loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
@@ -122,5 +135,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }*/
     }
 }

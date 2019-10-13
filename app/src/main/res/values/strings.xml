@@ -31,4 +31,9 @@
     <string name="title_login">Login</string>
     <string name="abtTitle">About Us</string>
     <string name="abtGroupName">Team Lavender</string>
+    <string name="title_more">More</string>
+
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
