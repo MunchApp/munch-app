@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-
-<!--    <fragment-->
-<!--        android:id="@+id/map"-->
-<!--        class="com.google.android.gms.maps.MapFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ui.map.MapFragment">
+    tools:context="ui.map.MapFragment"
+    >
 
     <fragment
         android:id="@+id/frg"
+        android:layout_marginTop="@dimen/actionbar_height"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -32,14 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
-        sothree:umanoPanelHeight="68dp"
+        sothree:umanoPanelHeight="100dp"
+        sothree:umanoFadeColor="@color/cardview_dark_background"
         sothree:umanoShadowHeight="4dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Main Content"
+            android:text="Main"
             android:textSize="16sp" />
 
         <TextView
