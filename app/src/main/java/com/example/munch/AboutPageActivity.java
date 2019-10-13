@@ -1,12 +1,16 @@
 package com.example.munch;
 
+
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import org.json.JSONObject;
+import android.util.Log;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.w3c.dom.Text;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,10 +22,6 @@ import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.HashMap;
-
-import android.util.Log;
-import android.widget.TextView;
-
 
 public class AboutPageActivity extends AppCompatActivity {
 
