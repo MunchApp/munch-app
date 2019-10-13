@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".AboutPageActivity">
 
+    <include
+        layout = "@layout/top_logo_bar"
+        android:id="@+id/logo_bar">
+
+    </include>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
