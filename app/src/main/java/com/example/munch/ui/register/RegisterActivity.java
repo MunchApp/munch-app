@@ -2,6 +2,7 @@ package com.example.munch.ui.register;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,15 +37,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         final String user = getIntent().getStringExtra(USERNAME);
         final String pass = getIntent().getStringExtra(PASSWORD);
-
         final EditText firstNameEditText = findViewById(R.id.first_name);
         final EditText lastNameEditText = findViewById(R.id.last_name);
         final EditText dobEditText = findViewById(R.id.date_of_birth);
         final EditText genderEditText = findViewById(R.id.gender);
         final EditText phoneNumberEditText = findViewById(R.id.phone_number);
         Button registerButton = findViewById(R.id.register);
-        final TextView pifirstAndLast = (TextView)findViewById(R.id.pi_first_and_last_name);
-        final TextView firstAndLast = (TextView)findViewById(R.id.first_and_last_name);
+
         registerButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
@@ -52,20 +51,21 @@ public class RegisterActivity extends AppCompatActivity {
 
                         Intent toMainIntent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(toMainIntent);
-                        /* String first = firstNameEditText.getText().toString();
-                        String last = lastNameEditText.getText().toString();
-                        String full = first + " " + last;
-                        System.out.println("HELLO" + full);
-                        pifirstAndLast.setText(full);
-                        firstAndLast.setText(full);*/
-                        /*TextView dob = findViewById(R.id.pi_dob);
-                        dob.setText(dobEditText.getText()toString());
-                        TextView gender = findViewById(R.id.pi_gender);
-                        gender.setText(genderEditText.getText()toString());
-                        TextView phoneNum = findViewById(R.id.pi_phone_num);
-                        phoneNum.setText(phoneNumberEditText.getText()toString());
-                        TextView email = findViewById(R.id.pi_email);
-                        email.setText(user);*/
+
+                        SharedPreferences sp = getSharedPreferences("key", 0);
+                        SharedPreferences.Editor ipVals = sp.edit();
+                        ipVals.putString("firstName", firstNameEditText.getText().toString());
+                        ipVals.putString("lastName", lastNameEditText.getText().toString());
+                        ipVals.putString("dob", dobEditText.getText().toString());
+                        ipVals.putString("gender", genderEditText.getText().toString());
+                        ipVals.putString("phoneNum", phoneNumberEditText.getText().toString());
+                        ipVals.putString("email", user);
+                        ipVals.commit();
+
+
+
+
+
                     }
                 });
 
