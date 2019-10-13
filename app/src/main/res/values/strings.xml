@@ -11,19 +11,19 @@
     <string name="login_failed">"Login failed"</string>
     <string name="abtDescriptionTxt">Munch is real-time food truck locator. It\'s purpose is to allow food truck owners to update their customers in real-time regarding their location, hours, and any other updates. In addition, customers are allowed to rate and review the food trucks. \n\nThis app is intended for Austinites looking for a good bite anywhere in the city!\n"</string>
     <string name="janineName">"Janine Bariuan"</string>
-    <string name="janineBiography">"Major: Electrical and Computer Engineering \nBio: Hello! I’m a 3rd year ECE major, with a focus in software engineering. In my free time, I like to go out and explore Austin with my friends, read, be a Longhorn, and when I can, go to the many amazing food trucks that Austin has!\nResponsibilities: Backend and frontend development\n"</string>
+    <string name="janineBiography">"Major: Electrical and Computer Engineering \nBio: Hello! I’m a 3rd year ECE major, with a focus in software engineering. In my free time, I like to go out and explore Austin with my friends, read, be a Longhorn, and when I can, go to the many amazing food trucks that Austin has!\nResponsibilities: Backend and frontend development\nNumber of unit tests: 0"</string>
     <string name="rafaelName">"Rafael Herrejon"</string>
-    <string name="rafaelBiography">"Major: Electrical and Computer Engineering \nBio: Hey, I’m Rafael. When I’m not at school I enjoy listening to music, exercising, and eating Tacos\nResponsibilities: Frontend development\n"</string>
+    <string name="rafaelBiography">"Major: Electrical and Computer Engineering \nBio: Hey, I’m Rafael. When I’m not at school I enjoy listening to music, exercising, and eating Tacos\nResponsibilities: Frontend development\nNumber of unit tests: 0"</string>
     <string name="syedName">"Syed Naqvi"</string>
-    <string name="syedBiography">"Major: Electrical and Computer Engineering \nBio: Hey ya’ll! My name is Syed. I am a final year Electrical and Computer engineering major, with a focus in software engineering. In my free time I love to spend time with my family, friends, and watch all things HBO and Netflix. I also love to go out and eat with said family and friends at all the local amazing food trucks!\nResponsibilities: Frontend Development and system design\n"</string>
+    <string name="syedBiography">"Major: Electrical and Computer Engineering \nBio: Hey ya’ll! My name is Syed. I am a final year Electrical and Computer engineering major, with a focus in software engineering. In my free time I love to spend time with my family, friends, and watch all things HBO and Netflix. I also love to go out and eat with said family and friends at all the local amazing food trucks!\nResponsibilities: Frontend Development and system design\nNumber of unit tests: 0"</string>
     <string name="andreaName">"Andrea Nguyen"</string>
-    <string name="andreaBiography">"Major: Electrical and Computer Engineering \nBio: Hello! I’m Andrea and I’m a 3rd year ECE major. In my free time I like to explore Austin, find new places to eat, play tennis, or sit at home and binge TV shows\nResponsibilities: Frontend development and mockups\n"</string>
+    <string name="andreaBiography">"Major: Electrical and Computer Engineering \nBio: Hello! I’m Andrea and I’m a 3rd year ECE major. In my free time I like to explore Austin, find new places to eat, play tennis, or sit at home and binge TV shows\nResponsibilities: Frontend development and mockups\nNumber of unit tests: 0"</string>
     <string name="lukeName">"Luke Norrell"</string>
-    <string name="lukeBiography">"Major: Electrical and Computer Engineering \nBio: My name is Luke! I’m a software design technical core and a huge a cappella guy. I really like traveling, and I live on a farm where wifi is not available (hence why I love traveling)\nResponsibilities: Testing, UI design, and mockups\n"</string>
+    <string name="lukeBiography">"Major: Electrical and Computer Engineering \nBio: My name is Luke! I’m a software design technical core and a huge a cappella guy. I really like traveling, and I live on a farm where wifi is not available (hence why I love traveling)\nResponsibilities: Testing, UI design, and mockups\nNumber of unit tests: 0"</string>
     <string name="kennyName">"Kenny Tang"</string>
-    <string name="kennyBiography">"Major: Electrical and Computer Engineering \nBio: What's up, I'm Kenny. I love playing Ultimate Frisbee, programming in C, and eating every type of food.\nResponsibilities: Full Stack\n"</string>
+    <string name="kennyBiography">"Major: Electrical and Computer Engineering \nBio: What's up, I'm Kenny. I love playing Ultimate Frisbee, programming in C, and eating every type of food.\nResponsibilities: Full Stack\nNumber of unit tests: 0"</string>
     <string name="yasiraName">"Yasira Younus"</string>
-    <string name="yasiraBiography">"Major: Electrical and Computer Engineering \nBio: Hi, I am Yasira, and I love coding and memes\nResponsibilities: UI setup\n"</string>
+    <string name="yasiraBiography">"Major: Electrical and Computer Engineering \nBio: Hi, I am Yasira, and I love coding and memes\nResponsibilities: UI setup\nNumber of unit tests: 0"</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_map">Map</string>
     <string name="title_favorites">Favorites</string>
@@ -33,5 +33,20 @@
     <string name="dataSources">"Data Sources:"</string>
     <string name="toolsDescription">"Tools Description"</string>
     <string name="githubLink">Github Link: https://github.com/MunchApp/munch-app </string>
+
+    <string name="janineCommits">Number of commits:</string>
+    <string name="janineIssues">Number of issues:\n</string>
+    <string name="rafaelCommits">Number of commits:</string>
+    <string name="rafaelIssues">Number of issues:\n</string>
+    <string name="syedCommits">Number of commits:0</string>
+    <string name="syedIssues">Number of issues:\n</string>
+    <string name="andreaCommits">Number of commits:</string>
+    <string name="andreaIssues">Number of issues:\n</string>
+    <string name="lukeCommits">Number of commits:</string>
+    <string name="lukeIssues">Number of issues:\n</string>
+    <string name="kennyCommits">Number of commits:0</string>
+    <string name="kennyIssues">Number of issues:\n</string>
+    <string name="yasiraCommits">Number of commits:</string>
+    <string name="yasiraIssues">Number of issues:\n</string>
 
 </resources>
