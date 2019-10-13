@@ -14,7 +14,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 public class MapFragment extends Fragment{
@@ -34,14 +33,8 @@ public class MapFragment extends Fragment{
 
                 mMap.clear(); //clear old markers
 
-                CameraPosition austin = CameraPosition.builder()
-                        .target(new LatLng(30.267153, -97.743057))
-                        .zoom(10)
-                        .bearing(0)
-                        .tilt(45)
-                        .build();
-
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(austin), 10500, null);
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(30.267153, -97.743057)));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(13.0f));
             }
         });
 
