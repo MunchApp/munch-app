@@ -16,8 +16,19 @@
             android:orientation="vertical"
             tools:layout_editor_absoluteX="-29dp"
             tools:layout_editor_absoluteY="0dp">
+        <TextView
+            android:id="@+id/abtGroupName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Members"
+            android:textSize="18sp" />
 
-            <TextView
+        <TextView
             android:id="@+id/aboutPageTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,11 +84,28 @@
                 android:text="@string/janineName"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/janineImage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:srcCompat="@drawable/janinephoto" />
+
             <TextView
                 android:id="@+id/janineBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/janineBiography" />
+            <TextView
+                android:id="@+id/janineCommitsTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/janineCommits" />
+            <TextView
+                android:id="@+id/janineIssuesTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/janineIssues" />
 
             <TextView
                 android:id="@+id/rafaelTitle"
@@ -86,11 +114,29 @@
                 android:text="@string/rafaelName"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/rafaelImage"
+                android:layout_width="match_parent"
+                android:layout_height="147dp"
+                app:srcCompat="@drawable/rafaelphoto" />
+
+
             <TextView
                 android:id="@+id/rafaelBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/rafaelBiography" />
+            <TextView
+                android:id="@+id/rafaelCommitsTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rafaelCommits" />
+            <TextView
+                android:id="@+id/rafaelIssuesTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rafaelIssues" />
 
             <TextView
                 android:id="@+id/syedTitle"
@@ -99,11 +145,29 @@
                 android:text="@string/syedName"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/syedImage"
+                android:layout_width="match_parent"
+                android:layout_height="119dp"
+                app:srcCompat="@drawable/syedphoto" />
+
             <TextView
                 android:id="@+id/syedBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/syedBiography" />
+            <TextView
+                android:id="@+id/syedCommitsTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/syedCommits" />
+            <TextView
+                android:id="@+id/syedIssuesTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/syedIssues" />
+
 
             <TextView
                 android:id="@+id/andreaTitle"
@@ -112,11 +176,28 @@
                 android:text="@string/andreaName"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/andreaImage"
+                android:layout_width="match_parent"
+                android:layout_height="142dp"
+                app:srcCompat="@drawable/andreaphoto" />
+
             <TextView
                 android:id="@+id/andreaBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/andreaBiography" />
+            <TextView
+                android:id="@+id/andreaCommitsTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/andreaCommits" />
+            <TextView
+                android:id="@+id/andreaIssuesTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/andreaIssues" />
 
             <TextView
                 android:id="@+id/lukeTitle"
@@ -125,11 +206,28 @@
                 android:text="@string/lukeName"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/lukeImage"
+                android:layout_width="match_parent"
+                android:layout_height="143dp"
+                app:srcCompat="@drawable/lukephoto" />
+
             <TextView
                 android:id="@+id/lukeBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/lukeBiography" />
+            <TextView
+                android:id="@+id/lukeCommitsTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lukeCommits" />
+            <TextView
+                android:id="@+id/lukeIssuesTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lukeIssues" />
 
             <TextView
                 android:id="@+id/kennyTitle"
@@ -138,11 +236,28 @@
                 android:text="@string/kennyName"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/kennyImage"
+                android:layout_width="match_parent"
+                android:layout_height="141dp"
+                app:srcCompat="@drawable/kennyphoto" />
+
             <TextView
                 android:id="@+id/kennyBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/kennyBiography" />
+            <TextView
+                android:id="@+id/kennyCommitsTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kennyCommits" />
+            <TextView
+                android:id="@+id/kennyIssuesTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kennyIssues" />
 
             <TextView
                 android:id="@+id/yasiraTitle"
@@ -151,16 +266,67 @@
                 android:text="@string/yasiraName"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/yasiraImage"
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+                app:srcCompat="@drawable/yasiraphoto" />
+
             <TextView
                 android:id="@+id/yasiraBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/yasiraBiography" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/yasiraCommitsTxtView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="vertical"></LinearLayout>
+                android:layout_height="wrap_content"
+                android:text="@string/yasiraCommits" />
+            <TextView
+                android:id="@+id/yasiraIssuesTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/yasiraIssues" />
+
+            <TextView
+                android:id="@+id/dataSourcesDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="@string/dataSources"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/toolsDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="@string/toolsDescription"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/gitLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="@string/githubLink"
+                android:textSize="18sp" />
+
+
+
         </LinearLayout>
 
     </ScrollView>
