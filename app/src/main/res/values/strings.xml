@@ -31,7 +31,7 @@
     <string name="abtTitle">About Us</string>
     <string name="abtGroupName">Team Lavender</string>
     <string name="dataSources">"Data Sources:"</string>
-    <string name="toolsDescription">"Tools Description"</string>
+    <string name="toolsDescription">"Tools Description: Android Studio is used to create the application.Adobe XD is used to create the mockups.Draw.io is used to create the database model UML diagrams, UML class diagrams, and the use case diagram."</string>
     <string name="githubLink">Github Link: https://github.com/MunchApp/munch-app </string>
 
     <string name="janineCommits">Number of commits:</string>
