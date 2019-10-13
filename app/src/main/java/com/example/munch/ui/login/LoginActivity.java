@@ -44,9 +44,10 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(           //action triggered on button click
                 new View.OnClickListener() {
                     public void onClick(View view) {
+
                         Intent toRegPage = new Intent(LoginActivity.this, RegisterActivity.class);
-                        toRegPage.putExtra(USERNAME,usernameEditText.getText());
-                        toRegPage.putExtra(PASSWORD,passwordEditText.getText());
+                        toRegPage.putExtra(USERNAME,usernameEditText.getText().toString());
+                        toRegPage.putExtra(PASSWORD,passwordEditText.getText().toString());
                         startActivity(toRegPage);
                     }
                 });
