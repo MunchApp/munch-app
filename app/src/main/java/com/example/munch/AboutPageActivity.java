@@ -39,7 +39,10 @@ public class AboutPageActivity extends AppCompatActivity {
         TextView rafaelTxtView = findViewById(R.id.rafaelCommitsTxtView);
         TextView yasiraTxtView = findViewById(R.id.yasiraCommitsTxtView);
         TextView janineTxtView = findViewById(R.id.janineCommitsTxtView);
+        TextView kennyTxtView = findViewById(R.id.kennyCommitsTxtView);
         TextView lukeTxtView = findViewById(R.id.lukeCommitsTxtView);
+        TextView syedTxtView = findViewById(R.id.syedCommitsTxtView);
+
 
         TextView andreaIssuesView = findViewById(R.id.andreaIssuesTxtView);
         TextView rafaelIssuesView = findViewById(R.id.rafaelIssuesTxtView);
@@ -49,18 +52,19 @@ public class AboutPageActivity extends AppCompatActivity {
         TextView kennyIssuesView = findViewById(R.id.kennyIssuesTxtView);
         TextView syedIssuesView = findViewById(R.id.syedIssuesTxtView);
 
-        String andreaCommits = "";
-        String rafaelCommits = "";
-        String yasiraCommits = "";
-        String janineCommits = "";
-        String lukeCommits = "";
+        String andreaCommits = "0";
+        String rafaelCommits = "0";
+        String yasiraCommits = "0";
+        String janineCommits = "0";
+        String lukeCommits = "0";
+        String syedCommits = "0";
+        String kennyCommits = "0";
 
         HashMap<String, Integer> issuesCount;
 
 
-
         @Override
-        protected String doInBackground(String... strings) {
+        protected String doInBackground(final String... strings) {
 
             String result = "";
 
@@ -95,11 +99,11 @@ public class AboutPageActivity extends AppCompatActivity {
                     JSONArray response = new JSONArray(buffer.toString()); //from doInBackground
                     Log.d("Response again: ", response.toString());
 
-                    andreaCommits = Integer.toString(response.getJSONObject(0).getInt("total"));
-                    rafaelCommits = Integer.toString(response.getJSONObject(1).getInt("total"));
-                    yasiraCommits = Integer.toString(response.getJSONObject(2).getInt("total"));
-                    janineCommits = Integer.toString(response.getJSONObject(3).getInt("total"));
-                    lukeCommits = Integer.toString(response.getJSONObject(4).getInt("total"));
+                    andreaCommits = Integer.toString(response.getJSONObject(1).getInt("total"));
+                    rafaelCommits = Integer.toString(response.getJSONObject(0).getInt("total"));
+                    yasiraCommits = Integer.toString(response.getJSONObject(4).getInt("total"));
+                    janineCommits = Integer.toString(response.getJSONObject(2).getInt("total"));
+                    lukeCommits = Integer.toString(response.getJSONObject(3).getInt("total"));
 
                 }
                 catch (JSONException e) {
@@ -126,6 +130,66 @@ public class AboutPageActivity extends AppCompatActivity {
 
             }
 
+
+            ////////////////////////////////////
+            // Finding commits for the server //
+            ////////////////////////////////////
+
+            try {
+                URL url = new URL("https://api.github.com/repos/MunchApp/munchserver/stats/contributors");
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                Authenticator.setDefault (new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication ("RafaelHerrejon", "M@gyk1571".toCharArray());
+                    }
+                });
+
+                // Gets JSON Data
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuffer buffer = new StringBuffer();
+
+                while ((result = reader.readLine()) != null) {
+                    buffer.append(result + "\n");
+                    Log.d("Commits Response: ", result); // line by line printing
+                }
+
+                //Parses JSON data
+                try {
+
+                    JSONArray response = new JSONArray(buffer.toString()); //from doInBackground
+                    Log.d("Response again: ", response.toString());
+
+                    //todo: kenny's commits are currently mapped to Luke's stats.
+                    kennyCommits = Integer.toString(response.getJSONObject(0).getInt("total"));
+
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // Closes weather connections
+            finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
 
             // Number of issues
 
@@ -218,6 +282,7 @@ public class AboutPageActivity extends AppCompatActivity {
             yasiraTxtView.setText("Number of commits: " + yasiraCommits);
             janineTxtView.setText("Number of commits: " + janineCommits);
             lukeTxtView.setText("Number of commits: " + lukeCommits);
+            kennyTxtView.setText("Number of commits: " + kennyCommits);
 
             andreaIssuesView.setText("Number of issues: " + issuesCount.get("ngynandrea") + "\n");
             rafaelIssuesView.setText("Number of issues: " + issuesCount.get("RafaelHerrejon") + "\n");
