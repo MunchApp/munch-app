@@ -5,12 +5,13 @@
     android:background="@color/munchOrange"
     android:gravity="center">
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/abbr_logo"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:text= "M."
+        android:textSize="50sp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/hp_simplified_font"
+        android:layout_gravity="center"/>
 
 </androidx.appcompat.widget.Toolbar>

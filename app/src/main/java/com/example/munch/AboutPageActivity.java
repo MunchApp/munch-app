@@ -38,6 +38,7 @@ public class AboutPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_page);
         submitThread getGitStats= new submitThread();
         getGitStats.execute("");
+        setContentView(R.layout.fragment_explore);
     }
 
     private class submitThread extends AsyncTask<String, Void, String> {

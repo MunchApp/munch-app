@@ -25,6 +25,7 @@ public class MapFragment extends Fragment{
         mapViewModel =
                 ViewModelProviders.of(this).get(MapViewModel.class);
         View root = inflater.inflate(R.layout.fragment_map, container, false);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);  //use SuppoprtMapFragment for using in fragment instead of activity  MapFragment = activity   SupportMapFragment = fragment
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override

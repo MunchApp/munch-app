@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0.1"
+            android:layout_marginTop="35dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:text="@string/hello"
+            android:textColor="@color/munchOrange"
+            android:textSize="40sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/greeting_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:fontFamily="@font/hp_simplified_font"
+            android:paddingLeft="10dp"
+            android:text="@string/first_name"
+            android:textColor="@color/munchOrange"
+            android:textSize="40sp"
+            app:layout_constraintLeft_toRightOf="@id/greeting"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/exclaimation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:fontFamily="@font/hp_simplified_font"
+            android:paddingLeft="5dp"
+            android:text="!"
+            android:textColor="@color/munchOrange"
+            android:textSize="40sp"
+            app:layout_constraintLeft_toRightOf="@id/greeting_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+            android:id="@+id/search_bar_pg1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginTop="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Space
+                android:id="@+id/spacer1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/search_explore_pg1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_weight=".5"/>
+
+            <EditText
+                android:id="@+id/search_explore_pg1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ex_search_bar"
+                android:fontFamily="sans-serif"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="60dp"
+                android:paddingBottom="3dp"
+                android:hint="SEARCH SOMETHING"
+                android:textColorHint="@color/munchGrey"
+                android:textSize="15sp"
+                app:layout_constraintHorizontal_weight="9"
+                app:layout_constraintLeft_toRightOf="@id/spacer1"
+                app:layout_constraintRight_toLeftOf="@id/spacer2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:src="@drawable/ex_search_icon"
+                app:layout_constraintVertical_bias=".45"
+                app:layout_constraintTop_toTopOf="@id/search_explore_pg1"
+                app:layout_constraintBottom_toBottomOf="@id/search_explore_pg1"
+                app:layout_constraintLeft_toLeftOf="@id/search_explore_pg1"/>
+
+            <Space
+                android:id="@+id/spacer2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                app:layout_constraintHorizontal_weight="0.5"
+                app:layout_constraintLeft_toRightOf="@id/search_explore_pg1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/near_you"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0.1"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/hp_simplified_light_font"
+        android:text="@string/near_you"
+        android:textColor="@color/munchOrange"
+        android:textSize="25sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_bar_pg1" />
+
+    <TextView
+        android:id="@+id/catagories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/hp_simplified_light_font"
+        android:text="@string/catagories"
+        android:textColor="@color/munchOrange"
+        android:textSize="25sp"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/near_you" />
+
+    <LinearLayout
+        android:id="@+id/spacer3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintRight_toLeftOf="@+id/rec_scroll"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/catagories"/>
+
+    <HorizontalScrollView
+        android:id="@+id/rec_scroll"
+        android:scrollbars="none"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_weight="9"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/catagories">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/ex_dessert_icon"/>
+
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/ex_vegan_icon" />
+
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/ex_asian_icon" />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/spacer4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/rec_scroll"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/catagories"/>
+
+    <TextView
+        android:id="@+id/recommended"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/hp_simplified_light_font"
+        android:text="@string/recommended"
+        android:textColor="@color/munchOrange"
+        android:textSize="25sp"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rec_scroll" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

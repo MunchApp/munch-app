@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Space
+        android:id="@+id/spacer1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/search_explore_pg1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_weight=".5"/>
+
+    <EditText
+        android:id="@+id/search_explore_pg1"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ex_search_bar"
+        android:fontFamily="sans-serif"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="60dp"
+        android:paddingBottom="3dp"
+        android:hint="SEARCH SOMETHING"
+        android:textColorHint="@color/munchGrey"
+        android:textSize="15sp"
+        app:layout_constraintHorizontal_weight="9"
+        app:layout_constraintLeft_toRightOf="@id/spacer1"
+        app:layout_constraintRight_toLeftOf="@id/spacer2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:src="@drawable/ex_search_icon"
+        app:layout_constraintVertical_bias=".45"
+        app:layout_constraintTop_toTopOf="@id/search_explore_pg1"
+        app:layout_constraintBottom_toBottomOf="@id/search_explore_pg1"
+        app:layout_constraintLeft_toLeftOf="@id/search_explore_pg1"/>
+
+    <Space
+        android:id="@+id/spacer2"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_weight="0.5"
+        app:layout_constraintLeft_toRightOf="@id/search_explore_pg1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
