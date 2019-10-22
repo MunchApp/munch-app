@@ -47,7 +47,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/dee_dee" />
+                    android:src="@drawable/temp_dee_dee" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -146,7 +146,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/arloscropped" />
+                    android:src="@drawable/temp_arloscropped" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -165,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/offline_circle"
+                        android:background="@drawable/fv_offline_circle"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"

@@ -84,7 +84,7 @@
                 android:id="@+id/janineImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                app:srcCompat="@drawable/janinephoto" />
+                app:srcCompat="@drawable/pp_janine" />
 
             <TextView
                 android:id="@+id/janineBio"
@@ -114,7 +114,7 @@
                 android:id="@+id/rafaelImage"
                 android:layout_width="match_parent"
                 android:layout_height="147dp"
-                app:srcCompat="@drawable/rafaelphoto" />
+                app:srcCompat="@drawable/pp_rafael" />
 
 
             <TextView
@@ -145,7 +145,7 @@
                 android:id="@+id/syedImage"
                 android:layout_width="match_parent"
                 android:layout_height="119dp"
-                app:srcCompat="@drawable/syedphoto" />
+                app:srcCompat="@drawable/pp_syed" />
 
             <TextView
                 android:id="@+id/syedBio"
@@ -176,7 +176,7 @@
                 android:id="@+id/andreaImage"
                 android:layout_width="match_parent"
                 android:layout_height="142dp"
-                app:srcCompat="@drawable/andreaphoto" />
+                app:srcCompat="@drawable/pp_andrea" />
 
             <TextView
                 android:id="@+id/andreaBio"
@@ -206,7 +206,7 @@
                 android:id="@+id/lukeImage"
                 android:layout_width="match_parent"
                 android:layout_height="143dp"
-                app:srcCompat="@drawable/lukephoto" />
+                app:srcCompat="@drawable/pp_luke" />
 
             <TextView
                 android:id="@+id/lukeBio"
@@ -236,7 +236,7 @@
                 android:id="@+id/kennyImage"
                 android:layout_width="match_parent"
                 android:layout_height="141dp"
-                app:srcCompat="@drawable/kennyphoto" />
+                app:srcCompat="@drawable/pp_kenny" />
 
             <TextView
                 android:id="@+id/kennyBio"
@@ -266,7 +266,7 @@
                 android:id="@+id/yasiraImage"
                 android:layout_width="match_parent"
                 android:layout_height="122dp"
-                app:srcCompat="@drawable/yasiraphoto" />
+                app:srcCompat="@drawable/pp_yasira" />
 
             <TextView
                 android:id="@+id/yasiraBio"

@@ -3,10 +3,12 @@
     <color name="colorPrimary">#FA8D49</color>
     <color name="colorPrimaryDark">#c76f38</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="munchOrange">#FA8D49</color>
+    <color name="munchOrange">#E28838</color>
     <color name="munchOrangeDark">#D25D14</color>
     <color name="munchGrey">#707070</color>
     <color name="munchGreyLight">#AEB4B7</color>
+    <color name="munchOrangeLight">#F9F3EC</color>
+    <color name="munchBlueDark">#4E5F7A</color>
     <color name="onlineGreen">#529A2E</color>
     <color name="offlineRed">#DB4437</color>
 

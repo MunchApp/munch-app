@@ -10,72 +10,147 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.login.LoginActivity"
-    android:background="@color/munchOrange">
+    android:background="@color/munchOrangeLight">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-82dp"
+        tools:layout_editor_absoluteY="-206dp">
 
         <TextView
             android:id="@+id/welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp"
-            android:fontFamily="@font/rambla"
-            android:text="welcome to"
-            android:textSize="30sp"
-            android:textColor="#FFFFFF"/>
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="269dp"
-            android:layout_height="102dp"
-            android:src="@drawable/full_logo"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:text="Welcome to"
+            android:textColor="@color/munchOrange"
+            android:textSize="37sp" />
 
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="310dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="10dp"
-            android:elevation="1dp"
-            android:layout_gravity="center_horizontal"
-            android:textColorHint="#FFFFFF"
-            android:hint="@string/prompt_email"
-            android:textColor="#FFFFFF"
-            android:inputType="textEmailAddress" />
+        <TextView
+            android:id="@+id/logo_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="-25dp"
+            android:fontFamily="@font/hp_simplified_font"
+            android:text="Munch."
+            android:textColor="@color/munchOrangeDark"
+            android:textSize="80sp" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="310dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="#FFFFFF"
-            android:elevation="1dp"
-            android:hint="@string/prompt_password"
-            android:textColorHint="#FFFFFF"
-            android:layout_gravity="center_horizontal"
+        <TextView
+            android:id="@+id/email_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/rambla"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:selectAllOnFocus="true" />
+            android:text="EMAIL"
+            android:textColor="@color/munchBlueDark"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="63.702dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_email"/>
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_input"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/password_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/rambla"
+            android:text="PASSWORD"
+            android:textColor="@color/munchBlueDark"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="63.702dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_lock"/>
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_input"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/login"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/button_shape_2"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
+            android:background="@drawable/button_shape"
             android:enabled="true"
             android:fontFamily="@font/rambla"
+            android:text="@string/action_sign_in_short"
             android:textColor="@color/munchOrangeDark"
-            android:text="@string/action_sign_in" />
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/register_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/rambla"
+                android:selectAllOnFocus="true"
+                android:text="DON'T HAVE AN ACCOUNT?"
+                android:textColor="@color/munchBlueDark"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/new_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/rambla"
+                android:selectAllOnFocus="true"
+                android:text="@string/action_sign_up"
+                android:textColor="@color/munchBlueDark"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/loading"

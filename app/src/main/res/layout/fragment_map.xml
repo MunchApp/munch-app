@@ -1,21 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ui.map.MapFragment"
-    >
+    tools:context="ui.map.MapFragment">
 
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/logobar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/munchOrange"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text= "M."
+            android:textSize="50sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/hp_simplified_font"
+            android:layout_gravity="center"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
+
         android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="520dp"
         android:gravity="bottom"
-        android:layout_marginTop="@dimen/actionbar_height"
+        app:layout_constraintTop_toBottomOf="@+id/logobar"
+        app:layout_constraintLeft_toLeftOf="parent"
         sothree:umanoPanelHeight="60dp"
         sothree:umanoFadeColor="@android:color/transparent"
         sothree:umanoShadowHeight="4dp">
@@ -34,18 +54,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-
         </FrameLayout>
-
-
         <FrameLayout
             android:id="@+id/bottomPanel"
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:clickable="true"
             android:focusable="true"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -271,25 +287,15 @@
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-    <EditText
-        android:id="@+id/textView"
-        android:layout_width="376dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="90dp"
-        android:background="@drawable/search_box"
-        android:hint="Search for food trucks"
-        android:paddingLeft="60dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="88dp"
-        android:layout_height="140dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="90dp"
-        android:src="@drawable/ic_search_black_24dp" />
+        <include
+            layout="@layout/search_bar" />
+    </LinearLayout>
 
-
-
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
