@@ -17,8 +17,7 @@
         android:gravity="bottom"
         android:layout_marginTop="@dimen/actionbar_height"
         sothree:umanoPanelHeight="60dp"
-        sothree:umanoFadeColor="@color/cardview_dark_background"
-
+        sothree:umanoFadeColor="@android:color/transparent"
         sothree:umanoShadowHeight="4dp">
 
         <FrameLayout
@@ -57,102 +56,16 @@
                 android:text="Results"
                 android:textSize="30sp" />
 
-            <ScrollView
+            <ListView
+                android:id="@+id/search_results"
                 android:layout_width="match_parent"
                 android:layout_marginTop="60dp"
                 android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/cc1"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:src="@drawable/cc1" />
-
-                        <Space
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"/>
-
-                        <ImageView
-                            android:id="@+id/cc2"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:src="@drawable/cc2" />
-
-                        <Space
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"/>
-
-                        <ImageView
-                            android:id="@+id/cc3"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:src="@drawable/cc3" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="120dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Cold Cookie Company"
-                            android:textSize="20sp" />
-
-                        <Space
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAlignment="textEnd"
-                            android:text="0.1 miles away"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                    <RatingBar
-                        android:id="@+id/simpleRatingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:rating="4.5"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginTop="151dp"
-                        android:scaleX=".5"
-                        android:scaleY=".5"
-                        android:transformPivotX="0dp"
-                        android:transformPivotY="0dp"
-                        android:isIndicator="false"/>
-
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="387dp"
-                        android:layout_height="wrap_content"
-                        android:text="Call Food Truck"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:layout_marginLeft="13dp"
-                        android:layout_marginTop="175dp" />
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
 
 
 <!--                    <LinearLayout-->
@@ -160,11 +73,10 @@
 <!--                        android:layout_height="match_parent"-->
 <!--                        android:layout_marginStart="15dp"-->
 <!--                        android:layout_marginEnd="15dp"-->
-<!--                        android:layout_marginTop="300dp"-->
 <!--                        android:orientation="horizontal">-->
 
 <!--                        <ImageView-->
-<!--                            android:id="@+id/cc4"-->
+<!--                            android:id="@+id/cc1"-->
 <!--                            android:layout_width="110dp"-->
 <!--                            android:layout_height="110dp"-->
 <!--                            android:src="@drawable/cc1" />-->
@@ -175,7 +87,7 @@
 <!--                            android:layout_width="wrap_content"/>-->
 
 <!--                        <ImageView-->
-<!--                            android:id="@+id/cc5"-->
+<!--                            android:id="@+id/cc2"-->
 <!--                            android:layout_width="110dp"-->
 <!--                            android:layout_height="110dp"-->
 <!--                            android:src="@drawable/cc2" />-->
@@ -186,7 +98,7 @@
 <!--                            android:layout_width="wrap_content"/>-->
 
 <!--                        <ImageView-->
-<!--                            android:id="@+id/cc6"-->
+<!--                            android:id="@+id/cc3"-->
 <!--                            android:layout_width="110dp"-->
 <!--                            android:layout_height="110dp"-->
 <!--                            android:src="@drawable/cc3" />-->
@@ -198,7 +110,7 @@
 <!--                        android:layout_height="match_parent"-->
 <!--                        android:layout_marginEnd="15dp"-->
 <!--                        android:layout_marginStart="15dp"-->
-<!--                        android:layout_marginTop="380dp">-->
+<!--                        android:layout_marginTop="120dp">-->
 
 <!--                        <TextView-->
 <!--                            android:layout_width="wrap_content"-->
@@ -220,31 +132,123 @@
 
 <!--                    </LinearLayout>-->
 
-<!--                    <RatingBar-->
-<!--                        android:id="@+id/simpleRatingBar2"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:rating="4.5"-->
-<!--                        android:layout_marginStart="13dp"-->
-<!--                        android:layout_marginTop="411dp"-->
-<!--                        android:scaleX=".5"-->
-<!--                        android:scaleY=".5"-->
-<!--                        android:transformPivotX="0dp"-->
-<!--                        android:transformPivotY="0dp"-->
-<!--                        android:isIndicator="false"/>-->
+<!--&lt;!&ndash;                    <com.example.munch.RatingBarMunchView&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="150dp"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <RatingBar&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:id="@+id/simpleRatingBar"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:rating="4.5"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginStart="13dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginTop="151dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:scaleX=".5"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:scaleY=".5"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:transformPivotX="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:transformPivotY="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:isIndicator="false"/>&ndash;&gt;-->
 
 <!--                    <Button-->
-<!--                        android:id="@+id/button2"-->
-<!--                        android:layout_width="390dp"-->
+<!--                        android:id="@+id/button"-->
+<!--                        android:layout_width="387dp"-->
 <!--                        android:layout_height="wrap_content"-->
 <!--                        android:text="Call Food Truck"-->
 <!--                        android:backgroundTint="@color/colorPrimary"-->
-<!--                        android:layout_marginTop="455dp"-->
-<!--                        android:layout_gravity="center_horizontal"/>-->
+<!--                        android:layout_marginLeft="13dp"-->
+<!--                        android:layout_marginTop="175dp" />-->
 
-                </RelativeLayout>
 
-            </ScrollView>
+<!--&lt;!&ndash;                    <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginStart="15dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginEnd="15dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginTop="300dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:orientation="horizontal">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/cc4"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="110dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="110dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:src="@drawable/cc1" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <Space&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="wrap_content"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/cc5"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="110dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="110dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:src="@drawable/cc2" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <Space&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="wrap_content"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/cc6"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="110dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="110dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:src="@drawable/cc3" />&ndash;&gt;-->
+<!--&lt;!&ndash;                    </LinearLayout>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;                    <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginEnd="15dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginStart="15dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginTop="380dp">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:text="Cold Cookie Company"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textSize="20sp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <Space&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="wrap_content"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textAlignment="textEnd"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:text="0.1 miles away"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textSize="12sp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    </LinearLayout>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <RatingBar&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:id="@+id/simpleRatingBar2"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:rating="4.5"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginStart="13dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginTop="411dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:scaleX=".5"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:scaleY=".5"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:transformPivotX="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:transformPivotY="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:isIndicator="false"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <Button&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:id="@+id/button2"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="390dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:text="Call Food Truck"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:backgroundTint="@color/colorPrimary"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginTop="455dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_gravity="center_horizontal"/>&ndash;&gt;-->
+
+<!--                </RelativeLayout>-->
+
+            </ListView>
 
             <!--                        <RatingBar-->
 <!--                android:id="@+id/ratingBar"-->

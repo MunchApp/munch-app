@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#09C"
+    android:padding="@dimen/widget_margin">
+
+
+    <ImageView
+        android:id="@+id/ratingWhite"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/rating_bar_white" />
+
+    <ImageView
+        android:id="@+id/ratingOrange"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/rating_bar_orange" />
+
+</RelativeLayout>

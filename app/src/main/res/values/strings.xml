@@ -56,5 +56,7 @@
     <string name="kennyIssues">Number of issues:\n</string>
     <string name="yasiraCommits">Number of commits:</string>
     <string name="yasiraIssues">Number of issues:\n</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
