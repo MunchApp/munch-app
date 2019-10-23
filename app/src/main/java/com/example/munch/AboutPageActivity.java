@@ -81,8 +81,6 @@ public class AboutPageActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(final String... strings) {
 
-            findViewById(R.id.IPConfig)
-
             String result = "";
 
             HttpURLConnection connection = null;
