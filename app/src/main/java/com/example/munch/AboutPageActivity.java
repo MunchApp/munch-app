@@ -67,6 +67,14 @@ public class AboutPageActivity extends AppCompatActivity {
         String syedCommits = "0";
         String kennyCommits = "0";
 
+        String andreaIssues;
+        String janineIssues;
+        String kennyIssues;
+        String lukeIssues;
+        String rafaelIssues;
+        String syedIssues;
+        String yasiraIssues;
+
         HashMap<String, Integer> issuesCount;
 
 
@@ -79,15 +87,15 @@ public class AboutPageActivity extends AppCompatActivity {
             BufferedReader reader = null;
 
             try {
-                URL url = new URL("https://api.github.com/repos/MunchApp/munch-app/stats/contributors");
+                URL url = new URL("http://10.0.2.2:80/contributors");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
-                Authenticator.setDefault (new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication ("RafaelHerrejon", "M@gyk1571".toCharArray());
-                    }
-                });
+//                Authenticator.setDefault (new Authenticator() {
+//                    protected PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication ("RafaelHerrejon", "M@gyk1571".toCharArray());
+//                    }
+//                });
 
                 // Gets JSON Data
                 InputStream stream = connection.getInputStream();
@@ -106,11 +114,21 @@ public class AboutPageActivity extends AppCompatActivity {
                     JSONArray response = new JSONArray(buffer.toString()); //from doInBackground
                     Log.d("Response again: ", response.toString());
 
-                    andreaCommits = Integer.toString(response.getJSONObject(1).getInt("total"));
-                    rafaelCommits = Integer.toString(response.getJSONObject(0).getInt("total"));
-                    yasiraCommits = Integer.toString(response.getJSONObject(4).getInt("total"));
-                    janineCommits = Integer.toString(response.getJSONObject(2).getInt("total"));
-                    lukeCommits = Integer.toString(response.getJSONObject(3).getInt("total"));
+                    andreaCommits = Integer.toString(response.getJSONObject(0).getInt("contributions"));
+                    janineCommits = Integer.toString(response.getJSONObject(1).getInt("contributions"));
+                    kennyCommits = Integer.toString(response.getJSONObject(2).getInt("contributions"));
+                    lukeCommits = Integer.toString(response.getJSONObject(3).getInt("contributions"));
+                    rafaelCommits = Integer.toString(response.getJSONObject(4).getInt("contributions"));
+                    syedCommits = Integer.toString(response.getJSONObject(5).getInt("contributions"));
+                    yasiraCommits = Integer.toString(response.getJSONObject(6).getInt("contributions"));
+
+                    andreaIssues = Integer.toString(response.getJSONObject(0).getInt("Issues"));
+                    janineIssues = Integer.toString(response.getJSONObject(1).getInt("Issues"));
+                    kennyIssues = Integer.toString(response.getJSONObject(2).getInt("Issues"));
+                    lukeIssues = Integer.toString(response.getJSONObject(3).getInt("Issues"));
+                    rafaelIssues = Integer.toString(response.getJSONObject(4).getInt("Issues"));
+                    syedIssues = Integer.toString(response.getJSONObject(5).getInt("Issues"));
+                    yasiraIssues = Integer.toString(response.getJSONObject(6).getInt("Issues"));
 
                 }
                 catch (JSONException e) {
@@ -137,148 +155,145 @@ public class AboutPageActivity extends AppCompatActivity {
 
             }
 
-
-            ////////////////////////////////////
-            // Finding commits for the server //
-            ////////////////////////////////////
-
-            try {
-                URL url = new URL("https://api.github.com/repos/MunchApp/munchserver/stats/contributors");
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                Authenticator.setDefault (new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication ("RafaelHerrejon", "M@gyk1571".toCharArray());
-                    }
-                });
-
-                // Gets JSON Data
-                InputStream stream = connection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-                StringBuffer buffer = new StringBuffer();
-
-                while ((result = reader.readLine()) != null) {
-                    buffer.append(result + "\n");
-                    Log.d("Commits Response: ", result); // line by line printing
-                }
-
-                //Parses JSON data
-                try {
-
-                    JSONArray response = new JSONArray(buffer.toString()); //from doInBackground
-                    Log.d("Response again: ", response.toString());
-
-                    //todo: kenny's commits are currently mapped to Luke's stats.
-                    kennyCommits = Integer.toString(response.getJSONObject(0).getInt("total"));
-
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // Closes weather connections
-            finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            // Number of issues
-
-            issuesCount = new HashMap<String, Integer>();
-            issuesCount.put("janinebar", 0);
-            issuesCount.put("yasirayounus", 0);
-            issuesCount.put("kftang", 0);
-            issuesCount.put("Lmnorrell99", 0);
-            issuesCount.put("ngynandrea", 0);
-            issuesCount.put("RafaelHerrejon", 0);
-            issuesCount.put("Majjalpee", 0);
-
-            try {
-                URL url = new URL("https://api.github.com/repos/MunchApp/munch-app/issues");
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                Authenticator.setDefault (new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication ("RafaelHerrejon", "M@gyk1571".toCharArray());
-                    }
-                });
-
-                // Gets JSON Data
-                InputStream stream = connection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-                StringBuffer buffer = new StringBuffer();
-
-                while ((result = reader.readLine()) != null) {
-                    buffer.append(result + "\n");
-                    Log.d("Issues Response: ", result); // line by line printing
-                }
-
-                //Parses JSON data
-                try {
-                    JSONArray response = new JSONArray(buffer.toString()); //from doInBackground
-                    int issueSize = response.length();
-                    Log.d("Issues size", Integer.toString(issueSize));
-
-                    for(int i = 0; i < issueSize; i++) {
-                        JSONObject issue = response.getJSONObject(i);
-                        JSONArray assignees = issue.getJSONArray("assignees");
-
-                        for(int j = 0; j < assignees.length(); j++) {
-
-                            JSONObject eachAssignee = assignees.getJSONObject(j);
-                            String assigneeName = eachAssignee.getString("login");
-
-                            int numIssues = issuesCount.get(assigneeName)+1;
-                            issuesCount.put(assigneeName, numIssues);
-                        }
-                    }
-
-
-
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // Closes weather connections
-            finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-
+//            ////////////////////////////////////
+//            // Finding commits for the server //
+//            ////////////////////////////////////
+//
+//            try {
+//                URL url = new URL("https://api.github.com/repos/MunchApp/munchserver/stats/contributors");
+//                connection = (HttpURLConnection) url.openConnection();
+//                connection.connect();
+//
+//                Authenticator.setDefault (new Authenticator() {
+//                    protected PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication ("RafaelHerrejon", "M@gyk1571".toCharArray());
+//                    }
+//                });
+//
+//                // Gets JSON Data
+//                InputStream stream = connection.getInputStream();
+//
+//                reader = new BufferedReader(new InputStreamReader(stream));
+//                StringBuffer buffer = new StringBuffer();
+//
+//                while ((result = reader.readLine()) != null) {
+//                    buffer.append(result + "\n");
+//                    Log.d("Commits Response: ", result); // line by line printing
+//                }
+//
+//                //Parses JSON data
+//                try {
+//
+//                    JSONArray response = new JSONArray(buffer.toString()); //from doInBackground
+//                    Log.d("Response again: ", response.toString());
+//
+//                    //todo: kenny's commits are currently mapped to Luke's stats.
+//                    kennyCommits = Integer.toString(response.getJSONObject(0).getInt("total"));
+//
+//                }
+//                catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            // Closes weather connections
+//            finally {
+//                if (connection != null) {
+//                    connection.disconnect();
+//                }
+//                try {
+//                    if (reader != null) {
+//                        reader.close();
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//            // Number of issues
+//
+//            issuesCount = new HashMap<String, Integer>();
+//            issuesCount.put("janinebar", 0);
+//            issuesCount.put("yasirayounus", 0);
+//            issuesCount.put("kftang", 0);
+//            issuesCount.put("Lmnorrell99", 0);
+//            issuesCount.put("ngynandrea", 0);
+//            issuesCount.put("RafaelHerrejon", 0);
+//            issuesCount.put("Majjalpee", 0);
+//
+//            try {
+//                URL url = new URL("https://api.github.com/repos/MunchApp/munch-app/issues");
+//                connection = (HttpURLConnection) url.openConnection();
+//                connection.connect();
+//
+//                Authenticator.setDefault (new Authenticator() {
+//                    protected PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication ("RafaelHerrejon", "M@gyk1571".toCharArray());
+//                    }
+//                });
+//
+//                // Gets JSON Data
+//                InputStream stream = connection.getInputStream();
+//
+//                reader = new BufferedReader(new InputStreamReader(stream));
+//                StringBuffer buffer = new StringBuffer();
+//
+//                while ((result = reader.readLine()) != null) {
+//                    buffer.append(result + "\n");
+//                    Log.d("Issues Response: ", result); // line by line printing
+//                }
+//
+//                //Parses JSON data
+//                try {
+//                    JSONArray response = new JSONArray(buffer.toString()); //from doInBackground
+//                    int issueSize = response.length();
+//                    Log.d("Issues size", Integer.toString(issueSize));
+//
+//                    for(int i = 0; i < issueSize; i++) {
+//                        JSONObject issue = response.getJSONObject(i);
+//                        JSONArray assignees = issue.getJSONArray("assignees");
+//
+//                        for(int j = 0; j < assignees.length(); j++) {
+//
+//                            JSONObject eachAssignee = assignees.getJSONObject(j);
+//                            String assigneeName = eachAssignee.getString("login");
+//
+//                            int numIssues = issuesCount.get(assigneeName)+1;
+//                            issuesCount.put(assigneeName, numIssues);
+//                        }
+//                    }
+//
+//
+//
+//                }
+//                catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            // Closes weather connections
+//            finally {
+//                if (connection != null) {
+//                    connection.disconnect();
+//                }
+//                try {
+//                    if (reader != null) {
+//                        reader.close();
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
             return null;
         }
 
@@ -291,13 +306,13 @@ public class AboutPageActivity extends AppCompatActivity {
             lukeTxtView.setText("Number of commits: " + lukeCommits);
             kennyTxtView.setText("Number of commits: " + kennyCommits);
 
-            andreaIssuesView.setText("Number of issues: " + issuesCount.get("ngynandrea") + "\n");
-            rafaelIssuesView.setText("Number of issues: " + issuesCount.get("RafaelHerrejon") + "\n");
-            yasiraIssuesView.setText("Number of issues: " + issuesCount.get("yasirayounus") + "\n");
-            janineIssuesView.setText("Number of issues: " + issuesCount.get("janinebar") + "\n");
-            lukeIssuesView.setText("Number of issues: " + issuesCount.get("Lmnorrell99") + "\n");
-            kennyIssuesView.setText("Number of issues: " + issuesCount.get("kftang") + "\n");
-            syedIssuesView.setText("Number of issues: " + issuesCount.get("Majjalpee") + "\n");
+            andreaIssuesView.setText("Number of issues: " + andreaIssues + "\n");
+            rafaelIssuesView.setText("Number of issues: " + rafaelIssues + "\n");
+            yasiraIssuesView.setText("Number of issues: " + yasiraIssues + "\n");
+            janineIssuesView.setText("Number of issues: " + janineIssues + "\n");
+            lukeIssuesView.setText("Number of issues: " + lukeIssues + "\n");
+            kennyIssuesView.setText("Number of issues: " + kennyIssues + "\n");
+            syedIssuesView.setText("Number of issues: " + syedIssues + "\n");
         }
     }
 
