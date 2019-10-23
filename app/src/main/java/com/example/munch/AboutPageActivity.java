@@ -87,7 +87,7 @@ public class AboutPageActivity extends AppCompatActivity {
             BufferedReader reader = null;
 
             try {
-                URL url = new URL("http://172.16.3.190:80/contributors");
+                URL url = new URL("http://10.0.2.2:80/contributors");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
