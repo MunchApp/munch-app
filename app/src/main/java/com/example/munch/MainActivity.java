@@ -9,14 +9,22 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.munch.data.model.LoggedInUser;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -38,13 +46,45 @@ public class MainActivity extends AppCompatActivity {
 
 
         final TextView textView = (TextView) findViewById(R.id.text);
-        String[] getFields = {"hello", "bye", "cya"};
-        String fields = "";
-        for (String f: getFields){
-            fields+= f +",";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://munch-server.herokuapp.com/register";
+
+        /*JSONObject jsonBody = new JSONObject();
+        try{
+            jsonBody.put("firstName", "Andrea");
+            jsonBody.put("lastName", "Nguyen");
+            jsonBody.put("email", "ngynandrea@gmail.com");
+            jsonBody.put("password", "temp_pass");
+            jsonBody.put("dateOfBirth", "1998-03-30");
+        }catch (JSONException ex) {
+            System.out.println("Login Failed");
         }
-        fields = fields.substring(0,fields.length()-1);
-        textView.setText(fields);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+        new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    textView.setText("Response:" + response.toString(4));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                textView.setText("ERROR");
+                if (error.networkResponse != null) {
+                    int statusCode = error.networkResponse.statusCode;
+                    textView.setText(statusCode);
+                }
+            }
+        });*/
+
+        //queue.add(req);
+
+
 
     }
 
