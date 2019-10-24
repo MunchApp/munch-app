@@ -41,6 +41,8 @@
     <string name="yelpAPILink">Yelp API: <a href="https://www.yelp.com/developers">Link</a></string>
     <string name="toolsDescription">"Tools Description: Android Studio is used to create the application.\nAdobe XD is used to create the mockups.\nDraw.io is used to create the database model UML diagrams, UML class diagrams, and the use case diagram."</string>
     <string name="githubLink">Github Link: https://github.com/MunchApp/munch-app </string>
+    <string name="githubServerLink">Github Server Link: https://github.com/MunchApp/munchserver</string>
+
 
     <string name="janineCommits">Number of commits:</string>
     <string name="janineIssues">Number of issues:\n</string>
