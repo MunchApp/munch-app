@@ -63,4 +63,31 @@
     <string name="yasiraCommits">Number of commits:</string>
     <string name="yasiraIssues">Number of issues:\n</string>
 
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+
+    <string name="accountSettings">Account Settings</string>
+    <string name="personalInfo">PERSONAL INFORMATION</string>
+    <string name="yourReviews">YOUR REVIEWS</string>
+    <string name="yourPhotos">YOUR PHOTOS</string>
+    <string name="notifications">NOTIFICATIONS</string>
+
+    <string name="ownerSettings">Owner Settings</string>
+    <string name="manageTruck">MANAGE YOUR FOOD TRUCK</string>
+    <string name="listTruck">LIST A NEW TRUCK</string>
+    <string name="learn">LEARN ABOUT LISTING</string>
+
 </resources>

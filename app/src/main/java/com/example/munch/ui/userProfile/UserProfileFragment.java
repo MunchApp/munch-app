@@ -53,23 +53,22 @@ public class UserProfileFragment extends Fragment {
 
         final SharedPreferences sp = getActivity().getSharedPreferences("key", 0);
         firstAndLast.setText(sp.getString("firstName","") + " " +sp.getString("lastName",""));
-        if (sp.getString("login","") == null)
-            signInOut.setText("SIGN IN");
-        else
-            signInOut.setText(sp.getString("login",""));
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.putString("login", "SIGN IN");
+
+        signInOut.setText(sp.getString("login",""));
 
         signInOut.setOnClickListener(           //action triggered on button click
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         if (signInOut.getText().toString().equals("SIGN IN")) {
-                            SharedPreferences.Editor editor = sp.edit();
+
                             editor.putString("login", "SIGN OUT");
                             editor.commit();
                             Intent toLoginPage = new Intent(getActivity(), LoginActivity.class);
                             startActivity(toLoginPage);
 
                         } else {
-                            SharedPreferences.Editor editor = sp.edit();
                             editor.clear();
                             editor.putString("login", "SIGN IN");
                             editor.commit();
