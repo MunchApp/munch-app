@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/munchOrange"
+    tools:context=".ui.foodTruck.createTruckActivity">
     tools:context=".ui.register.RegisterActivity">
 
     <ScrollView
@@ -125,6 +126,7 @@
                 android:elevation="1dp"
                 android:backgroundTint="#FFFFFF"
                 android:inputType="text"
+                android:hint="Street Address"
                 app:layout_constraintLeft_toRightOf="@id/spacer3"
                 app:layout_constraintRight_toLeftOf="@id/spacer4"
                 app:layout_constraintTop_toBottomOf="@+id/address_prompt"
@@ -139,30 +141,64 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_weight="1"/>
 
+            <Space
+                android:id="@+id/spacer8"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/address2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_weight="1"/>
+
+            <EditText
+                android:id="@+id/address2"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="1dp"
+                android:hint="City,State Zip Code"
+                android:backgroundTint="#FFFFFF"
+                android:inputType="text"
+                app:layout_constraintLeft_toRightOf="@id/spacer8"
+                app:layout_constraintRight_toLeftOf="@id/spacer9"
+                app:layout_constraintTop_toBottomOf="@+id/address"
+                app:layout_constraintHorizontal_weight="8"/>
+
+            <Space
+                android:id="@+id/spacer9"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/address2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_weight="1"/>
+
             <TextView
-                android:id="@+id/phone_num_prompt"
+                android:id="@+id/photo_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/rambla"
-                android:text="PHONE NUMBER"
+                android:text="PHOTO URL"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:layout_marginStart="40dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/address"/>
+                app:layout_constraintTop_toBottomOf="@+id/address2"/>
 
             <Space
                 android:id="@+id/spacer5"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/phone_num"
+                app:layout_constraintRight_toLeftOf="@id/photo_url"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_weight="1"/>
 
             <EditText
-                android:id="@+id/phone_num"
+                android:id="@+id/photo_url"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -173,7 +209,7 @@
                 android:inputType="text"
                 app:layout_constraintLeft_toRightOf="@id/spacer5"
                 app:layout_constraintRight_toLeftOf="@id/spacer6"
-                app:layout_constraintTop_toBottomOf="@+id/phone_num_prompt"
+                app:layout_constraintTop_toBottomOf="@+id/photo_prompt"
                 app:layout_constraintHorizontal_weight="8"/>
 
             <Space
@@ -181,9 +217,26 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/phone_num"
+                app:layout_constraintLeft_toRightOf="@id/photo_url"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_weight="1"/>
+
+            <Button
+                android:id="@+id/next_create"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_shape"
+                android:enabled="true"
+                android:fontFamily="@font/rambla"
+                android:text="NEXT"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/photo_url"/>
 
 
 

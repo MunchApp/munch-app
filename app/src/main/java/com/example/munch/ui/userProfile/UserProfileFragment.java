@@ -10,31 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.LoggedInUser;
+import com.example.munch.ui.foodTruck.createTruckActivity;
 import com.example.munch.ui.login.LoginActivity;
-import com.example.munch.ui.login.PersonalInfoFragment;
-import com.example.munch.ui.map.MapFragment;
-import com.example.munch.ui.map.MapViewModel;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.concurrent.ExecutionException;
 
 public class UserProfileFragment extends Fragment {
     public static LoggedInUser currentUser = new LoggedInUser();
@@ -49,6 +36,7 @@ public class UserProfileFragment extends Fragment {
         boolean pi = false;
         final Button signInOut = root.findViewById(R.id.sign_in_out);
         TextView personalInfo = root.findViewById(R.id.personal_information);
+        TextView listTruck = root.findViewById(R.id.list_truck);
         TextView firstAndLast = root.findViewById(R.id.first_and_last_name);
 
         firstAndLast.setText(currentUser.getFullName());
@@ -58,7 +46,15 @@ public class UserProfileFragment extends Fragment {
             signInOut.setText("SIGN IN");
         }
 
+        listTruck.setOnClickListener(           //action triggered on button click
+                new View.OnClickListener() {
+                    public void onClick(View view) {
 
+                        Intent toListPage = new Intent(getActivity(), createTruckActivity.class);
+                        startActivity(toListPage);
+
+                    }
+                });
         signInOut.setOnClickListener(           //action triggered on button click
                 new View.OnClickListener() {
                     public void onClick(View view) {

@@ -21,29 +21,29 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.ui.map.MapViewModel;
 import com.example.munch.ui.register.RegisterActivity;
+import com.example.munch.ui.userProfile.UserProfileFragment;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
-    private LoginViewModel loginViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel =
-                ViewModelProviders.of(this).get(LoginViewModel.class);
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
+        final Button login = findViewById(R.id.login);
+        final TextView newAccount = findViewById(R.id.new_account);
 
 
-        loginButton.setOnClickListener(           //action triggered on button click
+        newAccount.setOnClickListener(           //action triggered on button click
                 new View.OnClickListener() {
                     public void onClick(View view) {
 
@@ -54,5 +54,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+        login.setOnClickListener(           //action triggered on button click
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        UserProfileFragment.currentUser.login(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+                        Intent toMainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        toMainIntent.putExtra("registered", "true");
+                        startActivity(toMainIntent);
+                    }
+                });
     }
 }

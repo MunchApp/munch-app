@@ -1,4 +1,4 @@
-package com.example.munch.ui.login;
+package com.example.munch.ui.userProfile;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

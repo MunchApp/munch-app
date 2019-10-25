@@ -47,11 +47,15 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             con.setDoInput(true);
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
+
             if (strings[1].equals("POST")){
                 try(OutputStream os = con.getOutputStream()) {
                     byte[] input = strings[2].getBytes("utf-8");
                     os.write(input, 0, input.length);
                 }
+            }
+            if (strings.length >= 4){
+                con.setRequestProperty ("Authorization", strings[3]);
             }
             con.connect();
 

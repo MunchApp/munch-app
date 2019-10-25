@@ -22,9 +22,11 @@ import java.util.logging.Logger;
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
 public class LoggedInUser {
-
+    // get currentUser : UserProfileFragment.currentUser
     //jwts
     //private HashMap<String,String> userInfo;
+    private String accessToken;
+    private String refreshToken;
     private boolean loggedIn;
     private String email;   //edit
     private String firstName;
@@ -40,9 +42,30 @@ public class LoggedInUser {
     private ArrayList<FoodTruck> foodTrucks;
     private ArrayList<FoodTruck> favorites;
 
+
     //, String gender, String city, String state, String phoneNum
     public LoggedInUser () {
         signOut();
+    }
+    public void login(String email, String password){
+        JSONObject logUser = new JSONObject();
+        try {
+            logUser.put("email", email);
+            logUser.put("password", password);
+        } catch (JSONException ex) {
+            System.out.println("Login Failed");
+        }
+        HttpRequests logRequests = new HttpRequests();
+        logRequests.execute("login", "POST", logUser.toString());
+        String responseLogin = null;
+        try {
+            responseLogin = logRequests.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        accessToken = responseLogin;
+        if ( accessToken != null && !accessToken.equals(""))
+            loggedIn = true;
     }
     public void register(String password, String email, String firstName, String lastName, String day, String month, String year) {
 
@@ -58,23 +81,20 @@ public class LoggedInUser {
         } catch (JSONException ex) {
             System.out.println("Login Failed");
         }
-        HttpRequests httpRequests = new HttpRequests();
-        httpRequests.execute("register", "POST", user.toString());
+        HttpRequests regRequests = new HttpRequests();
+        regRequests.execute("register", "POST", user.toString());
         String response = null;
         try {
-            response = httpRequests.get();
+            response = regRequests.get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        loggedIn = true;
+
+        login(email,password);
 
 
-        //Get accessToken?
-        //Get - Get info from User Database
-        //Set variables
-
-
+        //This is wrong but keep until GET routes are established
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -101,6 +121,7 @@ public class LoggedInUser {
         return lastName;
     }
 
+    public String getAccessToken() { return accessToken;}
     public String getGender() {
         return gender;
     }

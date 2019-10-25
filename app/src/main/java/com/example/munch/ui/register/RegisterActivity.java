@@ -1,12 +1,6 @@
 package com.example.munch.ui.register;
 
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,14 +9,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 
 import com.example.munch.MainActivity;
 import com.example.munch.R;
-import com.example.munch.data.model.LoggedInUser;
-import com.example.munch.ui.login.PersonalInfoFragment;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
 

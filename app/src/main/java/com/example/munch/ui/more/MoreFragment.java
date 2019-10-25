@@ -36,7 +36,6 @@ public class MoreFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         return root;
     }
 }

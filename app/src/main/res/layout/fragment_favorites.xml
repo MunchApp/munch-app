@@ -104,11 +104,12 @@
                     android:layout_width="389dp"
                     android:layout_height="261dp"
                     android:layout_marginTop="20dp"
+                    android:clickable="true"
+                    android:src="@drawable/temp_dee_dee"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/temp_dee_dee" />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
