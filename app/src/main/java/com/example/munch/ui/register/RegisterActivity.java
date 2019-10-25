@@ -1,36 +1,30 @@
 package com.example.munch.ui.register;
 
-import android.app.Activity;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import com.example.munch.MainActivity;
 import com.example.munch.R;
-import com.example.munch.ui.explore.ExploreFragment;
-import com.example.munch.ui.login.LoginActivity;
-import com.example.munch.ui.login.LoginViewModel;
+import com.example.munch.data.model.LoggedInUser;
+import com.example.munch.ui.login.PersonalInfoFragment;
+import com.example.munch.ui.userProfile.UserProfileFragment;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -81,29 +75,22 @@ public class RegisterActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View view) {
 
-
+                        String firstname = fName.getText().toString();
+                        String lastname = lName.getText().toString();
+                        String dateofbirth_day = day.getText().toString();
+                        String dateofbirth_month= month.getSelectedItem().toString();
+                        String dateofbirth_year= year.getText().toString();
+                        if (pass != null && user != null && firstname !=null && dateofbirth_day != null && dateofbirth_month != null && dateofbirth_year != null) {
+                            UserProfileFragment.currentUser.register(pass, user, firstname, lastname, dateofbirth_day, dateofbirth_month, dateofbirth_year);
+                        }
                         Intent toMainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                        toMainIntent.putExtra("registered", "true");
                         startActivity(toMainIntent);
-
-
-
-
-                        SharedPreferences sp = getSharedPreferences("key", 0);
-                        SharedPreferences.Editor ipVals = sp.edit();
-                        ipVals.putString("firstName", firstNameEditText.getText().toString());
-                        ipVals.putString("lastName", lastNameEditText.getText().toString());
-                        ipVals.putString("email", user);
-                        ipVals.putString("month",month.getSelectedItem().toString());
-                        ipVals.putString("day",day.getText().toString());
-                        ipVals.putString("year",year.getText().toString());
-                        ipVals.commit();
-
-
-
-
 
                     }
                 });
 
     }
+
+
 }

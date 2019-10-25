@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.munch.MainActivity;
 import com.example.munch.R;
+import com.example.munch.data.model.LoggedInUser;
 import com.example.munch.ui.login.LoginActivity;
 import com.example.munch.ui.login.PersonalInfoFragment;
 import com.example.munch.ui.map.MapFragment;
@@ -36,7 +37,7 @@ import org.json.JSONObject;
 import java.util.concurrent.ExecutionException;
 
 public class UserProfileFragment extends Fragment {
-
+    public static LoggedInUser currentUser = new LoggedInUser();
     private UserProfileViewModel userProfileViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,30 +49,25 @@ public class UserProfileFragment extends Fragment {
         boolean pi = false;
         final Button signInOut = root.findViewById(R.id.sign_in_out);
         TextView personalInfo = root.findViewById(R.id.personal_information);
-
         TextView firstAndLast = root.findViewById(R.id.first_and_last_name);
 
-        final SharedPreferences sp = getActivity().getSharedPreferences("key", 0);
-        firstAndLast.setText(sp.getString("firstName","") + " " +sp.getString("lastName",""));
-        final SharedPreferences.Editor editor = sp.edit();
-        editor.putString("login", "SIGN IN");
+        firstAndLast.setText(currentUser.getFullName());
+        if (currentUser.getLoggedIn()){
+            signInOut.setText("SIGN OUT");
+        } else {
+            signInOut.setText("SIGN IN");
+        }
 
-        signInOut.setText(sp.getString("login",""));
 
         signInOut.setOnClickListener(           //action triggered on button click
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         if (signInOut.getText().toString().equals("SIGN IN")) {
-
-                            editor.putString("login", "SIGN OUT");
-                            editor.commit();
                             Intent toLoginPage = new Intent(getActivity(), LoginActivity.class);
                             startActivity(toLoginPage);
 
                         } else {
-                            editor.clear();
-                            editor.putString("login", "SIGN IN");
-                            editor.commit();
+                            currentUser.signOut();
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             UserProfileFragment NAME = new UserProfileFragment();
