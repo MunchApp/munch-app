@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.AboutPageActivity;
 import com.example.munch.R;
-import com.example.munch.ui.FoodTruck.FoodTruck;
 
 public class MoreFragment extends Fragment {
 

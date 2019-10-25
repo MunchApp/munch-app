@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/munchOrange"
+    tools:context=".ui.foodTruck.createTruckActivity2">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/munchGreenDark"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/init_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/hp_simplified_light_font"
+                android:text="Tell Us About"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/init_prompt_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/hp_simplified_font"
+                android:text="Your Hours"
+                android:textColor="@color/munchOrange"
+                android:textSize="60sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/init_prompt" />
+
+            <TextView
+                android:id="@+id/temp_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/hp_simplified_font"
+                android:text="Enter in Military time eg. 2100"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/init_prompt_2" />
+
+
+            <TextView
+                android:id="@+id/sunday_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="SUN HOURS"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/temp_hint" />
+
+            <Space
+                android:id="@+id/spacer1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/hoursSrtMon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/hoursSrtSun"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/spacer1"
+                app:layout_constraintRight_toLeftOf="@id/mon_to"
+                app:layout_constraintTop_toBottomOf="@+id/sunday_prompt" />
+
+            <TextView
+                android:id="@+id/sun_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rambla"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TO"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/hoursEndSun"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintLeft_toRightOf="@id/hoursSrtSun"
+                app:layout_constraintRight_toLeftOf="@id/hoursEndSun"
+                app:layout_constraintTop_toTopOf="@+id/hoursEndSun" />
+
+            <EditText
+                android:id="@+id/hoursEndSun"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/sun_to"
+                app:layout_constraintRight_toLeftOf="@id/spacer2"
+                app:layout_constraintTop_toBottomOf="@+id/sunday_prompt" />
+
+            <Space
+                android:id="@+id/spacer2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/hoursEndSun"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/monday_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="MONDAY HOURS"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hoursSrtSun" />
+
+            <Space
+                android:id="@+id/spacer3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/hoursSrtMon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/hoursSrtMon"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/spacer1"
+                app:layout_constraintRight_toLeftOf="@id/mon_to"
+                app:layout_constraintTop_toBottomOf="@+id/monday_prompt" />
+
+            <TextView
+                android:id="@+id/mon_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rambla"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TO"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/hoursEndMon"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintLeft_toRightOf="@id/hoursSrtMon"
+                app:layout_constraintRight_toLeftOf="@id/hoursEndMon"
+                app:layout_constraintTop_toTopOf="@+id/hoursEndMon" />
+
+            <EditText
+                android:id="@+id/hoursEndMon"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/mon_to"
+                app:layout_constraintRight_toLeftOf="@id/spacer2"
+                app:layout_constraintTop_toBottomOf="@+id/monday_prompt" />
+
+            <Space
+                android:id="@+id/spacer4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/hoursEndMon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tuesday_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="TUESDAY HOURS"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hoursSrtMon" />
+
+            <Space
+                android:id="@+id/spacer5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/hoursSrtTue"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/hoursSrtTue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/spacer1"
+                app:layout_constraintRight_toLeftOf="@id/tue_to"
+                app:layout_constraintTop_toBottomOf="@+id/tuesday_prompt" />
+
+            <TextView
+                android:id="@+id/tue_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rambla"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TO"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/hoursEndTue"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintLeft_toRightOf="@id/hoursSrtTue"
+                app:layout_constraintRight_toLeftOf="@id/hoursEndTue"
+                app:layout_constraintTop_toTopOf="@+id/hoursEndTue" />
+
+            <EditText
+                android:id="@+id/hoursEndTue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/tue_to"
+                app:layout_constraintRight_toLeftOf="@id/spacer2"
+                app:layout_constraintTop_toBottomOf="@+id/tuesday_prompt" />
+
+            <Space
+                android:id="@+id/spacer6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/hoursEndTue"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/wednesday_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="WEDNESDAY HOURS"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hoursSrtTue" />
+
+            <Space
+                android:id="@+id/spacer7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/hoursSrtWed"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/hoursSrtWed"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/spacer1"
+                app:layout_constraintRight_toLeftOf="@id/tue_to"
+                app:layout_constraintTop_toBottomOf="@+id/wednesday_prompt" />
+
+            <TextView
+                android:id="@+id/wed_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rambla"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TO"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/hoursEndWed"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintLeft_toRightOf="@id/hoursSrtWed"
+                app:layout_constraintRight_toLeftOf="@id/hoursEndWed"
+                app:layout_constraintTop_toTopOf="@+id/hoursEndWed" />
+
+            <EditText
+                android:id="@+id/hoursEndWed"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/wed_to"
+                app:layout_constraintRight_toLeftOf="@id/spacer2"
+                app:layout_constraintTop_toBottomOf="@+id/wednesday_prompt" />
+
+            <Space
+                android:id="@+id/spacer8"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/hoursEndWed"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/thursday_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="THURSDAY HOURS"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hoursSrtWed" />
+
+            <Space
+                android:id="@+id/spacer9"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/hoursSrtThu"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/hoursSrtThu"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/spacer1"
+                app:layout_constraintRight_toLeftOf="@id/tue_to"
+                app:layout_constraintTop_toBottomOf="@+id/thursday_prompt" />
+
+            <TextView
+                android:id="@+id/thu_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rambla"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TO"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/hoursEndThu"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintLeft_toRightOf="@id/hoursSrtThu"
+                app:layout_constraintRight_toLeftOf="@id/hoursEndThu"
+                app:layout_constraintTop_toTopOf="@+id/hoursEndThu" />
+
+            <EditText
+                android:id="@+id/hoursEndThu"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/thu_to"
+                app:layout_constraintRight_toLeftOf="@id/spacer2"
+                app:layout_constraintTop_toBottomOf="@+id/thursday_prompt" />
+
+            <Space
+                android:id="@+id/spacer10"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/hoursEndThu"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            -------------
+
+            <TextView
+                android:id="@+id/friday_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="FRIDAY HOURS"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hoursSrtThu" />
+
+            <Space
+                android:id="@+id/spacer11"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/hoursSrtThu"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/hoursSrtFri"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/spacer1"
+                app:layout_constraintRight_toLeftOf="@id/fri_to"
+                app:layout_constraintTop_toBottomOf="@+id/friday_prompt" />
+
+            <TextView
+                android:id="@+id/fri_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rambla"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TO"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/hoursEndFri"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintLeft_toRightOf="@id/hoursSrtFri"
+                app:layout_constraintRight_toLeftOf="@id/hoursEndFri"
+                app:layout_constraintTop_toTopOf="@+id/hoursEndFri" />
+
+            <EditText
+                android:id="@+id/hoursEndFri"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/fri_to"
+                app:layout_constraintRight_toLeftOf="@id/spacer2"
+                app:layout_constraintTop_toBottomOf="@+id/friday_prompt" />
+
+            <Space
+                android:id="@+id/spacer12"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/hoursEndWed"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            ------------
+
+            <TextView
+                android:id="@+id/saturday_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="SATURDAY HOURS"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hoursSrtFri" />
+
+            <Space
+                android:id="@+id/spacer13"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/hoursSrtSat"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/hoursSrtSat"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/spacer1"
+                app:layout_constraintRight_toLeftOf="@id/sat_to"
+                app:layout_constraintTop_toBottomOf="@+id/saturday_prompt" />
+
+            <TextView
+                android:id="@+id/sat_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rambla"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TO"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/hoursEndSat"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintLeft_toRightOf="@id/hoursSrtSat"
+                app:layout_constraintRight_toLeftOf="@id/hoursEndSat"
+                app:layout_constraintTop_toTopOf="@+id/hoursEndSat" />
+
+            <EditText
+                android:id="@+id/hoursEndSat"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@id/tue_to"
+                app:layout_constraintRight_toLeftOf="@id/spacer2"
+                app:layout_constraintTop_toBottomOf="@+id/saturday_prompt" />
+
+            <Space
+                android:id="@+id/spacer14"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/hoursEndWed"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/create_listing"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_shape"
+                android:enabled="true"
+                android:fontFamily="@font/rambla"
+                android:text="CREATE TRUCK LISTING"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hoursEndSat" />
+
+            <Space
+                android:id="@+id/next_create"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_listing" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
