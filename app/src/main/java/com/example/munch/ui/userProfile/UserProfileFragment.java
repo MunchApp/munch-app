@@ -54,24 +54,21 @@ public class UserProfileFragment extends Fragment {
         final SharedPreferences sp = getActivity().getSharedPreferences("key", 0);
         firstAndLast.setText(sp.getString("firstName","") + " " +sp.getString("lastName",""));
         final SharedPreferences.Editor editor = sp.edit();
-        editor.putString("login", "SIGN IN");
-
-        signInOut.setText(sp.getString("login",""));
-
+        String temp = sp.getString("loggedIn", "");
+        if (sp.getString("loggedIn", "").equals("false")){
+            signInOut.setText("SIGN IN");
+        }
+        else{
+            signInOut.setText("SIGN OUT");
+        }
         signInOut.setOnClickListener(           //action triggered on button click
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         if (signInOut.getText().toString().equals("SIGN IN")) {
-
-                            editor.putString("login", "SIGN OUT");
-                            editor.commit();
                             Intent toLoginPage = new Intent(getActivity(), LoginActivity.class);
                             startActivity(toLoginPage);
 
                         } else {
-                            editor.clear();
-                            editor.putString("login", "SIGN IN");
-                            editor.commit();
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             UserProfileFragment NAME = new UserProfileFragment();

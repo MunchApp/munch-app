@@ -1,36 +1,24 @@
 package com.example.munch.ui.register;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.MainActivity;
 import com.example.munch.R;
-import com.example.munch.ui.explore.ExploreFragment;
-import com.example.munch.ui.login.LoginActivity;
-import com.example.munch.ui.login.LoginViewModel;
+import com.example.munch.data.model.LoggedInUser;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -82,28 +70,77 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
 
-                        Intent toMainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(toMainIntent);
 
 
 
 
-                        SharedPreferences sp = getSharedPreferences("key", 0);
+
+                       /* SharedPreferences sp = getSharedPreferences("key", 0);
                         SharedPreferences.Editor ipVals = sp.edit();
                         ipVals.putString("firstName", firstNameEditText.getText().toString());
                         ipVals.putString("lastName", lastNameEditText.getText().toString());
                         ipVals.putString("email", user);
-                        ipVals.putString("month",month.getSelectedItem().toString());
-                        ipVals.putString("day",day.getText().toString());
-                        ipVals.putString("year",year.getText().toString());
-                        ipVals.commit();
+                        ipVals.commit();*/
 
 
+
+                        // Input
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Integer.valueOf(year.getText().toString()), getMonth(month.getSelectedItem().toString()), Integer.valueOf(day.getText().toString()), 00, 00, 00);
+                        calendar.set(Calendar.MILLISECOND, 0);
+                        Date date = calendar.getTime();
+                        SimpleDateFormat sdf;
+                        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                        String isoDOB = sdf.format(date);
+                        System.out.println(isoDOB);
+
+                        Intent toMainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+
+                        toMainIntent.putExtra(USERNAME,user);
+                        toMainIntent.putExtra(PASSWORD,pass);
+                        toMainIntent.putExtra("firstname", fName.getText().toString());
+                        toMainIntent.putExtra("lastname", lName.getText().toString());
+                        toMainIntent.putExtra("dateofbirth",isoDOB);
+
+                        startActivity(toMainIntent);
 
 
 
                     }
                 });
 
+    }
+
+    private static int getMonth (String month) {
+        int monthNum = -1;
+        switch (month) {
+            case "January": monthNum = 0;
+                break;
+            case "February": monthNum = 1;
+                break;
+            case "March": monthNum = 2;
+                break;
+            case "April": monthNum = 3;
+                break;
+            case "May": monthNum = 4;
+                break;
+            case "June": monthNum = 5;
+                break;
+            case "July": monthNum = 6;
+                break;
+            case "August": monthNum = 7;
+                break;
+            case "September": monthNum = 8;
+                break;
+            case "October": monthNum = 9;
+                break;
+            case "November": monthNum = 10;
+                break;
+            case "December": monthNum = 11;
+                break;
+            default: monthNum = -1;
+                break;
+        }
+        return monthNum;
     }
 }

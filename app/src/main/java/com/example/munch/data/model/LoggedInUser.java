@@ -1,10 +1,16 @@
 package com.example.munch.data.model;
 
+import android.content.SharedPreferences;
+
+import com.example.munch.HttpRequests;
+
 import java.util.ArrayList;
 import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,11 +20,12 @@ import java.util.logging.Logger;
 public class LoggedInUser {
 
     //jwts
+    private boolean loggedIn;
     private String email;   //edit
     private String firstName;
     private String lastName;
     private String gender;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String city;
     private String state;
     private String phoneNum; //edit
@@ -27,11 +34,15 @@ public class LoggedInUser {
     private ArrayList<FoodTruck> favorites;
 
     //, String gender, String city, String state, String phoneNum
-    public LoggedInUser(String password, String email, String firstName, String lastName, Date dateOfBirth) {
+    public LoggedInUser () {
+        loggedIn = false;
+    }
+    public void register(String password, String email, String firstName, String lastName, String dateOfBirth) {
 
         //Create JSON Object to be passed through authentication
+        //Send Info to Back End
+        JSONObject user = new JSONObject();
         try {
-            JSONObject user = new JSONObject();
             user.put("firstName", firstName);
             user.put("lastName", lastName);
             user.put("email", email);
@@ -40,12 +51,19 @@ public class LoggedInUser {
         } catch (JSONException ex) {
             System.out.println("Login Failed");
         }
+        HttpRequests httpRequests = new HttpRequests();
+        httpRequests.execute("register", "POST", user.toString());
+        String response = null;
+        try {
+            response = httpRequests.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        //Send info to User Database
+        loggedIn = true;
 
 
         //Get accessToken?
-
         //Get - Get info from User Database
         //Set variables
 
@@ -53,15 +71,19 @@ public class LoggedInUser {
 
 
 
-        /*this.email = email;
+        this.email = email;
         this.firstName = lastName;
-        this.gender = gender;
         this.dateOfBirth = dateOfBirth;
-        this.city = city;
-        this.state = state;
-        this.phoneNum = phoneNum;*/
+
+
+
+        //this.gender = gender;
+        //this.city = city;
+        //this.state = state;
+        //this.phoneNum = phoneNum;
 
     }
+    public boolean getLoggedIn() { return loggedIn;}
 
     public String getEmail() {
         return email;
@@ -79,7 +101,7 @@ public class LoggedInUser {
         return gender;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
