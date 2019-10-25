@@ -1,5 +1,6 @@
 package com.example.munch;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -12,14 +13,28 @@ import androidx.navigation.ui.NavigationUI;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
 public class MainActivity extends AppCompatActivity {
+    private Bitmap bit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+        ImageLoader imageLoader = ImageLoader.getInstance();
+//        imageLoader.loadImage("https://s3-media4.fl.yelpcdn.com/bphoto/j0m1Ru-GyRSejU0O8jMOQQ/o.jpg", new SimpleImageLoadingListener() {
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                ImageView im = findViewById(R.id.testImage);
+//                im.setImageBitmap(loadedImage);
+//                bit = loadedImage;
+//            }
+//        });
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

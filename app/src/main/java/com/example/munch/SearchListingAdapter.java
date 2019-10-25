@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class SearchListingAdapter extends ArrayAdapter<SearchListing> {
 
     private Context mContext;
     private List<SearchListing> searchList;
+//    private ImageView image1;
 
     public SearchListingAdapter(Context context, ArrayList<SearchListing> list) {
         super(context, 0, list);
@@ -35,13 +38,22 @@ public class SearchListingAdapter extends ArrayAdapter<SearchListing> {
         SearchListing currentResult = searchList.get(position);
 
         ImageView image1 = (ImageView)listItem.findViewById(R.id.image1);
-        image1.setImageResource(currentResult.getmPic1());
+        Picasso.with(mContext).load(currentResult.getmPic1())
+                .resize(110, 110)
+                .centerCrop()
+                .into(image1);
 
         ImageView image2 = (ImageView)listItem.findViewById(R.id.image2);
-        image2.setImageResource(currentResult.getmPic2());
+        Picasso.with(mContext).load(currentResult.getmPic1())
+                .resize(110, 110)
+                .centerCrop()
+                .into(image2);
 
         ImageView image3 = (ImageView)listItem.findViewById(R.id.image3);
-        image3.setImageResource(currentResult.getmPic3());
+        Picasso.with(mContext).load(currentResult.getmPic1())
+                .resize(110, 110)
+                .centerCrop()
+                .into(image3);
 
         TextView truckName = (TextView)listItem.findViewById(R.id.truckName);
         truckName.setText(currentResult.getTruckName());
@@ -53,4 +65,16 @@ public class SearchListingAdapter extends ArrayAdapter<SearchListing> {
 
         return listItem;
     }
+
+//    public void getBitmapFromURL(String url, int id) throws IOException {
+//        ImageLoader imageLoader = ImageLoader.getInstance();
+//        imageLoader.loadImage(url, new SimpleImageLoadingListener() {
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                ImageView im = view.findViewById(id);
+//                im.setImageBitmap(loadedImage);
+//            }
+//        });
+//    }
+
 }

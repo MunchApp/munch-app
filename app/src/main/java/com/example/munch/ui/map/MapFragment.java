@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 public class MapFragment extends Fragment{
 
     private MapViewModel mapViewModel;
+    public ImageView firstIm;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,10 +59,19 @@ public class MapFragment extends Fragment{
     private void populatePopularTrucksList(View root) {
         ListView resultsList = (ListView) root.findViewById(R.id.search_results);
         ArrayList<SearchListing> listings = new ArrayList<>();
-        listings.add(new SearchListing("Cold Cookie Company", R.drawable.cc1,
-                R.drawable.cc2, R.drawable.cc3, 3.5, 409692773, "0.3 miles away"));
-        listings.add(new SearchListing("Cold Cookie Company", R.drawable.cc1,
-                R.drawable.cc2, R.drawable.cc3, 3.5, 409692773, "0.3 miles away"));
+        //TODO create GET request and get the results needed to populate, store in ArrayList of Map
+
+
+
+
+        String url1 = "https://s3-media4.fl.yelpcdn.com/bphoto/j0m1Ru-GyRSejU0O8jMOQQ/o.jpg";
+        String url2 = "https://s3-media4.fl.yelpcdn.com/bphoto/j0m1Ru-GyRSejU0O8jMOQQ/o.jpg";
+        String url3 = "https://s3-media4.fl.yelpcdn.com/bphoto/j0m1Ru-GyRSejU0O8jMOQQ/o.jpg";
+
+        listings.add(new SearchListing("Cold Cookie Company", url1,
+                url2, url3, 3.5, 409692773, "0.3 miles away"));
+//        listings.add(new SearchListing("Cold Cookie Company", R.drawable.cc1,
+//                R.drawable.cc2, R.drawable.cc3, 3.5, 409692773, "0.3 miles away"));
         SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), listings);
         resultsList.setAdapter(mAdapter);
 

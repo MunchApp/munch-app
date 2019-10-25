@@ -3,15 +3,15 @@ package com.example.munch;
 public class SearchListing {
 
     private String truckName;
-    private int mPic1;
-    private int mPic2;
-    private int mPic3;
+    private String mPic1;
+    private String mPic2;
+    private String mPic3;
     private double rating;
     private int phoneNumber;
     private String distance;
 
 
-    public SearchListing(String truckName, int mPic1, int mPic2, int mPic3,
+    public SearchListing(String truckName, String mPic1, String mPic2, String mPic3,
                          double rating, int phoneNumber, String distance){
         this.truckName = truckName;
         this.mPic1 = mPic1;
@@ -32,29 +32,33 @@ public class SearchListing {
         this.truckName = truckName;
     }
 
-    public int getmPic1() {
+
+    public String getmPic1() {
         return mPic1;
     }
 
-    public void setmPic1(int mPic1) {
+    public void setmPic1(String mPic1) {
         this.mPic1 = mPic1;
     }
 
-    public int getmPic2() {
+
+    public String getmPic2() {
         return mPic2;
     }
 
-    public void setmPic2(int mPic2) {
+    public void setmPic2(String mPic2) {
         this.mPic2 = mPic2;
     }
 
-    public int getmPic3() {
+
+    public String getmPic3() {
         return mPic3;
     }
 
-    public void setmPic3(int mPic3) {
+    public void setmPic3(String mPic3) {
         this.mPic3 = mPic3;
     }
+
 
     public double getRating() {
         return rating;
