@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,7 @@ import java.util.logging.Logger;
 public class LoggedInUser {
 
     //jwts
+    //private HashMap<String,String> userInfo;
     private boolean loggedIn;
     private String email;   //edit
     private String firstName;
@@ -71,9 +73,6 @@ public class LoggedInUser {
         //Get accessToken?
         //Get - Get info from User Database
         //Set variables
-
-
-
 
 
         this.email = email;
