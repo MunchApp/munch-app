@@ -13,11 +13,4 @@
         android:layout_marginStart="15dp"
         android:text="About Us" />
 
-    <Button
-        android:id="@+id/food_truck_demo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_marginStart="15dp"
-        android:text="View a FoodTruck" />
 </FrameLayout>

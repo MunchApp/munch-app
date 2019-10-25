@@ -10,13 +10,14 @@
     <LinearLayout
         android:id="@+id/food_truck_page"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="689dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="291dp"
+            android:cropToPadding="true"
             android:src="@drawable/temp_dee_dee" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,8 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="0.1 miles away"
                 android:fontFamily="@font/khand_light"
+                android:text="0.1 miles away"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
