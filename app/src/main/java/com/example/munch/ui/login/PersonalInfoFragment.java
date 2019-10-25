@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.R;
 import com.example.munch.ui.map.MapViewModel;
+import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,11 +34,11 @@ public class PersonalInfoFragment extends Fragment{
         TextView email = root.findViewById(R.id.pi_email);
 
         SharedPreferences sp = getActivity().getSharedPreferences("key", 0);
-        pifirstAndLast.setText(sp.getString("firstName","")+" "+sp.getString("lastName",""));
-        dob.setText(sp.getString("dob",""));
-        gender.setText(sp.getString("gender",""));
-        phoneNum.setText(sp.getString("phoneNum",""));
-        email.setText(sp.getString("email",""));
+        pifirstAndLast.setText(UserProfileFragment.currentUser.getFullName());
+        dob.setText(UserProfileFragment.currentUser.getDateOfBirth());
+        gender.setText(UserProfileFragment.currentUser.getGender());
+        phoneNum.setText(UserProfileFragment.currentUser.getPhoneNum());
+        email.setText(UserProfileFragment.currentUser.getFullName());
 
         return root;
     }

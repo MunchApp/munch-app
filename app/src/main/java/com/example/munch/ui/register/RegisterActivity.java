@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,10 +15,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.LoggedInUser;
+import com.example.munch.ui.login.PersonalInfoFragment;
+import com.example.munch.ui.userProfile.UserProfileFragment;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -69,78 +75,22 @@ public class RegisterActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View view) {
 
-
-
-
-
-
-
-                       /* SharedPreferences sp = getSharedPreferences("key", 0);
-                        SharedPreferences.Editor ipVals = sp.edit();
-                        ipVals.putString("firstName", firstNameEditText.getText().toString());
-                        ipVals.putString("lastName", lastNameEditText.getText().toString());
-                        ipVals.putString("email", user);
-                        ipVals.commit();*/
-
-
-
-                        // Input
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(Integer.valueOf(year.getText().toString()), getMonth(month.getSelectedItem().toString()), Integer.valueOf(day.getText().toString()), 00, 00, 00);
-                        calendar.set(Calendar.MILLISECOND, 0);
-                        Date date = calendar.getTime();
-                        SimpleDateFormat sdf;
-                        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                        String isoDOB = sdf.format(date);
-                        System.out.println(isoDOB);
-
+                        String firstname = fName.getText().toString();
+                        String lastname = lName.getText().toString();
+                        String dateofbirth_day = day.getText().toString();
+                        String dateofbirth_month= month.getSelectedItem().toString();
+                        String dateofbirth_year= year.getText().toString();
+                        if (pass != null && user != null && firstname !=null && dateofbirth_day != null && dateofbirth_month != null && dateofbirth_year != null) {
+                            UserProfileFragment.currentUser.register(pass, user, firstname, lastname, dateofbirth_day, dateofbirth_month, dateofbirth_year);
+                        }
                         Intent toMainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-
-                        toMainIntent.putExtra(USERNAME,user);
-                        toMainIntent.putExtra(PASSWORD,pass);
-                        toMainIntent.putExtra("firstname", fName.getText().toString());
-                        toMainIntent.putExtra("lastname", lName.getText().toString());
-                        toMainIntent.putExtra("dateofbirth",isoDOB);
-
+                        toMainIntent.putExtra("registered", "true");
                         startActivity(toMainIntent);
-
-
 
                     }
                 });
 
     }
 
-    private static int getMonth (String month) {
-        int monthNum = -1;
-        switch (month) {
-            case "January": monthNum = 0;
-                break;
-            case "February": monthNum = 1;
-                break;
-            case "March": monthNum = 2;
-                break;
-            case "April": monthNum = 3;
-                break;
-            case "May": monthNum = 4;
-                break;
-            case "June": monthNum = 5;
-                break;
-            case "July": monthNum = 6;
-                break;
-            case "August": monthNum = 7;
-                break;
-            case "September": monthNum = 8;
-                break;
-            case "October": monthNum = 9;
-                break;
-            case "November": monthNum = 10;
-                break;
-            case "December": monthNum = 11;
-                break;
-            default: monthNum = -1;
-                break;
-        }
-        return monthNum;
-    }
+
 }
