@@ -13,11 +13,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.AboutPageActivity;
 import com.example.munch.R;
+import com.example.munch.ui.FoodTruck.FoodTruck;
 
 public class MoreFragment extends Fragment {
 
     private MoreViewModel moreViewModel;
     Button mSubmitButton;
+    Button demoButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +38,14 @@ public class MoreFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        demoButton = root.findViewById(R.id.food_truck_demo);
+        demoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FoodTruck.class);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 }
