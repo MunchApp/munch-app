@@ -27,6 +27,16 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <receiver android:name=".CustomRating">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/custom_rating_info" />
+        </receiver>
+
         <activity android:name=".ui.foodTruck.FoodTruckFragment"></activity>
         <activity
             android:name=".ui.register.RegisterActivity"
