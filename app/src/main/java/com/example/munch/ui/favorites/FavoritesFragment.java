@@ -38,10 +38,12 @@ public class FavoritesFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        //Make image clickable
         clickable(root);
         return root;
     }
 
+    //Code to make the first image in favorites list be clickable TODO:Obviously implement so that its dynamic and also for every image
     private void clickable(View root){
         imageClick = (ImageView) root.findViewById(R.id.imageView2);
         imageClick.bringToFront();
