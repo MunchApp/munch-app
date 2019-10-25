@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.example.munch.ui.explore.ExploreFragment"
+        android:name="com.example.munch.ui.map.MapFragment"
         android:label="@string/title_map"
-        tools:layout="@layout/fragment_explore" >
+        tools:layout="@layout/fragment_map" >
         <action
             android:id="@+id/action_navigation_map_to_navigation_favorites"
             app:destination="@id/navigation_favorites" />

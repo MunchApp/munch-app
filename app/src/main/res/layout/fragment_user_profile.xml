@@ -7,24 +7,23 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/actionbar_height"
         android:background="#FFFFFF"
         app:layout_constraintTop_toTopOf="parent"
-
-        android:paddingBottom="?attr/actionBarSize">
+        android:fillViewport="true">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/munchOrange"
             android:orientation="vertical"
             android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:elevation="20dp">
+                android:background="@color/munchOrangeLight"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/profile_picture"
@@ -32,6 +31,7 @@
                     android:layout_height="93dp"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     app:srcCompat="@mipmap/ic_launcher_round" />
 
                 <LinearLayout
@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="30dp"
-                        android:fontFamily="@font/khand_medium"
+                        android:fontFamily="@font/hp_simplified"
                         android:text="FirstName LastName"
                         android:textColor="@color/munchGrey"
                         android:textSize="25sp" />
@@ -56,231 +56,157 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="0dp"
-                        android:fontFamily="@font/khand_medium"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/hp_simplified"
                         android:text="Austin, Texas"
                         android:textColor="@color/munchOrangeDark"
-                        android:textSize="20sp"
-                        android:layout_marginBottom="20dp"/>
+                        android:textSize="20sp" />
 
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/account_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/khand_medium"
-                android:text="Account Settings"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/personal_information"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/khand_light"
-                android:text="Personal Information"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/account_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/hp_simplified_light_font"
+                        android:text="@string/accountSettings"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/personal_information"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="@string/personalInfo"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/your_reviews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="@string/yourReviews"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/your_photos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="@string/yourPhotos"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/notifications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="@string/notifications"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/owner_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/hp_simplified_light_font"
+                        android:text="@string/ownerSettings"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/manage_trucks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="@string/manageTruck"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/learn_about_listing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="@string/learn"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/list_truck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="@string/listTruck"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/sign_in_out"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="50dp"
+                        android:background="@drawable/button_shape"
+                        android:fontFamily="@font/rambla"
+                        android:text="SIGN IN"
+                        android:textColor="#FFFFFF"
+                        android:textSize="25sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/shadow"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/shadow" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="5">
+                android:layout_height="100dp"
+                android:orientation="vertical">
 
-                <View
-                    android:layout_weight="4.5"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/munchGreyLight" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/your_reviews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/khand_light"
-                android:text="Your Reviews"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="5">
-
-                <View
-                    android:layout_weight="4.5"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/munchGreyLight" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/your_photos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/khand_light"
-                android:text="Your Photos"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="5">
-
-                <View
-                    android:layout_weight="4.5"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/munchGreyLight" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/notifications"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/khand_light"
-                android:text="Notifications"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="5">
-
-                <View
-                    android:layout_weight="4.5"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/munchGreyLight" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/owner_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/khand_medium"
-                android:text="Owner Settings"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/manage_trucks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/khand_light"
-                android:text="Manage Your Food Trucks"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="5">
-
-                <View
-                    android:layout_weight="4.5"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/munchGreyLight" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/list_truck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/khand_light"
-                android:text="List a New Truck"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="5">
-
-                <View
-                    android:layout_weight="4.5"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/munchGreyLight" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/learn_about_listing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/khand_light"
-                android:text="Learn About Listing"
-                android:textColor="@color/munchGrey"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="5">
-
-                <View
-                    android:layout_weight="4.5"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="@color/munchGreyLight" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/sign_in_out"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_shape"
-                android:layout_marginTop="20dp"
-                android:text="SIGN IN"
-                android:fontFamily="@font/khand_medium"
-                android:textColor="@color/munchOrangeDark"
-                android:layout_gravity="center"
-                android:textSize="25sp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="vertical"></LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>

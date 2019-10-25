@@ -1,6 +1,7 @@
 package com.example.munch;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -8,7 +9,22 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.munch.data.model.LoggedInUser;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -17,11 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*androidx.appcompat.widget.Toolbar toolbar =findViewById(R.id.logo_bar);
-        setSupportActionBar(toolbar);
-        //getSupportActionBar().setLogo(R.drawable.abbr_logo);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);*/
+
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -30,6 +43,48 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
+
+
+        final TextView textView = (TextView) findViewById(R.id.text);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://munch-server.herokuapp.com/register";
+
+        /*JSONObject jsonBody = new JSONObject();
+        try{
+            jsonBody.put("firstName", "Andrea");
+            jsonBody.put("lastName", "Nguyen");
+            jsonBody.put("email", "ngynandrea@gmail.com");
+            jsonBody.put("password", "temp_pass");
+            jsonBody.put("dateOfBirth", "1998-03-30");
+        }catch (JSONException ex) {
+            System.out.println("Login Failed");
+        }
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+        new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    textView.setText("Response:" + response.toString(4));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                textView.setText("ERROR");
+                if (error.networkResponse != null) {
+                    int statusCode = error.networkResponse.statusCode;
+                    textView.setText(statusCode);
+                }
+            }
+        });*/
+
+        //queue.add(req);
+
+
 
     }
 

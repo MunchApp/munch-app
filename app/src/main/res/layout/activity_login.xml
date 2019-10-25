@@ -49,7 +49,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/rambla"
             android:text="EMAIL"
-            android:textColor="@color/munchBlueDark"
+            android:textColor="@color/munchGreenDark"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -81,7 +81,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/rambla"
             android:text="PASSWORD"
-            android:textColor="@color/munchBlueDark"
+            android:textColor="@color/munchGreenDark"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -117,7 +117,8 @@
             android:fontFamily="@font/rambla"
             android:text="@string/action_sign_in_short"
             android:textColor="@color/munchOrangeDark"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:backgroundTint="@color/munchOrangeDark"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,7 +135,7 @@
                 android:fontFamily="@font/rambla"
                 android:selectAllOnFocus="true"
                 android:text="DON'T HAVE AN ACCOUNT?"
-                android:textColor="@color/munchBlueDark"
+                android:textColor="@color/munchGreenDark"
                 android:textSize="18sp"/>
 
             <TextView
@@ -147,7 +148,7 @@
                 android:fontFamily="@font/rambla"
                 android:selectAllOnFocus="true"
                 android:text="@string/action_sign_up"
-                android:textColor="@color/munchBlueDark"
+                android:textColor="@color/munchGreenDark"
                 android:textSize="18sp"/>
 
         </LinearLayout>

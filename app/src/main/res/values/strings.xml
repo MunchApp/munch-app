@@ -47,6 +47,8 @@
     <string name="yelpAPILink">Yelp API: <a href="https://www.yelp.com/developers">Link</a></string>
     <string name="toolsDescription">"Tools Description: Android Studio is used to create the application.\nAdobe XD is used to create the mockups.\nDraw.io is used to create the database model UML diagrams, UML class diagrams, and the use case diagram."</string>
     <string name="githubLink">Github Link: https://github.com/MunchApp/munch-app </string>
+    <string name="githubServerLink">Github Server Link: https://github.com/MunchApp/munchserver</string>
+
 
     <string name="janineCommits">Number of commits:</string>
     <string name="janineIssues">Number of issues:\n</string>
@@ -64,5 +66,32 @@
     <string name="yasiraIssues">Number of issues:\n</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+
+    <string name="accountSettings">Account Settings</string>
+    <string name="personalInfo">PERSONAL INFORMATION</string>
+    <string name="yourReviews">YOUR REVIEWS</string>
+    <string name="yourPhotos">YOUR PHOTOS</string>
+    <string name="notifications">NOTIFICATIONS</string>
+
+    <string name="ownerSettings">Owner Settings</string>
+    <string name="manageTruck">MANAGE YOUR FOOD TRUCK</string>
+    <string name="listTruck">LIST A NEW TRUCK</string>
+    <string name="learn">LEARN ABOUT LISTING</string>
 
 </resources>

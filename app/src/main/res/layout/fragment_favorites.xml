@@ -9,7 +9,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="79dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +26,9 @@
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
+                android:text="Favorites"
                 android:textSize="24sp"
-                android:fontFamily="@font/khand_medium"
+                android:fontFamily="@font/hp_simplified_font"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
