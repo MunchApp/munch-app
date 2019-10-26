@@ -44,13 +44,13 @@ public class SearchListingAdapter extends ArrayAdapter<SearchListing> {
                 .into(image1);
 
         ImageView image2 = (ImageView)listItem.findViewById(R.id.image2);
-        Picasso.with(mContext).load(currentResult.getmPic1())
+        Picasso.with(mContext).load(currentResult.getmPic2())
                 .resize(110, 110)
                 .centerCrop()
                 .into(image2);
 
         ImageView image3 = (ImageView)listItem.findViewById(R.id.image3);
-        Picasso.with(mContext).load(currentResult.getmPic1())
+        Picasso.with(mContext).load(currentResult.getmPic3())
                 .resize(110, 110)
                 .centerCrop()
                 .into(image3);

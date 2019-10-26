@@ -1,22 +1,15 @@
 package com.example.munch.data.model;
 
-import android.content.SharedPreferences;
-import android.util.Log;
-
 import com.example.munch.HttpRequests;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
@@ -66,6 +59,17 @@ public class LoggedInUser {
         accessToken = responseLogin;
         if ( accessToken != null && !accessToken.equals(""))
             loggedIn = true;
+
+//        this.email = email;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.dateOfBirth_month = month;
+//        this.dateOfBirth_day = day;
+//        this.dateOfBirth_year = year;
+//        this.gender = "Complete your profile";
+//        this.city = "Complete your profile";
+//        this.state = "Complete your profile";
+//        this.phoneNum = "Complete your profile";
     }
     public void register(String password, String email, String firstName, String lastName, String day, String month, String year) {
 
