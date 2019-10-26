@@ -60,6 +60,8 @@ public class LoggedInUser {
         if ( accessToken != null && !accessToken.equals(""))
             loggedIn = true;
 
+
+
 //        this.email = email;
 //        this.firstName = firstName;
 //        this.lastName = lastName;

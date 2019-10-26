@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -15,6 +16,7 @@ import com.example.munch.HttpRequests;
 import com.example.munch.R;
 import com.example.munch.SearchListing;
 import com.example.munch.SearchListingAdapter;
+import com.example.munch.ui.foodTruck.FoodTruckFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -154,6 +156,12 @@ public class MapFragment extends Fragment{
 //        }
 
 
+    }
+
+    public void goToFoodTruck(View v){
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        Fragment myFragment = new FoodTruckFragment();
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
     }
 
 
