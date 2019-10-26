@@ -5,6 +5,7 @@ import com.example.munch.HttpRequests;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,7 +41,7 @@ public class LoggedInUser {
     public LoggedInUser () {
         signOut();
     }
-    public void login(String email, String password){
+    public void login (String email, String password){
         JSONObject logUser = new JSONObject();
         try {
             logUser.put("email", email);
@@ -53,23 +54,60 @@ public class LoggedInUser {
         String responseLogin = null;
         try {
             responseLogin = logRequests.get();
+
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        accessToken = responseLogin;
-        if ( accessToken != null && !accessToken.equals(""))
-            loggedIn = true;
+        try {
+            JSONObject jsonToken = new JSONObject(responseLogin);
+            accessToken =jsonToken.get("token").toString();
+        } catch (JSONException ex){
 
-//        this.email = email;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.dateOfBirth_month = month;
-//        this.dateOfBirth_day = day;
-//        this.dateOfBirth_year = year;
-//        this.gender = "Complete your profile";
-//        this.city = "Complete your profile";
-//        this.state = "Complete your profile";
-//        this.phoneNum = "Complete your profile";
+        }
+
+
+
+        String responseLoginGet = null;
+        if ( accessToken != null && !accessToken.equals("")) {
+            loggedIn = true;
+            HttpRequests proRequests = new HttpRequests();
+            proRequests.execute("profile", "GET", null, accessToken);
+                try {
+                    responseLoginGet = proRequests.get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        try {
+            String[] monthName = {"January", "February",
+                    "March", "April", "May", "June", "July",
+                    "August", "September", "October", "November",
+                    "December"};
+
+            JSONObject jsonVals = new JSONObject(responseLoginGet);
+            this.email = jsonVals.get("email").toString();
+            this.firstName = jsonVals.get("firstName").toString();
+            this.lastName = jsonVals.get("lastName").toString();
+            SimpleDateFormat sdf;
+            sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+            Date dob = sdf.parse(jsonVals.get("dateOfBirth").toString());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dob);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            int year = cal.get(Calendar.YEAR);
+            this.dateOfBirth_month = monthName[month];
+            this.dateOfBirth_day = String.valueOf(day);
+            this.dateOfBirth_year = String.valueOf(year);
+            this.gender = "Complete your profile";
+            this.city = "Complete your profile";
+            this.state = "Complete your profile";
+            this.phoneNum = "Complete your profile";
+        } catch (JSONException | ParseException ex){
+
+        }
+
     }
     public void register(String password, String email, String firstName, String lastName, String day, String month, String year) {
 
@@ -99,7 +137,7 @@ public class LoggedInUser {
 
 
         //This is wrong but keep until GET routes are established
-        this.email = email;
+        /*this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth_month = month;
@@ -108,7 +146,7 @@ public class LoggedInUser {
         this.gender = "Complete your profile";
         this.city = "Complete your profile";
         this.state = "Complete your profile";
-        this.phoneNum = "Complete your profile";
+        this.phoneNum = "Complete your profile";*/
 
     }
     public boolean getLoggedIn() { return loggedIn;}

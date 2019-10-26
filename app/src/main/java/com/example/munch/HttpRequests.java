@@ -25,7 +25,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(strings[1]);
             con.setDoInput(true);
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            con.setRequestProperty("Content-Type", "application/json");
 
             if (strings[1].equals("POST")){
                 try(OutputStream os = con.getOutputStream()) {
@@ -34,7 +34,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
                 }
             }
             if (strings.length >= 4){
-                con.setRequestProperty ("Authorization", strings[3]);
+                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
             }
             con.connect();
 
