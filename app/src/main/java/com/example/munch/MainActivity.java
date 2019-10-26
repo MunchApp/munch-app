@@ -1,21 +1,18 @@
 package com.example.munch;
 
-import android.app.FragmentManager;
-import android.os.Bundle;
 
+import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.munch.ui.userProfile.UserProfileFragment;
+import com.example.munch.ui.foodTruck.FoodTruckFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-
-
 
 public class MainActivity extends AppCompatActivity {
     //public static LoggedInUser currentUser = new LoggedInUser();
@@ -43,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.navigation_user_profile);
             }
         }
+    }
+
+    public void goToFoodTruck(View v){
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        Fragment myFragment = new FoodTruckFragment();
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
+
+
     }
 
 }

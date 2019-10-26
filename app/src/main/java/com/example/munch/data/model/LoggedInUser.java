@@ -41,7 +41,7 @@ public class LoggedInUser {
     public LoggedInUser () {
         signOut();
     }
-    public void login (String email, String password){
+    public void login(String email, String password){
         JSONObject logUser = new JSONObject();
         try {
             logUser.put("email", email);

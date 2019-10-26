@@ -61,10 +61,31 @@ public class SearchListingAdapter extends ArrayAdapter<SearchListing> {
         TextView truckDistance = (TextView)listItem.findViewById(R.id.truckDistance);
         truckDistance.setText(currentResult.getDistance());
 
+//        Button goToTruckView = (Button) listItem.findViewById(R.id.button);
+//        goToTruckView.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//                Fragment myFragment = new FoodTruckFragment();
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
+//
+////                Fragment newFragment = new FoodTruckFragment();
+////                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+////
+////                transaction.replace(R.id.m, newFragment);
+////                transaction.addToBackStack(null);
+//
+//// Commit the transaction
+////                transaction.commit();
+//            }
+//        });
+
         //TODO implement getting phone number and rating in the right format
 
         return listItem;
     }
+
 
 //    public void getBitmapFromURL(String url, int id) throws IOException {
 //        ImageLoader imageLoader = ImageLoader.getInstance();
