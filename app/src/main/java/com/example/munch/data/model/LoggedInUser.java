@@ -5,6 +5,7 @@ import com.example.munch.HttpRequests;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,22 +57,53 @@ public class LoggedInUser {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        accessToken = responseLogin;
-        if ( accessToken != null && !accessToken.equals(""))
+
+
+
+        try{
+            JSONObject jsonToken = new JSONObject(responseLogin);
+            accessToken = jsonToken.get("token").toString();
+
+        }catch (JSONException e){
+
+        }
+
+
+        if ( accessToken != null && !accessToken.equals("")) {
             loggedIn = true;
+            HttpRequests proRequests = new HttpRequests();
+            proRequests.execute("profile", "GET", null,accessToken);
+            String responseProfile = null;
+            try {
+                String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+                responseProfile = proRequests.get();
+                JSONObject allVals = new JSONObject(responseProfile);
+                this.email = allVals.get("email").toString();
+                this.firstName = allVals.get("firstName").toString();
+                this.lastName = allVals.get("lastName").toString();
+                SimpleDateFormat sdf;
+                sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                Date date = sdf.parse(allVals.get("dateOfBirth").toString());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date); // don't forget this if date is arbitrary e.g. 01-01-2014
+                int month = cal.get(Calendar.MONTH); // 6
+                int day = cal.get(Calendar.DAY_OF_MONTH); // 17
+                int year = cal.get(Calendar.YEAR); //169
+                this.dateOfBirth_month = monthNames[month];
+                this.dateOfBirth_day = String.valueOf(day);
+                this.dateOfBirth_year = String.valueOf(year);
+                this.gender = "Complete your profile";
+                this.city = "Complete your profile";
+                this.state = "Complete your profile";
+                this.phoneNum = "Complete your profile";
+
+            } catch (ExecutionException | InterruptedException | JSONException | ParseException e) {
+                e.printStackTrace();
+            }
 
 
+        }
 
-//        this.email = email;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.dateOfBirth_month = month;
-//        this.dateOfBirth_day = day;
-//        this.dateOfBirth_year = year;
-//        this.gender = "Complete your profile";
-//        this.city = "Complete your profile";
-//        this.state = "Complete your profile";
-//        this.phoneNum = "Complete your profile";
     }
     public void register(String password, String email, String firstName, String lastName, String day, String month, String year) {
 
@@ -101,16 +133,16 @@ public class LoggedInUser {
 
 
         //This is wrong but keep until GET routes are established
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth_month = month;
-        this.dateOfBirth_day = day;
-        this.dateOfBirth_year = year;
-        this.gender = "Complete your profile";
-        this.city = "Complete your profile";
-        this.state = "Complete your profile";
-        this.phoneNum = "Complete your profile";
+//        this.email = email;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.dateOfBirth_month = month;
+//        this.dateOfBirth_day = day;
+//        this.dateOfBirth_year = year;
+//        this.gender = "Complete your profile";
+//        this.city = "Complete your profile";
+//        this.state = "Complete your profile";
+//        this.phoneNum = "Complete your profile";
 
     }
     public boolean getLoggedIn() { return loggedIn;}

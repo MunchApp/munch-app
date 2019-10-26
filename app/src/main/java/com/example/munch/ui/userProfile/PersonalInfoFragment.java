@@ -9,17 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.R;
-import com.example.munch.ui.map.MapViewModel;
-import com.example.munch.ui.userProfile.UserProfileFragment;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
 
 public class PersonalInfoFragment extends Fragment{
 
@@ -38,7 +29,7 @@ public class PersonalInfoFragment extends Fragment{
         dob.setText(UserProfileFragment.currentUser.getDateOfBirth());
         gender.setText(UserProfileFragment.currentUser.getGender());
         phoneNum.setText(UserProfileFragment.currentUser.getPhoneNum());
-        email.setText(UserProfileFragment.currentUser.getFullName());
+        email.setText(UserProfileFragment.currentUser.getEmail());
 
         return root;
     }

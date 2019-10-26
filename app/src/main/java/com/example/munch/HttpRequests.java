@@ -34,7 +34,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
                 }
             }
             if (strings.length >= 4){
-                con.setRequestProperty ("Authorization", strings[3]);
+                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
             }
             con.connect();
 
