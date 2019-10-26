@@ -1,5 +1,6 @@
 package com.example.munch;
 
+
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,9 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.munch.ui.foodTruck.FoodTruckFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-
-
 
 public class MainActivity extends AppCompatActivity {
     //public static LoggedInUser currentUser = new LoggedInUser();
@@ -48,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         Fragment myFragment = new FoodTruckFragment();
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
+
+
     }
 
 }
