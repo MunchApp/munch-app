@@ -42,6 +42,8 @@ public class LoggedInUser {
         signOut();
     }
     public void login(String email, String password){
+        /*email = "test@example.com";
+        password = "password";*/
         JSONObject logUser = new JSONObject();
         try {
             logUser.put("email", email);
@@ -134,19 +136,6 @@ public class LoggedInUser {
 
 
         login(email,password);
-
-
-        //This is wrong but keep until GET routes are established
-        /*this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth_month = month;
-        this.dateOfBirth_day = day;
-        this.dateOfBirth_year = year;
-        this.gender = "Complete your profile";
-        this.city = "Complete your profile";
-        this.state = "Complete your profile";
-        this.phoneNum = "Complete your profile";*/
 
     }
     public boolean getLoggedIn() { return loggedIn;}

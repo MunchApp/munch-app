@@ -38,7 +38,7 @@ public class PersonalInfoFragment extends Fragment{
         dob.setText(UserProfileFragment.currentUser.getDateOfBirth());
         gender.setText(UserProfileFragment.currentUser.getGender());
         phoneNum.setText(UserProfileFragment.currentUser.getPhoneNum());
-        email.setText(UserProfileFragment.currentUser.getFullName());
+        email.setText(UserProfileFragment.currentUser.getEmail());
 
         return root;
     }

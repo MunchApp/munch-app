@@ -26,16 +26,24 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             con.setRequestMethod(strings[1]);
             con.setDoInput(true);
             con.setRequestProperty("Content-Type", "application/json");
+<<<<<<< Updated upstream
 
+            if (strings.length >= 4){
+                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
+            }
+
+=======
+            if (strings.length >= 4){
+                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
+            }
+>>>>>>> Stashed changes
             if (strings[1].equals("POST")){
                 try(OutputStream os = con.getOutputStream()) {
                     byte[] input = strings[2].getBytes("utf-8");
                     os.write(input, 0, input.length);
                 }
             }
-            if (strings.length >= 4){
-                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
-            }
+
             con.connect();
 
             int responseCode = con.getResponseCode();
@@ -48,7 +56,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
                 response.append(inputLine);
             }
             in.close();
-
+            con.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,6 +64,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
         System.out.println(response.toString());
         System.out.println("PRINTED");
         return response.toString();
+
     }
 
 }
