@@ -26,17 +26,11 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             con.setRequestMethod(strings[1]);
             con.setDoInput(true);
             con.setRequestProperty("Content-Type", "application/json");
-<<<<<<< Updated upstream
 
             if (strings.length >= 4){
                 con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
             }
 
-=======
-            if (strings.length >= 4){
-                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
-            }
->>>>>>> Stashed changes
             if (strings[1].equals("POST")){
                 try(OutputStream os = con.getOutputStream()) {
                     byte[] input = strings[2].getBytes("utf-8");
