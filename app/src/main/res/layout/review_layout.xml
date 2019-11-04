@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/review_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/rambla"
+            android:text="FIRSTNAME LASTNAME"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dateofreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rambla"
+            android:text="October, 25, 2019"
+            app:layout_constraintStart_toStartOf="@+id/review_author"
+            app:layout_constraintTop_toBottomOf="@+id/review_author" />
+
+        <TextView
+            android:id="@+id/reviewbod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="5dp"
+            android:text="This is a review! So good! So bad! I love/ Hate this place!\n"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingbar_on_review" />
+
+        <RatingBar
+            android:id="@+id/ratingbar_on_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateofreview" />
+
+        <ImageView
+            android:id="@+id/reviewerpic"
+            android:layout_width="42dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/review_author"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/review_author"
+            app:srcCompat="@drawable/pp_janine" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
