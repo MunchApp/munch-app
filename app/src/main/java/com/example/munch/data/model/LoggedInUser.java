@@ -42,8 +42,6 @@ public class LoggedInUser {
         signOut();
     }
     public void login(String email, String password){
-        /*email = "test@example.com";
-        password = "password";*/
         JSONObject logUser = new JSONObject();
         try {
             logUser.put("email", email);
@@ -56,57 +54,53 @@ public class LoggedInUser {
         String responseLogin = null;
         try {
             responseLogin = logRequests.get();
-
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        try {
+
+
+
+        try{
             JSONObject jsonToken = new JSONObject(responseLogin);
-            accessToken =jsonToken.get("token").toString();
-        } catch (JSONException ex){
+            accessToken = jsonToken.get("token").toString();
+
+        }catch (JSONException e){
 
         }
 
 
-
-        String responseLoginGet = null;
         if ( accessToken != null && !accessToken.equals("")) {
             loggedIn = true;
             HttpRequests proRequests = new HttpRequests();
-            proRequests.execute("profile", "GET", null, accessToken);
-                try {
-                    responseLoginGet = proRequests.get();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+            proRequests.execute("profile", "GET", null,accessToken);
+            String responseProfile = null;
+            try {
+                String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+                responseProfile = proRequests.get();
+                JSONObject allVals = new JSONObject(responseProfile);
+                this.email = allVals.get("email").toString();
+                this.firstName = allVals.get("firstName").toString();
+                this.lastName = allVals.get("lastName").toString();
+                SimpleDateFormat sdf;
+                sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                Date date = sdf.parse(allVals.get("dateOfBirth").toString());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date); // don't forget this if date is arbitrary e.g. 01-01-2014
+                int month = cal.get(Calendar.MONTH); // 6
+                int day = cal.get(Calendar.DAY_OF_MONTH); // 17
+                int year = cal.get(Calendar.YEAR); //169
+                this.dateOfBirth_month = monthNames[month];
+                this.dateOfBirth_day = String.valueOf(day);
+                this.dateOfBirth_year = String.valueOf(year);
+                this.gender = "Complete your profile";
+                this.city = "Complete your profile";
+                this.state = "Complete your profile";
+                this.phoneNum = "Complete your profile";
+
+            } catch (ExecutionException | InterruptedException | JSONException | ParseException e) {
+                e.printStackTrace();
             }
 
-        try {
-            String[] monthName = {"January", "February",
-                    "March", "April", "May", "June", "July",
-                    "August", "September", "October", "November",
-                    "December"};
-
-            JSONObject jsonVals = new JSONObject(responseLoginGet);
-            this.email = jsonVals.get("email").toString();
-            this.firstName = jsonVals.get("firstName").toString();
-            this.lastName = jsonVals.get("lastName").toString();
-            SimpleDateFormat sdf;
-            sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-            Date dob = sdf.parse(jsonVals.get("dateOfBirth").toString());
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(dob);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            int year = cal.get(Calendar.YEAR);
-            this.dateOfBirth_month = monthName[month];
-            this.dateOfBirth_day = String.valueOf(day);
-            this.dateOfBirth_year = String.valueOf(year);
-            this.gender = "Complete your profile";
-            this.city = "Complete your profile";
-            this.state = "Complete your profile";
-            this.phoneNum = "Complete your profile";
-        } catch (JSONException | ParseException ex){
 
         }
 
@@ -136,6 +130,19 @@ public class LoggedInUser {
 
 
         login(email,password);
+
+
+        //This is wrong but keep until GET routes are established
+//        this.email = email;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.dateOfBirth_month = month;
+//        this.dateOfBirth_day = day;
+//        this.dateOfBirth_year = year;
+//        this.gender = "Complete your profile";
+//        this.city = "Complete your profile";
+//        this.state = "Complete your profile";
+//        this.phoneNum = "Complete your profile";
 
     }
     public boolean getLoggedIn() { return loggedIn;}
