@@ -93,5 +93,6 @@
     <string name="manageTruck">MANAGE YOUR FOOD TRUCK</string>
     <string name="listTruck">LIST A NEW TRUCK</string>
     <string name="learn">LEARN ABOUT LISTING</string>
+    <string name="title_activity_add_review">AddReviewActivity</string>
 
 </resources>

@@ -25,7 +25,11 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(strings[1]);
             con.setDoInput(true);
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            con.setRequestProperty("Content-Type", "application/json");
+
+            if (strings.length >= 4){
+                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
+            }
 
             if (strings[1].equals("POST")){
                 try(OutputStream os = con.getOutputStream()) {
@@ -33,9 +37,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
                     os.write(input, 0, input.length);
                 }
             }
-            if (strings.length >= 4){
-                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
-            }
+
             con.connect();
 
             int responseCode = con.getResponseCode();
@@ -48,7 +50,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
                 response.append(inputLine);
             }
             in.close();
-
+            con.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,6 +58,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
         System.out.println(response.toString());
         System.out.println("PRINTED");
         return response.toString();
+
     }
 
 }

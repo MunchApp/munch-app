@@ -39,7 +39,7 @@ public class createTruckActivity2 extends AppCompatActivity {
 
         final String truck_name = getIntent().getStringExtra("name");
         final String truck_address = getIntent().getStringExtra("address");
-        final String[] truck_photos = getIntent().getStringArrayExtra("photos");
+        final String[] truck_photos = {getIntent().getStringExtra("photos")};
         final EditText hoursSrtSun = findViewById(R.id.hoursSrtSun);
         final EditText hoursSrtMon = findViewById(R.id.hoursSrtMon);
         final EditText hoursSrtTue = findViewById(R.id.hoursSrtTue);
@@ -71,13 +71,20 @@ public class createTruckActivity2 extends AppCompatActivity {
         hours[5][1] = hoursEndFri.getText().toString();
         hours[6][1] = hoursEndSat.getText().toString();
 
+        final String[][] final_hours = hours;
+        final Button next = findViewById(R.id.create_listing);
 
+        next.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
 
-        if (truck_name != null && truck_address != null && hours !=null && truck_photos != null) {
-            String token = UserProfileFragment.currentUser.getAccessToken();
-            FoodTruck foodTruck = new FoodTruck(token,truck_name,truck_address,hours,truck_photos);
-        }
+                        if (true)/*(truck_name != null && truck_address != null && final_hours != null && truck_photos != null)*/ {
+                            String token = UserProfileFragment.currentUser.getAccessToken();
+                            FoodTruck foodTruck = new FoodTruck(token, truck_name, truck_address, final_hours, truck_photos);
+                        }
+                    }
 
-
+                }
+        );
     }
 }
