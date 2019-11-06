@@ -27,7 +27,11 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.Reviewspageactivity"></activity>
+        <activity
+            android:name=".ui.AddReviewActivity"
+            android:label="@string/title_activity_add_review"
+            android:theme="@style/NoActionBar"></activity>
+        <activity android:name=".ui.Reviewspageactivity" />
 
         <receiver android:name=".CustomRating">
             <intent-filter>
