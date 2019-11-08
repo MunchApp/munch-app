@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/main_image"
+        android:layout_width="390dp"
+        android:layout_height="260dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:src="@drawable/temp_dee_dee" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/status"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="32dp"
+            android:tint="@color/onlineGreen"
+            app:layout_constraintBottom_toBottomOf="@id/truck_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/truck_name"
+            app:layout_constraintTop_toTopOf="@id/truck_name"
+            app:srcCompat="@drawable/fv_offline_circle" />
+
+        <TextView
+            android:id="@+id/truck_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/rambla"
+            android:text="DEE DEE"
+            android:textColor="@color/munchGreenDark"
+            android:textSize="25sp"
+            app:layout_constraintLeft_toRightOf="@+id/status"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/restaurantDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:text="0.1 Miles Away"
+            app:layout_constraintBottom_toBottomOf="@id/truck_name"
+            app:layout_constraintHorizontal_bias=".8"
+            app:layout_constraintLeft_toRightOf="@+id/truck_name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/truck_name"
+            app:layout_constraintVertical_bias="0.4" />
+
+        <TextView
+            android:id="@+id/status_string"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/rambla"
+            android:text="ONLINE"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/truck_name" />
+
+        <TextView
+            android:id="@+id/truck_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/rambla"
+            android:text="4200 Manchaca Road\nAustin TX, 78705"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status_string" />
+
+        <RatingBar
+            android:id="@+id/truck_rating_bar"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/truck_address" />
+
+        <TextView
+            android:id="@+id/num_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/rambla"
+            android:text="42"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/truck_rating_bar"
+            app:layout_constraintLeft_toRightOf="@id/truck_rating_bar"
+            app:layout_constraintTop_toTopOf="@id/truck_rating_bar" />
+
+        <LinearLayout
+            android:id="@+id/line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/truck_rating_bar">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="4.5"
+                android:background="@color/munchGreyLight" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

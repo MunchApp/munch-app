@@ -12,53 +12,68 @@ import java.net.URL;
 public class HttpRequests extends AsyncTask<String, Void, String> {
 
     String serverURL;
+    int statusCode;
     public HttpRequests (){
         serverURL = "https://munch-server.herokuapp.com/";
+        statusCode = 0;
     }
 
     @Override
     protected String doInBackground(String... strings) {
         StringBuffer response = new StringBuffer();
         try {
-            URL url = new URL(serverURL + strings[0]);
+
+            String method = strings[1];
+            String route = strings[0];
+
+            URL url = new URL(serverURL + route);
+
             //Set up connection
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod(strings[1]);
+            con.setRequestMethod(method);
             con.setDoInput(true);
-            con.setRequestProperty("Content-Type", "application/json");
 
+            //Pass token
+            con.setRequestProperty("Content-Type", "application/json");
             if (strings.length >= 4){
-                con.setRequestProperty ("Authorization", "Bearer " +strings[3]);
+                String token = strings[3];
+                con.setRequestProperty ("Authorization", "Bearer " +token);
             }
 
-            if (strings[1].equals("POST")){
+            //Pass json object with parameters
+            if (method.equals("POST")){
+                String json = strings[2];
                 try(OutputStream os = con.getOutputStream()) {
-                    byte[] input = strings[2].getBytes("utf-8");
+                    byte[] input = json.getBytes("utf-8");
                     os.write(input, 0, input.length);
                 }
             }
 
+            //connect
             con.connect();
 
+            //get error code
             int responseCode = con.getResponseCode();
-            System.out.println(responseCode);
+            statusCode = responseCode;
 
+            //get response
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
             con.disconnect();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //Check to make sure HTTP response is working
-        System.out.println(response.toString());
-        System.out.println("PRINTED");
         return response.toString();
 
+    }
+
+    public int getStatusCode(){
+        return statusCode;
     }
 
 }

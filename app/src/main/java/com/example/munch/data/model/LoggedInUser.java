@@ -2,6 +2,7 @@ package com.example.munch.data.model;
 
 import com.example.munch.HttpRequests;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -19,6 +21,7 @@ public class LoggedInUser {
     // get currentUser : UserProfileFragment.currentUser
     //jwts
     //private HashMap<String,String> userInfo;
+    private String id;
     private String accessToken;
     private String refreshToken;
     private boolean loggedIn;
@@ -32,16 +35,16 @@ public class LoggedInUser {
     private String city;
     private String state;
     private String phoneNum; //edit
-    private ArrayList<Review> reviews;
-    private ArrayList<FoodTruck> foodTrucks;
-    private ArrayList<FoodTruck> favorites;
+    private ArrayList<String> reviews;
+    private ArrayList<String> foodTrucks;
+    private ArrayList<String> favorites;
 
 
     //, String gender, String city, String state, String phoneNum
     public LoggedInUser () {
         signOut();
     }
-    public void login(String email, String password){
+    public int login(String email, String password){
         JSONObject logUser = new JSONObject();
         try {
             logUser.put("email", email);
@@ -57,9 +60,6 @@ public class LoggedInUser {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-
-
         try{
             JSONObject jsonToken = new JSONObject(responseLogin);
             accessToken = jsonToken.get("token").toString();
@@ -68,42 +68,22 @@ public class LoggedInUser {
 
         }
 
-
-        if ( accessToken != null && !accessToken.equals("")) {
+        int statusCode = logRequests.getStatusCode();
+        if (statusCode == 200) {
             loggedIn = true;
             HttpRequests proRequests = new HttpRequests();
             proRequests.execute("profile", "GET", null,accessToken);
             String responseProfile = null;
             try {
-                String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
                 responseProfile = proRequests.get();
                 JSONObject allVals = new JSONObject(responseProfile);
-                this.email = allVals.get("email").toString();
-                this.firstName = allVals.get("firstName").toString();
-                this.lastName = allVals.get("lastName").toString();
-                SimpleDateFormat sdf;
-                sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                Date date = sdf.parse(allVals.get("dateOfBirth").toString());
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(date); // don't forget this if date is arbitrary e.g. 01-01-2014
-                int month = cal.get(Calendar.MONTH); // 6
-                int day = cal.get(Calendar.DAY_OF_MONTH); // 17
-                int year = cal.get(Calendar.YEAR); //169
-                this.dateOfBirth_month = monthNames[month];
-                this.dateOfBirth_day = String.valueOf(day);
-                this.dateOfBirth_year = String.valueOf(year);
-                this.gender = "Complete your profile";
-                this.city = "Complete your profile";
-                this.state = "Complete your profile";
-                this.phoneNum = "Complete your profile";
+                jsonToUser(allVals);
 
-            } catch (ExecutionException | InterruptedException | JSONException | ParseException e) {
+            } catch (ExecutionException | InterruptedException | JSONException e) {
                 e.printStackTrace();
             }
-
-
         }
-
+        return statusCode;
     }
     public void register(String password, String email, String firstName, String lastName, String day, String month, String year) {
 
@@ -127,23 +107,6 @@ public class LoggedInUser {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-
-        login(email,password);
-
-
-        //This is wrong but keep until GET routes are established
-//        this.email = email;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.dateOfBirth_month = month;
-//        this.dateOfBirth_day = day;
-//        this.dateOfBirth_year = year;
-//        this.gender = "Complete your profile";
-//        this.city = "Complete your profile";
-//        this.state = "Complete your profile";
-//        this.phoneNum = "Complete your profile";
-
     }
     public boolean getLoggedIn() { return loggedIn;}
 
@@ -157,6 +120,10 @@ public class LoggedInUser {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getAccessToken() { return accessToken;}
@@ -192,6 +159,10 @@ public class LoggedInUser {
         this.dateOfBirth_month = "";
         this.dateOfBirth_year = "";
         this.dateOfBirth_day = "";
+        this.id = "";
+        this.foodTrucks = new ArrayList<String>();
+        this.reviews = new ArrayList<String>();
+        this.favorites = new ArrayList<String>();
     }
 
     private static int getMonth (String month) {
@@ -227,7 +198,7 @@ public class LoggedInUser {
         return monthNum;
     }
 
-    public String getISOdob (String dateOfBirth_year, String dateOfBirth_day, String dateOfBirth_month){
+    private String getISOdob (String dateOfBirth_year, String dateOfBirth_day, String dateOfBirth_month){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Integer.valueOf(dateOfBirth_year), getMonth(dateOfBirth_month), Integer.valueOf(dateOfBirth_day), 00, 00, 00);
         calendar.set(Calendar.MILLISECOND, 0);
@@ -237,6 +208,54 @@ public class LoggedInUser {
         String isoDOB = sdf.format(date);
         return isoDOB;
 
+    }
+    public ArrayList<String> getFoodTrucks(){
+        return foodTrucks;
+    }
+    public void addTruck(String truck){
+        foodTrucks.add(truck);
+    }
+
+    private void jsonToUser(JSONObject jsonUser){
+        try {
+            String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+            SimpleDateFormat sdf;
+            sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            Date date = sdf.parse(jsonUser.get("dateOfBirth").toString());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date); // don't forget this if date is arbitrary e.g. 01-01-2014
+            int month = cal.get(Calendar.MONTH); // 6
+            int day = cal.get(Calendar.DAY_OF_MONTH); // 17
+            int year = cal.get(Calendar.YEAR); //169
+            this.email = jsonUser.get("email").toString();
+            this.firstName = jsonUser.get("firstName").toString();
+            this.lastName = jsonUser.get("lastName").toString();
+            this.dateOfBirth_month = monthNames[month];
+            this.dateOfBirth_day = String.valueOf(day);
+            this.dateOfBirth_year = String.valueOf(year);
+            //this.gender = jsonUser.get("gender").toString();
+            this.city = jsonUser.get("city").toString();
+            this.state = jsonUser.get("state").toString();
+            this.phoneNum = jsonUser.get("phoneNumber").toString();
+            JSONArray JSONreviews = new JSONArray(jsonUser.get("reviews").toString());
+            JSONArray JSONfoodTrucks = new JSONArray(jsonUser.get("ownedFoodTrucks").toString());
+            JSONArray JSONfavorites = new JSONArray(jsonUser.get("favorites").toString());
+
+            for (int c  = 0; c < JSONreviews.length(); c++){
+                this.reviews.add(JSONreviews.get(c).toString());
+            }
+
+            for (int c  = 0; c < JSONfoodTrucks.length(); c++){
+                this.foodTrucks.add(JSONfoodTrucks.get(c).toString());
+            }
+
+            for (int c  = 0; c < JSONfavorites.length(); c++){
+                this.favorites.add(JSONfavorites.get(c).toString());
+            }
+
+        } catch (JSONException | ParseException e) {
+
+        }
     }
    /* public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
@@ -254,7 +273,7 @@ public class LoggedInUser {
         this.gender = gender;
     }
 
-    public void setPhoneNum(String phoneNum) {
+    publicvoid setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
 

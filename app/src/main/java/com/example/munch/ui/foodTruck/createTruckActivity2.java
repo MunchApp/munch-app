@@ -2,6 +2,7 @@ package com.example.munch.ui.foodTruck;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.icu.text.UnicodeSet;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,62 +30,94 @@ import com.example.munch.ui.map.MapViewModel;
 import com.example.munch.ui.register.RegisterActivity;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
+import android.widget.TimePicker;
+
+import java.sql.Time;
+
 public class createTruckActivity2 extends AppCompatActivity {
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_truck_2);
+        setContentView(R.layout.activity_set_hours);
+        final CreateTruckViewModel newTruck = new CreateTruckViewModel();
 
-        final String truck_name = getIntent().getStringExtra("name");
-        final String truck_address = getIntent().getStringExtra("address");
-        final String[] truck_photos = {getIntent().getStringExtra("photos")};
-        final EditText hoursSrtSun = findViewById(R.id.hoursSrtSun);
-        final EditText hoursSrtMon = findViewById(R.id.hoursSrtMon);
-        final EditText hoursSrtTue = findViewById(R.id.hoursSrtTue);
-        final EditText hoursSrtWed = findViewById(R.id.hoursSrtWed);
-        final EditText hoursSrtThu = findViewById(R.id.hoursSrtThu);
-        final EditText hoursSrtFri = findViewById(R.id.hoursSrtFri);
-        final EditText hoursSrtSat = findViewById(R.id.hoursSrtSat);
-        final EditText hoursEndSun = findViewById(R.id.hoursEndSun);
-        final EditText hoursEndMon = findViewById(R.id.hoursEndMon);
-        final EditText hoursEndTue = findViewById(R.id.hoursEndTue);
-        final EditText hoursEndWed = findViewById(R.id.hoursEndWed);
-        final EditText hoursEndThu = findViewById(R.id.hoursEndThu);
-        final EditText hoursEndFri = findViewById(R.id.hoursEndFri);
-        final EditText hoursEndSat = findViewById(R.id.hoursEndSat);
+        newTruck.setName(getIntent().getStringExtra("name"));
+        newTruck.setAddress(getIntent().getStringExtra("address"));
+        String[] photos = {getIntent().getStringExtra("photo")};
+        newTruck.setPhotos(photos);
 
+        final TimePicker startTime = (TimePicker) findViewById(R.id.timePicker1);
+        startTime.setIs24HourView(false);
+        final TimePicker endTime = (TimePicker) findViewById(R.id.timePicker1);
+        endTime.setIs24HourView(false);
+        final TextView prompt = (TextView) findViewById(R.id.day_prompt);
+        final Button next = findViewById(R.id.submit_time);
+        final String[] days = {"SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"};
+        int day = 0;
+        prompt.setText(days[0] + " HOURS");
         String[][] hours = new String[7][2];
-        hours[0][0] = hoursSrtSun.getText().toString();
-        hours[1][0] = hoursSrtMon.getText().toString();
-        hours[2][0] = hoursSrtTue.getText().toString();
-        hours[3][0] = hoursSrtWed.getText().toString();
-        hours[4][0] = hoursSrtThu.getText().toString();
-        hours[5][0] = hoursSrtFri.getText().toString();
-        hours[6][0] = hoursSrtSat.getText().toString();
-        hours[0][1] = hoursEndSun.getText().toString();
-        hours[1][1] = hoursEndMon.getText().toString();
-        hours[2][1] = hoursEndTue.getText().toString();
-        hours[3][1] = hoursEndWed.getText().toString();
-        hours[4][1] = hoursEndThu.getText().toString();
-        hours[5][1] = hoursEndFri.getText().toString();
-        hours[6][1] = hoursEndSat.getText().toString();
-
-        final String[][] final_hours = hours;
-        final Button next = findViewById(R.id.create_listing);
-
         next.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
-
-                        if (true)/*(truck_name != null && truck_address != null && final_hours != null && truck_photos != null)*/ {
-                            String token = UserProfileFragment.currentUser.getAccessToken();
-                            FoodTruck foodTruck = new FoodTruck(token, truck_name, truck_address, final_hours, truck_photos);
+                        String day = prompt.getText().toString().split(" ")[0];
+                        switch(day)
+                        {
+                            case "SUNDAY":
+                                prompt.setText(days[1]+ " HOURS");
+                                newTruck.setHours(0,parseTime(startTime),parseTime(endTime));
+                                break;
+                            case "MONDAY":
+                                prompt.setText(days[2]+ " HOURS");
+                                newTruck.setHours(1,parseTime(startTime),parseTime(endTime));
+                                break;
+                            case "TUESDAY":
+                                prompt.setText(days[3]+ " HOURS");
+                                newTruck.setHours(2,parseTime(startTime),parseTime(endTime));
+                                break;
+                            case "WEDNESDAY":
+                                prompt.setText(days[4]+ " HOURS");
+                                newTruck.setHours(3,parseTime(startTime),parseTime(endTime));
+                                break;
+                            case "THURSDAY":
+                                prompt.setText(days[5]+ " HOURS");
+                                newTruck.setHours(4,parseTime(startTime),parseTime(endTime));
+                                break;
+                            case "FRIDAY":
+                                prompt.setText(days[6]+ " HOURS");
+                                next.setText("CREATE TRUCK");
+                                newTruck.setHours(5,parseTime(startTime),parseTime(endTime));
+                                break;
+                            case "SATURDAY":
+                                newTruck.setHours(6,parseTime(startTime),parseTime(endTime));
+                                String token = UserProfileFragment.currentUser.getAccessToken();
+                                String ownerId = UserProfileFragment.currentUser.getId();
+                                FoodTruck foodTruck = new FoodTruck(token, newTruck.getName(), newTruck.getAddress(), newTruck.getHours(), newTruck.getPhotos(),ownerId);
+                                UserProfileFragment.currentUser.addTruck(foodTruck.getId());
+                                Intent toMainIntent = new Intent(createTruckActivity2.this, MainActivity.class);
+                                startActivity(toMainIntent);
+                                break;
+                            default:
+                                System.out.println("error");
                         }
                     }
-
                 }
         );
+    }
+
+    private String parseTime(TimePicker start){
+        String time = "";
+        if (start.getHour() < 10){
+            time += "0" + start.getHour() + ":";
+        } else {
+            time += start.getHour() + ":";
+        }
+        if (start.getMinute() < 10){
+            time += "0" + start.getMinute();
+        } else {
+            time += start.getMinute();
+        }
+        return time;
     }
 }

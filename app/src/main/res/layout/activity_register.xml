@@ -13,7 +13,8 @@
         android:layout_height="match_parent"
         android:background="@color/munchGreenDark"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="38dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,12 +25,12 @@
                 android:id="@+id/init_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="70dp"
                 android:fontFamily="@font/hp_simplified_light_font"
                 android:text="Tell Us About"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"
-                android:layout_marginStart="40dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,37 +38,129 @@
                 android:id="@+id/init_prompt_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/hp_simplified_font"
                 android:text="Yourself"
                 android:textColor="@color/munchOrange"
                 android:textSize="60sp"
-                android:layout_marginStart="40dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/init_prompt" />
 
 
             <TextView
+                android:id="@+id/email_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/rambla"
+                android:text="EMAIL ADDRESS"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/init_prompt_2" />
+
+            <Space
+                android:id="@+id/spacer1_e"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/email_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/email_name"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="8"
+                app:layout_constraintLeft_toRightOf="@id/spacer1_e"
+                app:layout_constraintRight_toLeftOf="@id/spacer2_e"
+                app:layout_constraintTop_toBottomOf="@+id/email_prompt" />
+
+            <Space
+                android:id="@+id/spacer2_e"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/email_name"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/pass_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/rambla"
+                android:text="PASSWORD"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_name" />
+
+            <Space
+                android:id="@+id/spacer1_p"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/pass_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/pass_name"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
+                android:inputType="text"
+                app:layout_constraintHorizontal_weight="8"
+                app:layout_constraintLeft_toRightOf="@id/spacer1_p"
+                app:layout_constraintRight_toLeftOf="@id/spacer2_p"
+                app:layout_constraintTop_toBottomOf="@+id/pass_prompt" />
+
+            <Space
+                android:id="@+id/spacer2_p"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@id/email_name"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/first_name_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/rambla"
                 android:text="FIRST NAME"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
-                android:layout_marginStart="40dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/init_prompt_2" />
+                app:layout_constraintTop_toBottomOf="@+id/pass_name" />
 
             <Space
                 android:id="@+id/spacer1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/first_name"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/first_name"
@@ -76,44 +169,44 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:backgroundTint="#FFFFFF"
                 android:elevation="1dp"
                 android:inputType="text"
-                android:backgroundTint="#FFFFFF"
+                app:layout_constraintHorizontal_weight="8"
                 app:layout_constraintLeft_toRightOf="@id/spacer1"
                 app:layout_constraintRight_toLeftOf="@id/spacer2"
-                app:layout_constraintTop_toBottomOf="@+id/first_name_prompt"
-                app:layout_constraintHorizontal_weight="8"/>
+                app:layout_constraintTop_toBottomOf="@+id/first_name_prompt" />
 
             <Space
                 android:id="@+id/spacer2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toRightOf="@id/first_name"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/last_name_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/rambla"
                 android:text="LAST NAME"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
-                android:layout_marginStart="40dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/first_name"/>
+                app:layout_constraintTop_toBottomOf="@+id/first_name" />
 
             <Space
                 android:id="@+id/spacer3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/last_name"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/last_name"
@@ -122,44 +215,44 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:elevation="1dp"
                 android:backgroundTint="#FFFFFF"
+                android:elevation="1dp"
                 android:inputType="text"
+                app:layout_constraintHorizontal_weight="8"
                 app:layout_constraintLeft_toRightOf="@id/spacer3"
                 app:layout_constraintRight_toLeftOf="@id/spacer4"
-                app:layout_constraintTop_toBottomOf="@+id/last_name_prompt"
-                app:layout_constraintHorizontal_weight="8"/>
+                app:layout_constraintTop_toBottomOf="@+id/last_name_prompt" />
 
             <Space
                 android:id="@+id/spacer4"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toRightOf="@id/last_name"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/dob_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/rambla"
                 android:text="DATE OF BIRTH"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
-                android:layout_marginStart="40dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/last_name"/>
+                app:layout_constraintTop_toBottomOf="@+id/last_name" />
 
             <Space
                 android:id="@+id/spacer7"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/month"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
                 android:id="@+id/month"
@@ -169,10 +262,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="#FFFFFF"
+                app:layout_constraintHorizontal_weight="5"
                 app:layout_constraintLeft_toRightOf="@id/spacer7"
                 app:layout_constraintRight_toLeftOf="@id/day"
-                app:layout_constraintTop_toBottomOf="@+id/dob_prompt"
-                app:layout_constraintHorizontal_weight="5"/>
+                app:layout_constraintTop_toBottomOf="@+id/dob_prompt" />
 
             <EditText
                 android:id="@+id/day"
@@ -182,15 +275,15 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="#FFFFFF"
+                android:fontFamily="@font/rambla"
+                android:hint="DAY"
                 android:inputType="number"
                 android:maxLength="2"
+                android:textColorHint="#FFFFFF"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toRightOf="@id/month"
                 app:layout_constraintRight_toLeftOf="@id/year"
-                app:layout_constraintTop_toBottomOf="@+id/dob_prompt"
-                app:layout_constraintHorizontal_weight="1"
-                android:textColorHint="#FFFFFF"
-                android:fontFamily="@font/rambla"
-                android:hint="DAY"/>
+                app:layout_constraintTop_toBottomOf="@+id/dob_prompt" />
 
             <EditText
                 android:id="@+id/year"
@@ -200,135 +293,68 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="#FFFFFF"
+                android:fontFamily="@font/rambla"
+                android:hint="YEAR"
                 android:inputType="number"
                 android:maxLength="4"
                 android:textColorHint="#FFFFFF"
-                android:fontFamily="@font/rambla"
-                android:hint="YEAR"
+                app:layout_constraintHorizontal_weight="2"
                 app:layout_constraintLeft_toRightOf="@id/day"
                 app:layout_constraintRight_toLeftOf="@id/spacer8"
-                app:layout_constraintTop_toBottomOf="@+id/dob_prompt"
-                app:layout_constraintHorizontal_weight="2"/>
+                app:layout_constraintTop_toBottomOf="@+id/dob_prompt" />
 
             <Space
                 android:id="@+id/spacer8"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toRightOf="@id/year"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Space
                 android:id="@+id/spacer5"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/register"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/register"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/button_shape"
                 android:enabled="true"
                 android:fontFamily="@font/rambla"
                 android:text="REGISTER"
-                android:textSize="20sp"
                 android:textColor="#FFFFFF"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/year"
+                android:textSize="20sp"
+                app:layout_constraintHorizontal_weight="8"
                 app:layout_constraintLeft_toRightOf="@id/spacer5"
                 app:layout_constraintRight_toLeftOf="@id/spacer6"
-                app:layout_constraintHorizontal_weight="8"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/year" />
 
             <Space
                 android:id="@+id/spacer6"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toRightOf="@id/register"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1"/>
-            <!-- <TextView
-                android:id="@+id/dob_prompt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/rambla"
-                android:text="DATE OF BIRTH"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/date_of_birth"
-                android:layout_width="310dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:elevation="1dp"
-                android:inputType="text" />
+            <Space
+                android:id="@+id/bottom_spacer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toBottomOf="@id/register"
+                app:layout_constraintRight_toRightOf="parent" />
 
-            <TextView
-                android:id="@+id/gender_prompt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/rambla"
-                android:text="GENDER"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp" />
-
-            <EditText
-                android:id="@+id/gender"
-                android:layout_width="310dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:elevation="1dp"
-                android:inputType="text" />
-
-            <TextView
-                android:id="@+id/phone_number_prompt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/rambla"
-                android:text="PHONE NUMBER"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp" />
-
-            <EditText
-                android:id="@+id/phone_number"
-                android:layout_width="310dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:elevation="1dp"
-                android:inputType="text" />
-
-            <Button
-                android:id="@+id/register"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/button_shape_2"
-                android:enabled="true"
-                android:fontFamily="@font/rambla"
-                android:text="REGISTER"
-                android:textColor="@color/munchOrangeDark" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

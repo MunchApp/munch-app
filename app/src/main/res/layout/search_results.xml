@@ -49,7 +49,8 @@
                 android:id="@+id/truckName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:fontFamily="@font/rambla"/>
 
             <Space
                 android:layout_weight="1"
@@ -61,7 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:fontFamily="@font/rambla"/>
 
         </LinearLayout>
         <RatingBar

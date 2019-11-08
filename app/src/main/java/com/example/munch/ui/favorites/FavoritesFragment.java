@@ -1,7 +1,6 @@
 package com.example.munch.ui.favorites;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.munch.R;
 import com.example.munch.ui.foodTruck.FoodTruckFragment;
-import com.example.munch.ui.userProfile.PersonalInfoFragment;
 
 public class FavoritesFragment extends Fragment {
 
@@ -30,8 +28,8 @@ public class FavoritesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         favoritesViewModel =
                 ViewModelProviders.of(this).get(FavoritesViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_favorites, container, false);
-        final TextView textView = root.findViewById(R.id.text_favorites);
+        View root = inflater.inflate(R.layout.fragment_list_truck, container, false);
+        final TextView textView = root.findViewById(R.id.text_list_prompt);
         favoritesViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -45,7 +43,7 @@ public class FavoritesFragment extends Fragment {
 
     //Code to make the first image in favorites list be clickable TODO:Obviously implement so that its dynamic and also for every image
     private void clickable(View root){
-        imageClick = (ImageView) root.findViewById(R.id.imageView2);
+        imageClick = (ImageView) root.findViewById(R.id.main_image);
         imageClick.bringToFront();
         imageClick.setClickable(true);
         imageClick.setOnClickListener(new View.OnClickListener() {

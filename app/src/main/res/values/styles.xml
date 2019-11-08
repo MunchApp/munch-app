@@ -21,4 +21,11 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="timePickerTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/hp_simplified_light_font</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+    </style>
+
 </resources>

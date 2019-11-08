@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_favorites"
+                android:id="@+id/text_list_prompt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
@@ -96,7 +96,13 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <ListView
+                android:id="@+id/list_of_trucks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <!-- <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -139,6 +145,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:id="@+id/restaurantTitle"
@@ -194,7 +201,7 @@
                     android:background="@color/munchGreyLight" />
             </LinearLayout>
 
-            <!-- DUPLICATE CARD-->
+            &lt;!&ndash; DUPLICATE CARD&ndash;&gt;
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -275,7 +282,7 @@
                 android:fontFamily="@font/khand_light"
                 android:layout_marginBottom="60dp"
                 android:layout_marginLeft="25dp"
-                android:text="2908 Fruth St\nAustin TX, 78745" />
+                android:text="2908 Fruth St\nAustin TX, 78745" />-->
 
         </LinearLayout>
 

@@ -51,13 +51,11 @@ public class createTruckActivity extends AppCompatActivity {
 
                         Intent toMainIntent = new Intent(createTruckActivity.this, createTruckActivity2.class);
                         toMainIntent.putExtra("name", name.getText().toString());
-                        toMainIntent.putExtra("address", name.getText().toString());
+                        toMainIntent.putExtra("address", address.getText().toString());
                         toMainIntent.putExtra("photo", photo.getText().toString());
                         startActivity(toMainIntent);
 
                     }
                 });
-
-
     }
 }
