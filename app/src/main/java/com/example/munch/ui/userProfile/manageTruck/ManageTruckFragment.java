@@ -39,6 +39,7 @@ public class ManageTruckFragment extends Fragment {
             TruckListingAdapter mAdapter = new TruckListingAdapter(getActivity(), truckListings);
             myTrucksList.setAdapter(mAdapter);
         }
+
         return root;
     }
 }
