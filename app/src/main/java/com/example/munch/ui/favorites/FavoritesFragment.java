@@ -21,28 +21,17 @@ import com.example.munch.ui.foodTruck.FoodTruckFragment;
 
 public class FavoritesFragment extends Fragment {
 
-    private FavoritesViewModel favoritesViewModel;
-    private ImageView imageClick;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        favoritesViewModel =
-                ViewModelProviders.of(this).get(FavoritesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_list_truck, container, false);
-        final TextView textView = root.findViewById(R.id.text_list_prompt);
-        favoritesViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        //Make image clickable
-        clickable(root);
+        final TextView title = root.findViewById(R.id.text_list_prompt);
+
+        title.setText("Your Favorites");
         return root;
     }
 
     //Code to make the first image in favorites list be clickable TODO:Obviously implement so that its dynamic and also for every image
-    private void clickable(View root){
+    /*private void clickable(View root){
         imageClick = (ImageView) root.findViewById(R.id.main_image);
         imageClick.bringToFront();
         imageClick.setClickable(true);
@@ -57,5 +46,5 @@ public class FavoritesFragment extends Fragment {
             }
         });
 
-    }
+    }*/
 }

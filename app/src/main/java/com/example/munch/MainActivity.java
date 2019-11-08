@@ -42,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void goToFoodTruck(View v){
+   /* public void goToFoodTruck(View v){
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         Fragment myFragment = new FoodTruckFragment();
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
 
 
-    }
+    }*/
 
 }

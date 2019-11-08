@@ -41,7 +41,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             }
 
             //Pass json object with parameters
-            if (method.equals("POST")){
+            if (method.equals("POST") || method.equals("PUT")){
                 String json = strings[2];
                 try(OutputStream os = con.getOutputStream()) {
                     byte[] input = json.getBytes("utf-8");

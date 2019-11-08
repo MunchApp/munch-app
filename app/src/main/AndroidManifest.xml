@@ -29,8 +29,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".ui.AddReviewActivity"
-            android:label="@string/title_activity_add_review"
-            android:theme="@style/NoActionBar"></activity>
+            android:label="@string/title_activity_add_review"></activity>
         <activity android:name=".ui.Reviewspageactivity" />
 
         <receiver android:name=".CustomRating">

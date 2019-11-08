@@ -40,6 +40,7 @@ public class createTruckActivity extends AppCompatActivity {
 
         final EditText name = findViewById(R.id.truck_name);
         final EditText address = findViewById(R.id.address);
+        final EditText address2 = findViewById(R.id.address2);
         final EditText photo = findViewById(R.id.photo_url);
         final Button next = findViewById(R.id.next_create);
 
@@ -51,7 +52,7 @@ public class createTruckActivity extends AppCompatActivity {
 
                         Intent toMainIntent = new Intent(createTruckActivity.this, createTruckActivity2.class);
                         toMainIntent.putExtra("name", name.getText().toString());
-                        toMainIntent.putExtra("address", address.getText().toString());
+                        toMainIntent.putExtra("address", address.getText().toString() + "\n" +address2.getText().toString());
                         toMainIntent.putExtra("photo", photo.getText().toString());
                         startActivity(toMainIntent);
 

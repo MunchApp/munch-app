@@ -1,5 +1,6 @@
 package com.example.munch.ui.userProfile.manageTruck;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -11,11 +12,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.ui.foodTruck.FoodTruckFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,9 +35,8 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
 //    private ImageView image1;
 
     public TruckListingAdapter(Context context, ArrayList<FoodTruck> list) {
-        super(context, 0, list);
+        super(context, 0, list);truckList = list;
         mContext = context;
-        truckList = list;
     }
 
     @NonNull
@@ -39,9 +46,21 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.list_truck,parent,false);
 
-        FoodTruck currentResult = truckList.get(position);
+        final FoodTruck currentResult = truckList.get(position);
 
         ImageView image1 = (ImageView)listItem.findViewById(R.id.main_image);
+        image1.setClickable(true);
+        image1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity activity = (FragmentActivity)mContext;
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FoodTruckFragment NAME = new FoodTruckFragment(currentResult, true);
+                fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
+                fragmentTransaction.commit();
+            }
+        });
         Picasso.with(mContext).load(currentResult.getPhotos().get(0))
                 .resize(390, 260)
                 .centerCrop()
@@ -58,10 +77,10 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
         ImageView truckStatusIcon= (ImageView)listItem.findViewById(R.id.status);
         if (currentResult.getStatus()){
             ImageViewCompat.setImageTintList(truckStatusIcon, ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.onlineGreen)));
-            truckAddress.setText("ONLINE");
+            truckStatus.setText("ONLINE");
         } else {
             ImageViewCompat.setImageTintList(truckStatusIcon, ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.offlineRed)));
-            truckAddress.setText("OFFLINE");
+            truckStatus.setText("OFFLINE");
         }
 
         return listItem;

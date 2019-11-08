@@ -16,6 +16,7 @@ import com.example.munch.HttpRequests;
 import com.example.munch.R;
 import com.example.munch.SearchListing;
 import com.example.munch.SearchListingAdapter;
+import com.example.munch.data.model.FoodTruck;
 import com.example.munch.ui.foodTruck.FoodTruckFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -63,7 +64,7 @@ public class MapFragment extends Fragment{
 
     private void populatePopularTrucksList(View root) {
         ListView resultsList = (ListView) root.findViewById(R.id.search_results);
-        ArrayList<SearchListing> listings = new ArrayList<>();
+        ArrayList<FoodTruck> listings = new ArrayList<>();
         HttpRequests foodTruckRequest = new HttpRequests();
         foodTruckRequest.execute("foodtrucks", "GET");
         String responseTruck = null;
@@ -78,74 +79,16 @@ public class MapFragment extends Fragment{
             JSONArray truckData = new JSONArray(responseTruck);
             for (int i = 0; i < truckData.length(); i++) {
                 JSONObject jsonobject = truckData.getJSONObject(i);
-                String name = jsonobject.getString("name");
+                String id = jsonobject.getString("id");
 
-                ArrayList<String> photoURLs = new ArrayList<String>();
-                JSONArray jArray = (JSONArray)jsonobject.get("photos");
-                if (jArray != null) {
-                    for (int k=0; k<jArray.length(); k++){
-                        photoURLs.add(jArray.getString(k));
-                    }
-                }
-
-                if (photoURLs.size() > 3){
-                    photoURLs.subList(0,2);
-                } else {
-                    if (photoURLs.size() == 1){
-                        photoURLs.add(1, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
-                    }
-                    if (photoURLs.size() == 2){
-                        photoURLs.add(2, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
-                    }
-//                    if (photoURLs.get(0).isEmpty()){
-//                        photoURLs.set(0, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
-//                    }
-//                    if (photoURLs.get(1).isEmpty()){
-//                        photoURLs.set(1, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
-//                    }
-//                    if (photoURLs.get(2).isEmpty()){
-//                        photoURLs.set(2, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
-//                    }
-                }
-
-
-//                String[] actualImages = new String[3];
-//                if (images.length >= 3){
-//                    for (int j = 0; j < 3; j++){
-//                        actualImages[j] = images[j];
-//                    }
-//                } else {
-//                    if (images.length == 1){
-//                        actualImages[0] = images[0];
-//                        actualImages[1] = "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg";
-//                        actualImages[2] = "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg";
-//                    }
-//                    if (images.length == 2){
-//                        actualImages[0] = images[0];
-//                        actualImages[1] = images[1];
-//                        actualImages[2] = "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg";
-//                    }
-//                }
-                listings.add(new SearchListing(name, photoURLs.get(0),
-                        photoURLs.get(1), photoURLs.get(2), 3.5, 409692773, "0.3 miles away"));
+                FoodTruck truckListing = new FoodTruck(id);
+                listings.add(truckListing);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-
-
-
-//        String url1 = "https://s3-media4.fl.yelpcdn.com/bphoto/j0m1Ru-GyRSejU0O8jMOQQ/o.jpg";
-//        String url2 = "https://s3-media4.fl.yelpcdn.com/bphoto/j0m1Ru-GyRSejU0O8jMOQQ/o.jpg";
-//        String url3 = "https://s3-media4.fl.yelpcdn.com/bphoto/j0m1Ru-GyRSejU0O8jMOQQ/o.jpg";
-//
-//        listings.add(new SearchListing("Cold Cookie Company", url1,
-//                url2, url3, 3.5, 409692773, "0.3 miles away"));
-////        listings.add(new SearchListing("Cold Cookie Company", R.drawable.cc1,
-////                R.drawable.cc2, R.drawable.cc3, 3.5, 409692773, "0.3 miles away"));
         SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), listings);
         resultsList.setAdapter(mAdapter);
 
@@ -158,11 +101,11 @@ public class MapFragment extends Fragment{
 
     }
 
-    public void goToFoodTruck(View v){
+    /*public void goToFoodTruck(View v){
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         Fragment myFragment = new FoodTruckFragment();
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
-    }
+    }*/
 
 
 
