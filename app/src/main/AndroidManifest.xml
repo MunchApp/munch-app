@@ -27,6 +27,12 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity
+            android:name=".ui.AddReviewActivity"
+            android:label="@string/title_activity_add_review"
+            android:theme="@style/NoActionBar"></activity>
+        <activity android:name=".ui.Reviewspageactivity" />
+
         <receiver android:name=".CustomRating">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -37,7 +43,7 @@
                 android:resource="@xml/custom_rating_info" />
         </receiver>
 
-        <activity android:name=".ui.foodTruck.FoodTruckFragment"></activity>
+        <activity android:name=".ui.foodTruck.FoodTruckFragment" />
         <activity
             android:name=".ui.register.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -49,7 +55,6 @@
         <activity
             android:name=".ui.foodTruck.createTruckActivity"
             android:label="CTA_1" />
-
         <activity
             android:name=".ui.foodTruck.createTruckActivity2"
             android:label="CTA_2" />
@@ -64,7 +69,7 @@
         </activity>
         <activity
             android:name=".AboutPageActivity"
-            android:label="About"></activity>
+            android:label="About" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

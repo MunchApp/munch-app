@@ -21,14 +21,17 @@ android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="545dp">
+        android:layout_height="555dp">
 
         <View
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="4.5"
-            android:background="@color/munchGreyLight" />
+            android:background="@color/munchGreyLight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView16"
@@ -364,6 +367,9 @@ android:layout_height="match_parent">
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
 </LinearLayout>
 </ScrollView>
 
