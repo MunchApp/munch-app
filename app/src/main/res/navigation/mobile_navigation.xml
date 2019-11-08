@@ -19,7 +19,7 @@
         android:id="@+id/navigation_favorites"
         android:name="com.example.munch.ui.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_list_truck" >
         <action
             android:id="@+id/action_navigation_favorites_to_navigation_user_profile"
             app:destination="@id/navigation_user_profile" />

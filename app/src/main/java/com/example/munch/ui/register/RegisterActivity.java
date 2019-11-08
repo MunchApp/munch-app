@@ -1,5 +1,6 @@
 package com.example.munch.ui.register;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -27,8 +30,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         final String user = getIntent().getStringExtra(USERNAME);
         final String pass = getIntent().getStringExtra(PASSWORD);
-        final EditText firstNameEditText = findViewById(R.id.first_name);
-        final EditText lastNameEditText = findViewById(R.id.last_name);
+        final EditText emailEditText = findViewById(R.id.email_name);
+        final EditText passEditText = findViewById(R.id.pass_name);
+        emailEditText.setText(user);
+        passEditText.setText(pass);
         Button registerButton = findViewById(R.id.register);
         final Spinner month = (Spinner) findViewById(R.id.month);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -70,13 +75,25 @@ public class RegisterActivity extends AppCompatActivity {
                         String dateofbirth_day = day.getText().toString();
                         String dateofbirth_month= month.getSelectedItem().toString();
                         String dateofbirth_year= year.getText().toString();
-                        if (pass != null && user != null && firstname !=null && dateofbirth_day != null && dateofbirth_month != null && dateofbirth_year != null) {
+                        String password = passEditText.getText().toString();
+                        String username = emailEditText.getText().toString();
+                        int statusCode = 0;
+                        if (password != null && username != null && firstname !=null && dateofbirth_day != null && dateofbirth_month != null && dateofbirth_year != null) {
                             UserProfileFragment.currentUser.register(pass, user, firstname, lastname, dateofbirth_day, dateofbirth_month, dateofbirth_year);
+                            statusCode = UserProfileFragment.currentUser.login(user,pass);
                         }
-                        Intent toMainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                        toMainIntent.putExtra("registered", "true");
-                        startActivity(toMainIntent);
+                        if (statusCode != 200) {
+                            CharSequence text = "Invalid email and/or password! Try Again!";
+                            int duration = Toast.LENGTH_SHORT;
 
+                            Toast toast = Toast.makeText(RegisterActivity.this, text, duration);
+                            toast.show();
+
+                        } else {
+                            Intent toMainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                            toMainIntent.putExtra("registered", "true");
+                            startActivity(toMainIntent);
+                        }
                     }
                 });
 

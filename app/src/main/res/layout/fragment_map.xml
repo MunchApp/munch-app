@@ -71,6 +71,7 @@
                 android:paddingStart="15dp"
                 android:paddingTop="10dp"
                 android:text="Results"
+                android:fontFamily="@font/hp_simplified_font"
                 android:textSize="30sp" />
 
             <ListView

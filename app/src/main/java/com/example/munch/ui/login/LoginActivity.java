@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
                         Intent toRegPage = new Intent(LoginActivity.this, RegisterActivity.class);
-                        toRegPage.putExtra(USERNAME,usernameEditText.getText().toString());
-                        toRegPage.putExtra(PASSWORD,passwordEditText.getText().toString());
+                        toRegPage.putExtra(USERNAME, usernameEditText.getText().toString());
+                        toRegPage.putExtra(PASSWORD, passwordEditText.getText().toString());
                         startActivity(toRegPage);
                     }
                 });
@@ -57,11 +57,20 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(           //action triggered on button click
                 new View.OnClickListener() {
                     public void onClick(View view) {
-                        UserProfileFragment.currentUser.login(usernameEditText.getText().toString(),passwordEditText.getText().toString());
-                        Intent toMainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        toMainIntent.putExtra("registered", "true");
-                        startActivity(toMainIntent);
+                        int statusCode = UserProfileFragment.currentUser.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                        if (statusCode != 200) {
+                            CharSequence text = "Invalid email and/or password! Try Again!";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(LoginActivity.this, text, duration);
+                            toast.show();
+
+                        } else {
+                            Intent toMainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            toMainIntent.putExtra("registered", "true");
+                            startActivity(toMainIntent);
+                        }
                     }
-                });
+                    });
+                }
     }
-}

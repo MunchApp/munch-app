@@ -21,13 +21,11 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="timePickerTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/hp_simplified_light_font</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
     </style>
-
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
