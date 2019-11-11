@@ -34,6 +34,7 @@ public class FoodTruck{
         this.photos = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
         this.tags = new ArrayList<String>();
+        this.id = truckId;
         getTruck(truckId);
     }
 

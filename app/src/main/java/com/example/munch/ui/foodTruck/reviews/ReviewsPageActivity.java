@@ -3,9 +3,12 @@ package com.example.munch.ui.foodTruck.reviews;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,9 +35,9 @@ public class ReviewsPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews_page);
+        id = getIntent().getStringExtra("id");
         populateReviews(findViewById(R.id.review_page));
         mAddReviewBtn = findViewById(R.id.reviewButton);
-        id = getIntent().getStringExtra("id");
         if(!UserProfileFragment.currentUser.getLoggedIn()){
             mAddReviewBtn.setEnabled(false);
         } else {
@@ -55,34 +58,44 @@ public class ReviewsPageActivity extends AppCompatActivity {
         resultsList = (ListView) root.findViewById(R.id.review_layout);
         listings = new ArrayList<>();
         HttpRequests reviewRequest = new HttpRequests();
-        reviewRequest.execute("reviews/foodtruck/" + id, "GET");
+        if (id != null) {
+            reviewRequest.execute("reviews/foodtruck/" + id, "GET");
 
-        String responseReview = null;
-        try {
-            responseReview = reviewRequest.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            JSONArray reviewData = new JSONArray(responseReview);
-            for (int i = 0; i < reviewData.length(); i++) {
-                JSONObject jsonobject = reviewData.getJSONObject(i);
-                String author = jsonobject.getString("reviewer");
-                String date = jsonobject.getString("date");
-                String reviewBody = jsonobject.getString("comment");
-                Double rating = jsonobject.getDouble("rating");
-                listings.add(new ReviewListing(author, date, reviewBody, rating));
+            String responseReview = null;
+            try {
+                responseReview = reviewRequest.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            try {
+                JSONArray reviewData = new JSONArray(responseReview);
+                if (reviewData.length() == 0) {
+                    FrameLayout frameLayout = (FrameLayout) findViewById(R.id.review_page);
+                    TextView textView = new TextView(this);
+                    textView.setText("No reviews to display!");
+                    textView.setPadding(10, 10, 10, 10);
+                    textView.setGravity(Gravity.CENTER);
+                    frameLayout.addView(textView);
+                } else {
+                    for (int i = 0; i < reviewData.length(); i++) {
+                        JSONObject jsonobject = reviewData.getJSONObject(i);
+                        String author = jsonobject.getString("reviewer");
+                        String date = jsonobject.getString("date");
+                        String reviewBody = jsonobject.getString("comment");
+                        Double rating = jsonobject.getDouble("rating");
+                        listings.add(new ReviewListing(author, date, reviewBody, rating));
+                    }
+                    adapter = new ReviewListingAdapter(this, listings);
+                    resultsList.setAdapter(adapter);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
-
-        adapter = new ReviewListingAdapter(this, listings);
-        resultsList.setAdapter(adapter);
 
     }
 
@@ -114,11 +127,6 @@ public class ReviewsPageActivity extends AppCompatActivity {
                     System.out.println(responseCode);
                     populateReviews(findViewById(R.id.review_page));
 
-//                    if (!responseCode.equals("200")) {
-//                        inputStream = reviewRequests.getErrorStream();
-//                    } else {
-//                        inputStream = httpURLConnection.getInputStream();
-//                    }
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
