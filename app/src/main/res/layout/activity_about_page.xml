@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#FFFFFF"
     android:layout_height="match_parent"
-    tools:context=".AboutPageActivity">
+    tools:context=".ui.more.AboutPageActivity">
 
     <include
         layout = "@layout/top_logo_bar"

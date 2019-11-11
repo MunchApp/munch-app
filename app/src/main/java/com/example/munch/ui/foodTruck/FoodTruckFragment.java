@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
-import com.example.munch.ui.Reviewspageactivity;
+import com.example.munch.ui.foodTruck.reviews.Reviewspageactivity;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.squareup.picasso.Picasso;
 

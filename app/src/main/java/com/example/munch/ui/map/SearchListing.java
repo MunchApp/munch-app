@@ -1,4 +1,4 @@
-package com.example.munch;
+package com.example.munch.ui.map;
 
 import android.widget.Button;
 

@@ -1,4 +1,4 @@
-package com.example.munch;
+package com.example.munch.ui.foodTruck.reviews;
 
 public class ReviewListing {
 

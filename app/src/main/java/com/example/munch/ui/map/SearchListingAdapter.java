@@ -1,4 +1,4 @@
-package com.example.munch;
+package com.example.munch.ui.map;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.ui.foodTruck.FoodTruckFragment;
 import com.squareup.picasso.Picasso;

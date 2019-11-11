@@ -1,4 +1,4 @@
-package com.example.munch.ui;
+package com.example.munch.ui.foodTruck.reviews;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.munch.HttpRequests;
 import com.example.munch.R;
-import com.example.munch.ReviewListing;
-import com.example.munch.ReviewListingAdapter;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import org.json.JSONArray;

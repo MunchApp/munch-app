@@ -1,4 +1,4 @@
-package com.example.munch;
+package com.example.munch.ui.extras;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
+
+import com.example.munch.R;
 
 /**
  * Implementation of App Widget functionality.

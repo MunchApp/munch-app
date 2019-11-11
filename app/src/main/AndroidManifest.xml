@@ -28,11 +28,11 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.AddReviewActivity"
+            android:name=".ui.foodTruck.reviews.AddReviewActivity"
             android:label="@string/title_activity_add_review"></activity>
-        <activity android:name=".ui.Reviewspageactivity" />
+        <activity android:name=".ui.foodTruck.reviews.Reviewspageactivity" />
 
-        <receiver android:name=".CustomRating">
+        <receiver android:name=".ui.extras.CustomRating">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -67,7 +67,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AboutPageActivity"
+            android:name=".ui.more.AboutPageActivity"
             android:label="About" />
 
         <meta-data
