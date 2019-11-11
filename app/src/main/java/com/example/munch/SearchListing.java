@@ -1,5 +1,7 @@
 package com.example.munch;
 
+import android.widget.Button;
+
 public class SearchListing {
 
     private String truckName;
@@ -9,10 +11,11 @@ public class SearchListing {
     private double rating;
     private int phoneNumber;
     private String distance;
+    Button mTruckButton;
 
 
     public SearchListing(String truckName, String mPic1, String mPic2, String mPic3,
-                         double rating, int phoneNumber, String distance){
+                         double rating, int phoneNumber, String distance, Button mTruckButton){
         this.truckName = truckName;
         this.mPic1 = mPic1;
         this.mPic2 = mPic2;
@@ -21,6 +24,7 @@ public class SearchListing {
         this.rating = rating;
         this.phoneNumber = phoneNumber;
         this.distance = distance;
+        this.mTruckButton = mTruckButton;
     }
 
 

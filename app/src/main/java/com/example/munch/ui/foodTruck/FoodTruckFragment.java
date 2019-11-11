@@ -4,32 +4,24 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.ui.Reviewspageactivity;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.squareup.picasso.Picasso;
 
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FoodTruckFragment extends Fragment {
@@ -105,6 +97,16 @@ public class FoodTruckFragment extends Fragment {
                 description.setEnabled(false);
                 save.setVisibility(View.INVISIBLE);
                 exit.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        TextView reviews = (TextView) root.findViewById(R.id.review_text);
+        reviews.setClickable(true);
+        reviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Reviewspageactivity.class);
+                startActivity(intent);
             }
         });
         return root;
