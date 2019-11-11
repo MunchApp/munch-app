@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class Reviewspageactivity extends AppCompatActivity {
+public class ReviewsPageActivity extends AppCompatActivity {
 
     Button mAddReviewBtn;
     ListView resultsList;
@@ -30,7 +30,7 @@ public class Reviewspageactivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reviewspageactivity);
+        setContentView(R.layout.activity_reviews_page);
         populateReviews(findViewById(R.id.review_page));
         mAddReviewBtn = findViewById(R.id.reviewButton);
         if(!UserProfileFragment.currentUser.getLoggedIn()){
@@ -41,7 +41,7 @@ public class Reviewspageactivity extends AppCompatActivity {
                     new View.OnClickListener() {
                         public void onClick(View view) {
 
-                            Intent addReviewIntent = new Intent(Reviewspageactivity.this, AddReviewActivity.class);
+                            Intent addReviewIntent = new Intent(ReviewsPageActivity.this, AddReviewActivity.class);
                             startActivityForResult(addReviewIntent, 1);
                         }
                     });
@@ -88,7 +88,7 @@ public class Reviewspageactivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Reviewspageactivity.this.invalidateOptionsMenu();
+        ReviewsPageActivity.this.invalidateOptionsMenu();
         if (resultCode == Activity.RESULT_OK) {
             if (data != null) {
 //                ReviewListing newReview = new ReviewListing("anon", (new Date().toString()), data.getStringExtra("content"), Double.valueOf(data.getStringExtra("rating")));

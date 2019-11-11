@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
-import com.example.munch.ui.foodTruck.reviews.Reviewspageactivity;
+import com.example.munch.ui.foodTruck.reviews.ReviewsPageActivity;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.squareup.picasso.Picasso;
 
@@ -105,7 +105,7 @@ public class FoodTruckFragment extends Fragment {
         reviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Reviewspageactivity.class);
+                Intent intent = new Intent(getActivity(), ReviewsPageActivity.class);
                 startActivity(intent);
             }
         });
@@ -170,7 +170,7 @@ public class FoodTruckFragment extends Fragment {
         reviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Reviewspageactivity.class);
+                Intent intent = new Intent(getActivity(), ReviewsPageActivity.class);
                 startActivity(intent);
             }
         });

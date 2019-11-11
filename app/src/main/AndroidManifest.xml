@@ -30,7 +30,7 @@
         <activity
             android:name=".ui.foodTruck.reviews.AddReviewActivity"
             android:label="@string/title_activity_add_review"></activity>
-        <activity android:name=".ui.foodTruck.reviews.Reviewspageactivity" />
+        <activity android:name=".ui.foodTruck.reviews.ReviewsPageActivity" />
 
         <receiver android:name=".ui.extras.CustomRating">
             <intent-filter>
