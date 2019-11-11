@@ -106,6 +106,7 @@ public class FoodTruckFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReviewsPageActivity.class);
+                intent.putExtra("id", foodTruck.getId());
                 startActivity(intent);
             }
         });

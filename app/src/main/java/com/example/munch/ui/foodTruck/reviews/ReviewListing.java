@@ -10,7 +10,7 @@ public class ReviewListing {
     private String forFoodTruck;
 
     //constructor to define all fields but "forFoodtruck", just trying to make lists of these work in
-    //right now and not neccesary
+    //right now and not necessary
     public ReviewListing(String author, String date, String review, double rating){
         this.author=author;
         this.date=date;

@@ -3,9 +3,12 @@ package com.example.munch.ui.foodTruck.reviews;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,11 +29,13 @@ public class ReviewsPageActivity extends AppCompatActivity {
     ListView resultsList;
     ArrayList<ReviewListing> listings;
     ReviewListingAdapter adapter;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews_page);
+        id = getIntent().getStringExtra("id");
         populateReviews(findViewById(R.id.review_page));
         mAddReviewBtn = findViewById(R.id.reviewButton);
         if(!UserProfileFragment.currentUser.getLoggedIn()){
@@ -52,36 +57,45 @@ public class ReviewsPageActivity extends AppCompatActivity {
     private void populateReviews(View root) {
         resultsList = (ListView) root.findViewById(R.id.review_layout);
         listings = new ArrayList<>();
-
-
         HttpRequests reviewRequest = new HttpRequests();
-        reviewRequest.execute("reviews", "GET");
-        String responseReview = null;
-        try {
-            responseReview = reviewRequest.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        if (id != null) {
+            reviewRequest.execute("reviews/foodtruck/" + id, "GET");
 
-
-        try {
-            JSONArray reviewData = new JSONArray(responseReview);
-            for (int i = 0; i < reviewData.length(); i++) {
-                JSONObject jsonobject = reviewData.getJSONObject(i);
-                String author = jsonobject.getString("reviewer");
-                String date = jsonobject.getString("date");
-                String reviewBody = jsonobject.getString("comment");
-                Double rating = jsonobject.getDouble("rating");
-                listings.add(new ReviewListing(author, date, reviewBody, rating));
+            String responseReview = null;
+            try {
+                responseReview = reviewRequest.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            try {
+                JSONArray reviewData = new JSONArray(responseReview);
+                if (reviewData.length() == 0) {
+                    FrameLayout frameLayout = (FrameLayout) findViewById(R.id.review_page);
+                    TextView textView = new TextView(this);
+                    textView.setText("No reviews to display!");
+                    textView.setPadding(10, 10, 10, 10);
+                    textView.setGravity(Gravity.CENTER);
+                    frameLayout.addView(textView);
+                } else {
+                    for (int i = 0; i < reviewData.length(); i++) {
+                        JSONObject jsonobject = reviewData.getJSONObject(i);
+                        String author = jsonobject.getString("reviewer");
+                        String date = jsonobject.getString("date");
+                        String reviewBody = jsonobject.getString("comment");
+                        Double rating = jsonobject.getDouble("rating");
+                        listings.add(new ReviewListing(author, date, reviewBody, rating));
+                    }
+                    adapter = new ReviewListingAdapter(this, listings);
+                    resultsList.setAdapter(adapter);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
-
-        adapter = new ReviewListingAdapter(this, listings);
-        resultsList.setAdapter(adapter);
 
     }
 
@@ -97,7 +111,7 @@ public class ReviewsPageActivity extends AppCompatActivity {
 //                adapter.notifyDataSetChanged();
                 JSONObject review = new JSONObject();
                 try {
-                    review.put("foodTruck", "6f5c6b83-3df3-46a4-8408-f0d01eb6ed48");
+                    review.put("foodTruck", id);
                     review.put("comment", data.getStringExtra("content"));
                     review.put("rating", Float.valueOf(data.getStringExtra("rating")));
                 } catch (JSONException ex) {
@@ -113,11 +127,6 @@ public class ReviewsPageActivity extends AppCompatActivity {
                     System.out.println(responseCode);
                     populateReviews(findViewById(R.id.review_page));
 
-//                    if (!responseCode.equals("200")) {
-//                        inputStream = reviewRequests.getErrorStream();
-//                    } else {
-//                        inputStream = httpURLConnection.getInputStream();
-//                    }
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
