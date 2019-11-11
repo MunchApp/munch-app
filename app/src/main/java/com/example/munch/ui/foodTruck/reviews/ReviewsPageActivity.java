@@ -26,6 +26,7 @@ public class ReviewsPageActivity extends AppCompatActivity {
     ListView resultsList;
     ArrayList<ReviewListing> listings;
     ReviewListingAdapter adapter;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class ReviewsPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reviews_page);
         populateReviews(findViewById(R.id.review_page));
         mAddReviewBtn = findViewById(R.id.reviewButton);
+        id = getIntent().getStringExtra("id");
         if(!UserProfileFragment.currentUser.getLoggedIn()){
             mAddReviewBtn.setEnabled(false);
         } else {
@@ -52,10 +54,9 @@ public class ReviewsPageActivity extends AppCompatActivity {
     private void populateReviews(View root) {
         resultsList = (ListView) root.findViewById(R.id.review_layout);
         listings = new ArrayList<>();
-
-
         HttpRequests reviewRequest = new HttpRequests();
-        reviewRequest.execute("reviews", "GET");
+        reviewRequest.execute("reviews/foodtruck/" + id, "GET");
+
         String responseReview = null;
         try {
             responseReview = reviewRequest.get();
@@ -97,7 +98,7 @@ public class ReviewsPageActivity extends AppCompatActivity {
 //                adapter.notifyDataSetChanged();
                 JSONObject review = new JSONObject();
                 try {
-                    review.put("foodTruck", "6f5c6b83-3df3-46a4-8408-f0d01eb6ed48");
+                    review.put("foodTruck", id);
                     review.put("comment", data.getStringExtra("content"));
                     review.put("rating", Float.valueOf(data.getStringExtra("rating")));
                 } catch (JSONException ex) {
