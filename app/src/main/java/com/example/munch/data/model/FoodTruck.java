@@ -27,7 +27,7 @@ public class FoodTruck{
     String description;
     ArrayList<String> tags;
     Float avgRating;
-
+    String serverURL = "https://munch-server.herokuapp.com/";
     //Constructor for already existing Trucks in database
     public FoodTruck(String truckId){
         this.hours = new String[7][2];
@@ -58,7 +58,7 @@ public class FoodTruck{
 
         //Make httpRequest
         HttpRequests httpRequests = new HttpRequests();
-        httpRequests.execute("foodtrucks", "POST", truck.toString(), token);
+        httpRequests.execute(serverURL + "foodtrucks", "POST", truck.toString(), token);
         String response = null;
         try {
             response = httpRequests.get();
@@ -74,8 +74,9 @@ public class FoodTruck{
 
     //Get existing truck from database
     private void getTruck (String truckId){
+        this.id = truckId;
         HttpRequests getTruckRequests = new HttpRequests();
-        getTruckRequests.execute("foodtrucks/" + truckId, "GET");
+        getTruckRequests.execute(serverURL + "foodtrucks/" + truckId, "GET");
         String response = null;
         try {
             response = getTruckRequests.get();
@@ -141,6 +142,10 @@ public class FoodTruck{
         return phoneNumber;
     }
 
+    public String getWebsite() {
+        return website;
+    }
+
     private void jsonToFoodTruck (JSONObject jsonTruck) {
         try {
             this.name = jsonTruck.get("name").toString();
@@ -182,16 +187,62 @@ public class FoodTruck{
         return hours;
     }
 
-    public int updateTruck(String token, HashMap<String, String> vals){
+    public ArrayList<String> getReviews() {
+        return reviews;
+    }
+
+    public Float getAvgRating() {
+        return avgRating;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public String[] getRegHours() {
+        String[] regHours = new String[7];
+        for (int c = 0; c < 7; c++){
+           regHours[c] =  milToReg(hours[c][0]) + " to " + milToReg(hours[c][1]);
+        }
+        return regHours;
+    }
+
+    private String milToReg(String time){
+        int hours = Integer.valueOf(time.split(":")[0]);
+        String min = time.split(":")[1];
+        String ampm = "";
+        if (hours < 12) {
+            ampm = "AM";
+        } else {
+            ampm = "PM";
+            hours-=12;
+        }
+
+        if (hours == 0){
+            hours = 12;
+        }
+
+
+        return hours + ":" + min + " " +ampm;
+    }
+    public int updateTruck(String token, HashMap<String, String> vals, Boolean online){
         JSONObject truck = new JSONObject();
-        for (String key: vals.keySet()){
+        if (online != null){
             try {
-                truck.put(key, vals.get(key));
+                truck.put("status", online);
             } catch (JSONException ex) {
             }
         }
+        if (vals != null) {
+            for (String key : vals.keySet()) {
+                try {
+                    truck.put(key, vals.get(key));
+                } catch (JSONException ex) {
+                }
+            }
+        }
         HttpRequests getTruckRequests = new HttpRequests();
-        getTruckRequests.execute("foodtrucks/" + id, "PUT", truck.toString(), token);
+        getTruckRequests.execute(serverURL + "foodtrucks/" + id, "PUT", truck.toString(), token);
         String response = null;
         try {
             response = getTruckRequests.get();

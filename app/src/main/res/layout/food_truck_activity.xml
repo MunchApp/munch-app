@@ -1,137 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:background="#FFFFFF"
 android:id="@+id/container"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
-
-<LinearLayout
+<ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/main_image"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginTop="0dp"
-        app:srcCompat="@drawable/temp_dee_dee" />
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="4.5"
-            android:background="@color/munchGreyLight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/sat_hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Closed"
-            app:layout_constraintStart_toStartOf="@+id/sun_hours"
-            app:layout_constraintTop_toTopOf="@+id/saturday" />
-
-        <TextView
-            android:id="@+id/fri_hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9:00 A.M - 5:00 P.M"
-            app:layout_constraintStart_toStartOf="@+id/sun_hours"
-            app:layout_constraintTop_toTopOf="@+id/friday" />
-
-        <TextView
-            android:id="@+id/thu_hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9:00 A.M - 5:00 P.M"
-            app:layout_constraintStart_toStartOf="@+id/sun_hours"
-            app:layout_constraintTop_toTopOf="@+id/thursday" />
-
-        <TextView
-            android:id="@+id/wed_hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9:00 A.M - 5:00 P.M"
-            app:layout_constraintStart_toStartOf="@+id/sun_hours"
-            app:layout_constraintTop_toTopOf="@+id/wednesday" />
-
-        <TextView
-            android:id="@+id/mon_hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="9:00 A.M - 5:00 P.M"
-            app:layout_constraintStart_toStartOf="@+id/sun_hours"
-            app:layout_constraintTop_toBottomOf="@+id/sunday" />
+        <ImageView
+            android:id="@+id/truck_image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <ImageView
             android:id="@+id/status"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="@dimen/left_margin"
             android:tint="@color/onlineGreen"
-            app:layout_constraintBottom_toBottomOf="@id/truck_name"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/truck_name"
             app:layout_constraintTop_toTopOf="@id/truck_name"
+            app:layout_constraintBottom_toBottomOf="@+id/truck_name"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:srcCompat="@drawable/fv_offline_circle" />
 
-        <EditText
+        <TextView
             android:id="@+id/truck_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="TRUCK NAME"
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/rambla"
-            android:text="DEE DEE"
             android:textColor="@color/munchGreenDark"
             android:textSize="25sp"
-            android:background="#00FFFFFF"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintLeft_toRightOf="@+id/status"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintLeft_toRightOf="@id/status"
+            app:layout_constraintTop_toBottomOf="@id/truck_image"/>
+
+        <ImageView
+            android:id="@+id/edit_name"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/edit_pencil"
+            app:layout_constraintLeft_toRightOf="@id/truck_name"
+            app:layout_constraintTop_toTopOf="@id/truck_name"
+            app:layout_constraintBottom_toBottomOf="@id/truck_name"/>
+
+        <TextView
+            android:id="@+id/truck_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Miles Away"
+            android:textColor="@color/munchGrey"
+            android:layout_marginRight="@dimen/left_margin"
+            android:fontFamily="@font/hp_simplified_font"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/truck_name" />
 
         <TextView
             android:id="@+id/status_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:fontFamily="@font/rambla"
-            android:text="ONLINE"
-            android:textSize="18sp"
+            android:text="STATUS"
             android:textColor="@color/munchGrey"
-            android:background="#00FFFFFF"
+            android:layout_marginStart="@dimen/left_margin"
+            android:fontFamily="@font/hp_simplified_font"
+            android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/truck_name" />
 
-        <EditText
+        <Switch
+            android:id="@+id/switch_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:switchMinWidth="50dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintLeft_toRightOf="@id/status_string"
+            app:layout_constraintTop_toTopOf="@id/status_string"
+            app:layout_constraintBottom_toBottomOf="@id/status_string"
+            android:checked="false" />
+
+        <TextView
             android:id="@+id/truck_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:fontFamily="@font/rambla"
-            android:text="4200 Manchaca Road\nAustin TX, 78705"
+            android:text="Address Street\nAddress City, State Zip"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="@dimen/left_margin"
+            android:fontFamily="@font/hp_simplified_font"
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status_string"
-            android:textColor="@color/munchGrey"
-            android:background="#00FFFFFF"/>
+            app:layout_constraintTop_toBottomOf="@id/status_string" />
+
+        <ImageView
+            android:id="@+id/edit_address"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/edit_pencil"
+            app:layout_constraintLeft_toRightOf="@id/truck_address"
+            app:layout_constraintTop_toTopOf="@id/truck_address"
+            app:layout_constraintBottom_toBottomOf="@id/truck_address"/>
 
         <RatingBar
             android:id="@+id/truck_rating_bar"
             style="?android:attr/ratingBarStyleIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="@dimen/left_margin"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/truck_address" />
 
@@ -139,32 +125,20 @@ android:layout_height="match_parent">
             android:id="@+id/num_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="42"
+            android:text="num reviews"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/hp_simplified_font"
+            android:textColor="@color/munchGrey"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@id/truck_rating_bar"
             app:layout_constraintLeft_toRightOf="@id/truck_rating_bar"
-            app:layout_constraintTop_toTopOf="@id/truck_rating_bar" />
-
-        <TextView
-            android:id="@+id/review_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="Reviews"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@id/truck_rating_bar"
-            app:layout_constraintLeft_toRightOf="@id/num_reviews"
-            app:layout_constraintTop_toTopOf="@id/truck_rating_bar" />
-
+            app:layout_constraintTop_toTopOf="@id/truck_rating_bar"
+            app:layout_constraintBottom_toBottomOf="@id/truck_rating_bar" />
 
         <LinearLayout
             android:id="@+id/line1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/top_margin"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="5"
@@ -179,171 +153,323 @@ android:layout_height="match_parent">
         </LinearLayout>
 
         <TextView
-            android:id="@+id/info_header"
+            android:id="@+id/info_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:text="INFORMATION"
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_marginStart="@dimen/left_margin"
+            android:fontFamily="@font/rambla"
+            android:textColor="@color/munchGreenDark"
+            android:textSize="25sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line1"/>
+
+        <TextView
+            android:id="@+id/website_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WEBSITE"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="@dimen/left_margin2"
             android:fontFamily="@font/hp_simplified_font"
-            android:text="Truck Info"
-            android:textColor="@color/munchOrange"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line1" />
+            app:layout_constraintTop_toBottomOf="@id/info_prompt" />
 
-        <TextView
-            android:id="@+id/phone_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="PHONE NUMBER"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/info_header"
-            android:textColor="@color/munchGrey"
-            android:background="#00FFFFFF" />
-
-        <TextView
-            android:id="@+id/hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="HOURS"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/phone_num" />
-
-        <TextView
-            android:id="@+id/sunday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="Sunday"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/hours" />
-
-        <TextView
-            android:id="@+id/monday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:fontFamily="@font/rambla"
-            android:text="Monday"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sunday" />
-
-        <TextView
-            android:id="@+id/tuesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="Tuesday"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/monday" />
-
-        <TextView
-            android:id="@+id/wednesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="Wednesday"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tuesday" />
-
-        <TextView
-            android:id="@+id/thursday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="Thursday"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/wednesday" />
-
-        <TextView
-            android:id="@+id/friday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="Friday"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/thursday" />
-
-        <TextView
-            android:id="@+id/saturday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/rambla"
-            android:text="Saturday"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/friday" />
-
-        <EditText
-            android:id="@+id/phone_number"
-            android:layout_width="128dp"
+        <ImageView
+            android:id="@+id/edit_website"
+            android:layout_width="20dp"
             android:layout_height="25dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="5dp"
-            android:text="1-800-Ineedfood"
-            app:layout_constraintStart_toEndOf="@+id/phone_num"
-            app:layout_constraintTop_toBottomOf="@+id/info_header"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/edit_pencil"
+            app:layout_constraintLeft_toRightOf="@id/website_prompt"
+            app:layout_constraintTop_toTopOf="@id/website_prompt"
+            app:layout_constraintBottom_toBottomOf="@id/website_prompt"/>
+
+        <TextView
+            android:id="@+id/truck_website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="www.website.com"
             android:textColor="@color/munchGrey"
-            android:textSize="15dp"
-            android:background="#00FFFFFF"
-            tools:text="1-800-SHAMWOW" />
+            android:layout_marginStart="@dimen/left_margin3"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/website_prompt" />
+
+        <TextView
+            android:id="@+id/phone_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PHONE NUMBER"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="@dimen/left_margin2"
+            android:fontFamily="@font/hp_simplified_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/truck_website" />
+
+        <ImageView
+            android:id="@+id/edit_phone"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/edit_pencil"
+            app:layout_constraintLeft_toRightOf="@id/phone_prompt"
+            app:layout_constraintTop_toTopOf="@id/phone_prompt"
+            app:layout_constraintBottom_toBottomOf="@id/phone_prompt"/>
+
+        <TextView
+            android:id="@+id/truck_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="555-555-555"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="@dimen/left_margin3"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phone_prompt" />
+
+        <TextView
+            android:id="@+id/hours_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REGULAR HOURS"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="@dimen/left_margin2"
+            android:fontFamily="@font/hp_simplified_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/truck_phone" />
+
+        <ImageView
+            android:id="@+id/edit_hours"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/edit_pencil"
+            app:layout_constraintLeft_toRightOf="@id/hours_prompt"
+            app:layout_constraintTop_toTopOf="@id/hours_prompt"
+            app:layout_constraintBottom_toBottomOf="@id/hours_prompt"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/hours_prompt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="@dimen/left_margin3">
+        <TextView
+            android:id="@+id/sunday_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sunday"
+            android:textColor="@color/munchGrey"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/sun_hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Closed"
-            app:layout_constraintStart_toStartOf="@+id/phone_number"
-            app:layout_constraintTop_toBottomOf="@+id/hours" />
+            android:text="00:00 AM to 00:00 PM"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="120dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/monday_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="monday"
+            android:textColor="@color/munchGrey"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sunday_prompt" />
+
+        <TextView
+            android:id="@+id/mon_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM to 00:00 PM"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="120dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sunday_prompt" />
+
+        <TextView
+            android:id="@+id/tuesday_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tuesday"
+            android:textColor="@color/munchGrey"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monday_prompt" />
 
         <TextView
             android:id="@+id/tue_hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9:00 A.M - 5:00 P.M"
-            app:layout_constraintStart_toStartOf="@+id/sun_hours"
-            app:layout_constraintTop_toTopOf="@+id/tuesday" />
+            android:text="00:00 AM to 00:00 PM"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="120dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monday_prompt" />
+
+        <TextView
+            android:id="@+id/wednesday_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wednesday"
+            android:textColor="@color/munchGrey"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tuesday_prompt" />
+
+        <TextView
+            android:id="@+id/wed_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM to 00:00 PM"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="120dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tuesday_prompt" />
+
+        <TextView
+            android:id="@+id/thursday_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="thursday"
+            android:textColor="@color/munchGrey"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wednesday_prompt" />
+
+        <TextView
+            android:id="@+id/thu_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM to 00:00 PM"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="120dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wednesday_prompt" />
+
+        <TextView
+            android:id="@+id/friday_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tuesday"
+            android:textColor="@color/munchGrey"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thursday_prompt" />
+
+        <TextView
+            android:id="@+id/fri_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM to 00:00 PM"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="120dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thursday_prompt" />
+
+        <TextView
+            android:id="@+id/saturday_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="saturday"
+            android:textColor="@color/munchGrey"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/friday_prompt" />
+
+        <TextView
+            android:id="@+id/sat_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM to 00:00 PM"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="120dp"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/friday_prompt" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/descrip_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DESCRIPTION"
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="@dimen/left_margin2"
+            android:fontFamily="@font/hp_simplified_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hours" />
+
+        <ImageView
+            android:id="@+id/edit_descrip"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/edit_pencil"
+            app:layout_constraintLeft_toRightOf="@id/descrip_prompt"
+            app:layout_constraintTop_toTopOf="@id/descrip_prompt"
+            app:layout_constraintBottom_toBottomOf="@id/descrip_prompt"/>
+
+        <TextView
+            android:id="@+id/truck_descrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="this is an example truck decription."
+            android:textColor="@color/munchGrey"
+            android:layout_marginStart="@dimen/left_margin3"
+            android:fontFamily="@font/hp_simplified_light_font"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descrip_prompt" />
 
         <LinearLayout
             android:id="@+id/line2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/top_margin"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="5"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/saturday">
+            app:layout_constraintTop_toBottomOf="@id/truck_descrip">
 
             <View
-                android:id="@+id/aline"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="4.5"
@@ -351,194 +477,104 @@ android:layout_height="match_parent">
         </LinearLayout>
 
         <TextView
-            android:id="@+id/descrip"
+            android:id="@+id/review_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:text="REVIEWS"
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_marginStart="@dimen/left_margin"
             android:fontFamily="@font/rambla"
-            android:text="DESCRIPTION:"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/info_header"
-            app:layout_constraintTop_toBottomOf="@+id/line2" />
-
-        <EditText
-            android:id="@+id/descrip_body"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:text="A succint cultured food truck with amazing food"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.697"
-            android:background="#00FFFFFF"
-            android:textSize="15dp"
-            android:textColor="@color/munchGrey"
-            app:layout_constraintStart_toEndOf="@+id/descrip"
-            app:layout_constraintTop_toBottomOf="@+id/line2"
-            android:paddingBottom="10dp"/>
-
-        <ImageView
-            android:id="@+id/edit"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/truck_name"
-            app:layout_constraintTop_toTopOf="@id/truck_name"
-            app:layout_constraintBottom_toBottomOf="@id/truck_name"/>
-
-        <Button
-            android:id="@+id/save_info"
-            android:layout_width="310dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button_shape"
-            android:enabled="true"
-            android:fontFamily="@font/rambla"
-            android:text="SAVE"
             android:textColor="@color/munchGreenDark"
-            android:textSize="20sp"
-            android:backgroundTint="@color/munchGreenDark"
+            android:textSize="25sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/descrip_body"/>
+            app:layout_constraintTop_toBottomOf="@id/line2"/>
 
-        <Button
-            android:id="@+id/exit"
-            android:layout_width="310dp"
+        <ListView
+            android:id="@+id/truck_reviews"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button_shape"
-            android:enabled="true"
-            android:fontFamily="@font/rambla"
-            android:text="EXIT EDIT MODE"
-            android:textColor="@color/munchGreenDark"
-            android:textSize="20sp"
-            android:backgroundTint="@color/munchGreenDark"
+            app:layout_constraintTop_toBottomOf="@id/review_prompt"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_margin"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/save_info"/>
-
-        <!--<ImageView
-            android:id="@+id/edit_name"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/truck_name"
-            app:layout_constraintTop_toTopOf="@id/truck_name"
-            app:layout_constraintBottom_toBottomOf="@id/truck_name"/>
-
-        <ImageView
-            android:id="@+id/edit_address"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/truck_address"
-            app:layout_constraintTop_toTopOf="@id/truck_address"
-            app:layout_constraintBottom_toBottomOf="@id/truck_address"/>
-
-        <ImageView
-            android:id="@+id/edit_phone"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/phone_number"
-            app:layout_constraintTop_toTopOf="@id/phone_number"
-            app:layout_constraintBottom_toBottomOf="@id/phone_number"/>
-
-        <ImageView
-            android:id="@+id/edit_sun"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/sun_hours"
-            app:layout_constraintTop_toTopOf="@id/sun_hours"
-            app:layout_constraintBottom_toBottomOf="@id/sun_hours"/>
-
-        <ImageView
-            android:id="@+id/edit_mon"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/mon_hours"
-            app:layout_constraintTop_toTopOf="@id/mon_hours"
-            app:layout_constraintBottom_toBottomOf="@id/mon_hours"/>
-
-        <ImageView
-            android:id="@+id/edit_tue"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/tue_hours"
-            app:layout_constraintTop_toTopOf="@id/tue_hours"
-            app:layout_constraintBottom_toBottomOf="@id/tue_hours"/>
-
-        <ImageView
-            android:id="@+id/edit_wed"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/wed_hours"
-            app:layout_constraintTop_toTopOf="@id/wed_hours"
-            app:layout_constraintBottom_toBottomOf="@id/wed_hours"/>
-
-        <ImageView
-            android:id="@+id/edit_thu"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/thu_hours"
-            app:layout_constraintTop_toTopOf="@id/thu_hours"
-            app:layout_constraintBottom_toBottomOf="@id/thu_hours"/>
-
-        <ImageView
-            android:id="@+id/edit_fri"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/fri_hours"
-            app:layout_constraintTop_toTopOf="@id/fri_hours"
-            app:layout_constraintBottom_toBottomOf="@id/fri_hours"/>
-
-        <ImageView
-            android:id="@+id/edit_sat"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/sat_hours"
-            app:layout_constraintTop_toTopOf="@id/sat_hours"
-            app:layout_constraintBottom_toBottomOf="@id/sat_hours"/>
-
-        <ImageView
-            android:id="@+id/edit_descrip"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_pencil"
-            android:layout_marginStart="10dp"
-            app:layout_constraintLeft_toRightOf="@id/descrip"
-            app:layout_constraintTop_toTopOf="@id/descrip"
-            app:layout_constraintBottom_toBottomOf="@id/descrip"/>-->
+            app:layout_constraintTop_toBottomOf="@+id/truck_reviews"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.legacy.widget.Space
-        android:layout_width="match_parent"
-        android:layout_height="100dp"/>
-</LinearLayout>
 </ScrollView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:src="@drawable/shadow_top"
+        app:layout_constraintBottom_toTopOf="@id/truck_buttons"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/truck_buttons"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/top_margin"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="13">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/add_photo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
+            android:background="@drawable/button_shape"
+            android:enabled="true"
+            android:fontFamily="@font/rambla"
+            android:text="ADD A PHOTO"
+            android:textColor="@color/munchOrange"
+            android:textSize="20sp"
+            android:backgroundTint="@color/munchOrange"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="5"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/add_review"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
+            android:background="@drawable/button_shape"
+            android:enabled="true"
+            android:fontFamily="@font/rambla"
+            android:text="LEAVE A REVIEW"
+            android:textColor="@color/munchOrange"
+            android:textSize="20sp"
+            android:backgroundTint="@color/munchOrange"
+            android:layout_gravity="center_horizontal"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_margin"
+          />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

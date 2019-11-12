@@ -14,7 +14,6 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
     String serverURL;
     int statusCode;
     public HttpRequests (){
-        serverURL = "https://munch-server.herokuapp.com/";
         statusCode = 0;
     }
 
@@ -26,7 +25,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             String method = strings[1];
             String route = strings[0];
 
-            URL url = new URL(serverURL + route);
+            URL url = new URL(route);
 
             //Set up connection
             HttpURLConnection con = (HttpURLConnection) url.openConnection();

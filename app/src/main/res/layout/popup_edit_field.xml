@@ -1,64 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/popup_edit"
     android:padding="20dp"
-    android:background="#FFFFFF"
-    android:layout_height="wrap_content">
+    android:background="#FFFFFF">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="@font/rambla"
-        android:text="Enter new something"
-        android:textColor="@color/munchGreenDark"
-        android:textSize="20sp"/>
-    <EditText
-        android:id="@+id/input1"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
-        android:background="@drawable/ic_input"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:inputType="text"/>
-    <EditText
-        android:id="@+id/input2"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
-        android:background="@drawable/ic_input"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:inputType="text"/>
-    <Button
-        android:id="@+id/save_info"
-        android:layout_width="310dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_shape"
-        android:enabled="true"
-        android:fontFamily="@font/rambla"
-        android:text="SAVE"
-        android:textColor="@color/munchGreenDark"
-        android:textSize="20sp"
-        android:backgroundTint="@color/munchGreenDark" />
+        <TextView
+            android:id="@+id/edit_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip"
+            android:fontFamily="@font/rambla"
+            android:text="Enter new something"
+            android:textColor="@color/munchGreenDark"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/exit"
-        android:layout_width="310dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_shape"
-        android:enabled="true"
-        android:fontFamily="@font/rambla"
-        android:text="CLOSE"
-        android:textColor="@color/munchGreenDark"
-        android:textSize="20sp"
-        android:backgroundTint="@color/munchGreenDark" />
+        <EditText
+            android:id="@+id/input1"
+            android:layout_width="310dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_input"
+            android:inputType="text" />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/input2"
+            android:layout_width="310dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_input"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/save_info"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_shape"
+            android:backgroundTint="@color/munchGreenDark"
+            android:enabled="true"
+            android:fontFamily="@font/rambla"
+            android:text="SAVE"
+            android:textColor="@color/munchGreenDark"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_shape"
+            android:backgroundTint="@color/munchGreenDark"
+            android:enabled="true"
+            android:fontFamily="@font/rambla"
+            android:text="CLOSE"
+            android:textColor="@color/munchGreenDark"
+            android:textSize="20sp" />
+    </LinearLayout>

@@ -1,10 +1,13 @@
 package com.example.munch;
 
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,13 +19,27 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     //public static LoggedInUser currentUser = new LoggedInUser();
+    int MY_PERMISSIONS_ACCESS_FINE_LOCATION;
+    int MY_PERMISSIONS_ACCESS_COARSE_LOCATION;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int testPermission1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION );
+        int testPermission2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION );
 
+        if(testPermission1 != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION} ,
+                    MY_PERMISSIONS_ACCESS_FINE_LOCATION);
+        }
+        if(testPermission2 != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION} ,
+                    MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
+        }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -42,12 +59,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   /* public void goToFoodTruck(View v){
-        AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        Fragment myFragment = new FoodTruckFragment();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
-
-
-    }*/
 
 }

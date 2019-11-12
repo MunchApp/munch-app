@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.HttpRequests;
+import com.example.munch.LocationCalculator;
 import com.example.munch.R;
 import com.example.munch.SearchListing;
 import com.example.munch.SearchListingAdapter;
@@ -49,8 +50,10 @@ public class MapFragment extends Fragment{
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
                 mMap.clear(); //clear old markers
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(30.267153, -97.743057)));
+                LocationCalculator locationCalculator = new LocationCalculator(getContext());
+                double lat = locationCalculator.getLat();
+                double lng = locationCalculator.getLng();
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(13.0f));
             }
         });
@@ -66,7 +69,8 @@ public class MapFragment extends Fragment{
         ListView resultsList = (ListView) root.findViewById(R.id.search_results);
         ArrayList<FoodTruck> listings = new ArrayList<>();
         HttpRequests foodTruckRequest = new HttpRequests();
-        foodTruckRequest.execute("foodtrucks", "GET");
+        String serverURL = "https://munch-server.herokuapp.com/";
+        foodTruckRequest.execute(serverURL + "foodtrucks", "GET");
         String responseTruck = null;
         try {
             responseTruck = foodTruckRequest.get();
@@ -101,11 +105,6 @@ public class MapFragment extends Fragment{
 
     }
 
-    /*public void goToFoodTruck(View v){
-        AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        Fragment myFragment = new FoodTruckFragment();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
-    }*/
 
 
 

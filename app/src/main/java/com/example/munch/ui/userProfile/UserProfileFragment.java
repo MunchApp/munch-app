@@ -3,7 +3,6 @@ package com.example.munch.ui.userProfile;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.fragment.app.Fragment;
@@ -24,6 +22,7 @@ import com.example.munch.data.model.LoggedInUser;
 import com.example.munch.ui.foodTruck.createTruckActivity;
 import com.example.munch.ui.login.LoginActivity;
 import com.example.munch.ui.userProfile.manageTruck.ManageTruckFragment;
+import com.example.munch.ui.userProfile.personalInfo.PersonalInfoFragment;
 
 import java.util.ArrayList;
 

@@ -38,7 +38,7 @@ public class LoggedInUser {
     private ArrayList<String> reviews;
     private ArrayList<String> foodTrucks;
     private ArrayList<String> favorites;
-
+    String serverURL = "https://munch-server.herokuapp.com/";
 
     //, String gender, String city, String state, String phoneNum
     public LoggedInUser () {
@@ -53,7 +53,7 @@ public class LoggedInUser {
             System.out.println("Login Failed");
         }
         HttpRequests logRequests = new HttpRequests();
-        logRequests.execute("login", "POST", logUser.toString());
+        logRequests.execute(serverURL + "login", "POST", logUser.toString());
         String responseLogin = null;
         try {
             responseLogin = logRequests.get();
@@ -72,7 +72,7 @@ public class LoggedInUser {
         if (statusCode == 200) {
             loggedIn = true;
             HttpRequests proRequests = new HttpRequests();
-            proRequests.execute("profile", "GET", null,accessToken);
+            proRequests.execute(serverURL + "profile", "GET", null,accessToken);
             String responseProfile = null;
             try {
                 responseProfile = proRequests.get();
@@ -100,7 +100,7 @@ public class LoggedInUser {
             System.out.println("Login Failed");
         }
         HttpRequests regRequests = new HttpRequests();
-        regRequests.execute("register", "POST", user.toString());
+        regRequests.execute(serverURL + "register", "POST", user.toString());
         String response = null;
         try {
             response = regRequests.get();
