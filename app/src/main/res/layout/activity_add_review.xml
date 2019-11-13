@@ -5,7 +5,7 @@
     android:id="@+id/add_review_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AddReviewActivity">
+    tools:context=".ui.foodTruck.reviews.AddReviewActivity">
 
     <TextView
         android:id="@+id/title"

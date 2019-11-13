@@ -5,7 +5,7 @@
     android:id="@+id/review_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Reviewspageactivity">
+    tools:context=".ui.foodTruck.reviews.ReviewsPageActivity">
 
     <TextView
         android:id="@+id/title"
@@ -31,6 +31,8 @@
         android:id="@+id/review_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:layout_marginTop="100dp"/>
 
 </FrameLayout>

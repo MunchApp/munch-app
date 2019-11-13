@@ -1,4 +1,4 @@
-package com.example.munch.ui;
+package com.example.munch.ui.foodTruck.reviews;
 
 import android.content.Intent;
 import android.os.Bundle;

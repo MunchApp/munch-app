@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.munch.LocationCalculator;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.ui.foodTruck.reviews.ReviewsPageActivity;
 
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.squareup.picasso.Picasso;

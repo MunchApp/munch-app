@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.munch.AboutPageActivity;
 import com.example.munch.R;
 
 public class MoreFragment extends Fragment {

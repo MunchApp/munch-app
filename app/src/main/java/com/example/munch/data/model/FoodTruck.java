@@ -34,6 +34,7 @@ public class FoodTruck{
         this.photos = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
         this.tags = new ArrayList<String>();
+        this.id = truckId;
         getTruck(truckId);
     }
 
@@ -103,6 +104,17 @@ public class FoodTruck{
         this.lng = lng;
         this.owner = owner;
         this.hours = hours;
+        if (photos.size() < 3){
+            if (photos.size() == 0){
+                photos.add(0, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+            }
+            if (photos.size() == 1) {
+                photos.add(1, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+            }
+            if (photos.size() == 2) {
+                photos.add(2, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+            }
+        }
         this.photos = photos;
         this.reviews = reviews;
         this.phoneNumber = phoneNumber;
@@ -171,6 +183,18 @@ public class FoodTruck{
             for (int c  = 0; c < JSONphotos.length(); c++){
                 this.photos.add(JSONphotos.get(c).toString());
             }
+            if(this.photos.size() < 3){
+                if (this.photos.size() == 0){
+                    this.photos.add(0, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+                }
+                if (this.photos.size() == 1) {
+                    this.photos.add(1, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+                }
+                if (this.photos.size() == 2) {
+                    this.photos.add(2, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+                }
+            }
+
             this.phoneNumber = jsonTruck.get("phoneNumber").toString();
             this.website = jsonTruck.get("website").toString();
             this.description = jsonTruck.get("description").toString();

@@ -1,4 +1,4 @@
-package com.example.munch;
+package com.example.munch.ui.extras;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,8 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.example.munch.R;
 
 /**
  * TODO: document your custom view class.
