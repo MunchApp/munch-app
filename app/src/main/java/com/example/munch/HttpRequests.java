@@ -11,7 +11,6 @@ import java.net.URL;
 
 public class HttpRequests extends AsyncTask<String, Void, String> {
 
-    String serverURL;
     int statusCode;
     public HttpRequests (){
         statusCode = 0;

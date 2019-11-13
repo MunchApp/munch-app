@@ -31,7 +31,7 @@ public class LocationCalculator implements LocationListener {
     protected LocationListener locationListener;
     protected Context context;
     double lat = 30.2672;
-    double lng = 97.7431;
+    double lng = -97.7431;
     String provider;
     protected String latitude,longitude;
     protected boolean gps_enabled,network_enabled;
