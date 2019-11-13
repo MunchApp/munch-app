@@ -38,6 +38,15 @@ public class FoodTruck{
         getTruck(truckId);
     }
 
+
+    //Constructor for testing Trucks in map
+    public FoodTruck(String truckId, String name, float lat, float lng){
+        this.id = truckId;
+        this.name = name;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
     //Constructor for adding new Truck to database
     public FoodTruck(String token, String name, String address, String[][] hours, String[] photos, String owner ){
         this.hours = new String[7][2];
@@ -221,6 +230,12 @@ public class FoodTruck{
 
     public String getOwner() {
         return owner;
+    }
+
+    public float getLongitude() { return lng; }
+
+    public float getLatitude() {
+        return lat;
     }
 
     public String[] getRegHours() {
