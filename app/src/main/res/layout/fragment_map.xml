@@ -74,6 +74,26 @@
                 android:fontFamily="@font/hp_simplified_font"
                 android:textSize="30sp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="100dp"
+                android:paddingTop="20dp"
+                android:layout_gravity="end"
+                android:text="Filter"
+                android:fontFamily="@font/hp_simplified_font"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="15dp"
+                android:paddingTop="20dp"
+                android:text="Sort By"
+                android:fontFamily="@font/hp_simplified_font"
+                android:textSize="20sp" />
+
             <ListView
                 android:id="@+id/search_results"
                 android:layout_width="match_parent"

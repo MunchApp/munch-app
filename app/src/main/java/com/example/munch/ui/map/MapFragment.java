@@ -66,17 +66,39 @@ public class MapFragment extends Fragment{
         String name;
         String address;
         ArrayList<String> tags;
-//        searchButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String userInput = searchText.getText().toString();
-//
-//
-//                HttpRequests searchRequest = new HttpRequests();
-//                String serverURL = "https://munch-server.herokuapp.com/";
-//                searchRequest.execute(serverURL + "foodtrucks?name=" + name + "&tags=" + tags + "&address=" + address);
-//            }
-//        });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userInput = searchText.getText().toString();
+                String formattedInput = userInput.replaceAll(" ", "+");
+                ArrayList<String> tagInputArray = new ArrayList<>();
+                tagInputArray.add(formattedInput);
+                HttpRequests searchRequest = new HttpRequests();
+                String serverURL = "https://munch-server.herokuapp.com/";
+                searchRequest.execute(serverURL + "foodtrucks?name=" + formattedInput + "&tags=" + tagInputArray + "&address=" + formattedInput, "GET");
+                String responseSearch = null;
+                try {
+                    responseSearch = searchRequest.get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    JSONArray searchData = new JSONArray(responseSearch);
+                    for (int i = 0; i < searchData.length(); i++) {
+                        JSONObject jsonobject = searchData.getJSONObject(i);
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
 
 
 
