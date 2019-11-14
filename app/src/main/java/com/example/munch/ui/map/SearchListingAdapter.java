@@ -18,6 +18,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.ui.foodTruck.FoodTruckFragment;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -105,6 +109,7 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
 
         //TODO implement getting phone number and rating in the right format
 
+//        populateOfFoodTruck(currentResult, MapFragment.munMap);
         return listItem;
     }
 
@@ -120,4 +125,15 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
 //        });
 //    }
 
+
+//    private void populateOfFoodTruck(FoodTruck truck, GoogleMap mMap){
+//        populateTruckPin(truck.getLatitude(), truck.getLongitude(), truck.getName(), truck.getId(), mMap);
+//    }
+//
+//    public void populateTruckPin(float lat, float lng, String name, String id, GoogleMap myMap){
+//        //Todo set create pin from truck info
+//        //helper function for populateNearbyTrucks
+////        MapFragment.munMap.clear();
+//        MapFragment.munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
+//    }
 }

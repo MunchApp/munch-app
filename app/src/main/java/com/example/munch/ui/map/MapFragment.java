@@ -37,8 +37,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private MapViewModel mapViewModel;
     public ImageView firstIm;
-    public GoogleMap munMap;
-    Button mTestButton;
+    static GoogleMap munMap;
 
 
 
@@ -52,25 +51,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         mapFragment.getMapAsync(this);
 
-        mTestButton = root.findViewById(R.id.rafbutton);
-        mTestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                populateNearbyTrucks(sampleTrucks());
+//        populateNearbyTrucks(sampleTrucks());
 
 //                populateSearchedTruckPin(37.415229, -122.06265, "Testing", "Truck122");
 
 //                populatePins();
 
-
-            }
-        });
-
-//        populatePins(root);
         populatePopularTrucksList(root);
-
-
         return root;
     }
 
@@ -83,9 +70,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         double lat = locationCalculator.getLat();
         double lng = locationCalculator.getLng();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(13.0f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f));
         munMap = mMap;
-        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.06265)).title("Init"));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(30.2672, -97.7431)).title("Init"));
 //        marker.showInfoWindow();
 //        munMap.setOnMarkerClickListener(onMarkerClickedListener);
     }
@@ -124,6 +111,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 String id = jsonobject.getString("id");
 
                 FoodTruck truckListing = new FoodTruck(id);
+//                populateOfFoodTruck(truckListing);
                 listings.add(truckListing);
             }
 
@@ -134,12 +122,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), listings);
         resultsList.setAdapter(mAdapter);
 
+        while(listings.size() < 10){
 
-        //TODO create GET request and get the results needed to populate, store in ArrayList of Map
-//        for (int i = 0; i < 5; i++){
-//
-//        }
-
+        }
+        populateNearbyTrucks(listings);
 
     }
 
@@ -148,7 +134,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         ArrayList<FoodTruck> testTrucks = new ArrayList<>();
 
         for(int i = 0; i < 5; i++){
-            FoodTruck tester = new FoodTruck("identification" + i, "testTruck" + i, 37.415229f + i* 0.1f, -122.17265f - i*.1f);
+            FoodTruck tester = new FoodTruck("identification" + i, "testTruck" + i, 30.2672f + i* 0.1f, -97.7431f - i*.1f);
             testTrucks.add(tester);
         }
         return testTrucks;
@@ -158,7 +144,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         //Todo  input list of trucks output pins on map
         //place pins from ArrayList of trucks
         if(nearby != null){
-            for(int i = 0; i < nearby.size(); i++){
+            for(int i = 0; i < 10; i++){
                 populateTruckPin(
                         nearby.get(i).getLatitude(),
                         nearby.get(i).getLongitude(),
@@ -169,7 +155,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-    private void populateTruckPin(float lat, float lng, String name, String id){
+//    private void populateOfFoodTruck(FoodTruck truck){
+//        populateTruckPin(truck.getLatitude(), truck.getLongitude(), truck.getName(), truck.getId());
+//    }
+
+    public void populateTruckPin(float lat, float lng, String name, String id){
         //Todo set create pin from truck info
         //helper function for populateNearbyTrucks
         Marker marker = munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
