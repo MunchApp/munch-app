@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -35,6 +36,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="25dp"
+        android:id="@+id/search_bar_image"
         android:src="@drawable/ex_search_icon"
         app:layout_constraintVertical_bias=".45"
         app:layout_constraintTop_toTopOf="@id/search_explore_pg1"
@@ -50,5 +52,18 @@
         app:layout_constraintLeft_toRightOf="@id/search_explore_pg1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/doSearch"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:text="Search"
+        app:layout_constraintBottom_toBottomOf="@id/search_bar_image"
+        app:layout_constraintTop_toTopOf="@id/search_bar_image"
+        app:layout_constraintRight_toRightOf="@id/search_explore_pg1"
+        app:layout_constraintLeft_toLeftOf="@id/search_explore_pg1"
+        app:layout_constraintHorizontal_bias="0.95"
+        tools:layout_editor_absoluteX="297dp"
+        tools:layout_editor_absoluteY="4dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
