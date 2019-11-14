@@ -173,8 +173,8 @@ public class FoodTruck{
             this.address = jsonTruck.get("address").toString();
             this.name = jsonTruck.get("name").toString();
             JSONArray JSONlocation = new JSONArray(jsonTruck.get("location").toString());
-            this.lng = Float.valueOf(JSONlocation.get(0).toString());
-            this.lat = Float.valueOf(JSONlocation.get(1).toString());
+            this.lng = Float.valueOf(JSONlocation.get(1).toString());
+            this.lat = Float.valueOf(JSONlocation.get(0).toString());
             this.owner = jsonTruck.get("owner").toString();
             this.status = Boolean.valueOf(jsonTruck.get("status").toString());
             this.avgRating = Float.valueOf(jsonTruck.get("avgRating").toString());

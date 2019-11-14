@@ -38,6 +38,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private MapViewModel mapViewModel;
     public ImageView firstIm;
     static GoogleMap munMap;
+    private boolean readyFlag = false;
+    private ArrayList<FoodTruck> listing;
 
 
 
@@ -48,21 +50,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);  //use SuppoprtMapFragment for using in fragment instead of activity  MapFragment = activity   SupportMapFragment = fragment
-
+        populatePopularTrucksList(root);
         mapFragment.getMapAsync(this);
 
 //        populateNearbyTrucks(sampleTrucks());
 
-//                populateSearchedTruckPin(37.415229, -122.06265, "Testing", "Truck122");
+//                populateSearchedTruckPin(27.415229f, -97.06265f, "Testing", "Truck122");
 
 //                populatePins();
 
-        populatePopularTrucksList(root);
+
+//        populateNearbyTrucks(listing);
         return root;
     }
 
     @Override
     public void onMapReady(GoogleMap mMap) {
+
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         mMap.clear(); //clear old markers
@@ -72,9 +76,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f));
         munMap = mMap;
-        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(30.2672, -97.7431)).title("Init"));
+//        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(30.2672, -97.7431)).title("Init"));
 //        marker.showInfoWindow();
 //        munMap.setOnMarkerClickListener(onMarkerClickedListener);
+
+//        populateNearbyTrucks(sampleTrucks());
+//        populateTruckPin(30.415229f, -97.74265f, "Testing", "Truck122");
+//        populateNearbyTrucks(listing);
+        readyFlag = true;
+        if(listing != null){
+            populateNearbyTrucks(listing);
+            populateTruckPin(30.415229f, -97.74265f, "Testing", "Truck122");
+        }
     }
 
 
@@ -86,6 +99,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             } else {
                 marker.showInfoWindow();
             }
+            populateNearbyTrucks(listing);
             return true;
         }
     };
@@ -125,7 +139,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         while(listings.size() < 10){
 
         }
-        populateNearbyTrucks(listings);
+
+        listing = listings;
+//        populateNearbyTrucks(listings);
 
     }
 
@@ -144,7 +160,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         //Todo  input list of trucks output pins on map
         //place pins from ArrayList of trucks
         if(nearby != null){
-            for(int i = 0; i < 10; i++){
+            for(int i = 0; i < nearby.size(); i++){
                 populateTruckPin(
                         nearby.get(i).getLatitude(),
                         nearby.get(i).getLongitude(),
@@ -162,13 +178,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     public void populateTruckPin(float lat, float lng, String name, String id){
         //Todo set create pin from truck info
         //helper function for populateNearbyTrucks
-        Marker marker = munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
+        munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
     }
 
     private void populateSearchedTruckPin(float lat, float lng, String name, String id){
         //Todo set pin for single truck found through searchbar
         //sets pin for truck found from searching
-        munMap.clear();
+//        munMap.clear();
         Marker markered = munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
 //        markered.showInfoWindow();
 //        munMap.setOnMarkerClickListener(onMarkerClickedListener);
