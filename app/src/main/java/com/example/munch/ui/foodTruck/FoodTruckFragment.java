@@ -3,6 +3,7 @@ package com.example.munch.ui.foodTruck;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -14,8 +15,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -33,6 +36,7 @@ import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class FoodTruckFragment extends Fragment{
 
@@ -70,7 +74,8 @@ public class FoodTruckFragment extends Fragment{
     private String token;
     private Switch sw;
     private TextView distance;
-
+    private ImageView heart;
+    private ListView allReviews;
 
     public FoodTruckFragment(FoodTruck foodTruck, Boolean owner) {
         this.foodTruck = foodTruck;
@@ -113,8 +118,12 @@ public class FoodTruckFragment extends Fragment{
         edit_descrip = (ImageView)root.findViewById(R.id.edit_descrip);
         sw = (Switch) root.findViewById(R.id.switch_status);
         distance = (TextView) root.findViewById(R.id.truck_distance);
+        heart = (ImageView) root.findViewById(R.id.favorite_heart);
+        allReviews = (ListView) root.findViewById(R.id.truck_reviews);
+
 
         fillTruckFragment(foodTruck);
+        enableFavorite();
         setInfoButtons(phone_prompt,phone);
         setInfoButtons(website_prompt,website);
         setInfoButtons(hours_prompt,hours);
@@ -128,6 +137,16 @@ public class FoodTruckFragment extends Fragment{
         setSimpleEditButtons(edit_descrip,descrip, "DESCRIPTION","description");
 
         Boolean owns = UserProfileFragment.currentUser.getFoodTrucks().contains(foodTruck.getId());
+
+        num_review.setClickable(true);
+        num_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                ScrollView scrollView = (ScrollView)root.findViewById(R.id.scrollView);
+                TextView review_prompt= (TextView) root.findViewById(R.id.review_prompt);
+                scrollView.scrollTo(0, review_prompt.getTop());
+            }
+        });
         if (owns) {
             sw.setVisibility(View.VISIBLE);
             sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -150,6 +169,31 @@ public class FoodTruckFragment extends Fragment{
         return root;
     }
 
+    private void enableFavorite () {
+        if (UserProfileFragment.currentUser.getLoggedIn()){
+            heart.setClickable(true);
+            heart.setVisibility(View.VISIBLE);
+            heart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    if (UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId())){
+                        //todo make call to delete favorite
+                       heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart));
+
+                    } else {
+                        //todo make call to add favorite
+                        heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart_filled));
+                    }
+
+                    //todo uncomment when call is complete
+                    //fillHeart(UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId()));
+                }
+            });
+        } else {
+            heart.setVisibility(View.GONE);
+        }
+
+    }
     private void setSimpleEditButtons (final View button, final TextView editField, final String prompt, final String jsonField){
         String userId = UserProfileFragment.currentUser.getId();
         String ownerId = foodTruck.getOwner();
@@ -175,7 +219,7 @@ public class FoodTruckFragment extends Fragment{
         prompt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                if (value.getVisibility() == View.GONE){
+                if (value.getVisibility() == View.GONE) {
                     value.setVisibility(View.VISIBLE);
                 } else {
                     value.setVisibility(View.GONE);
@@ -183,9 +227,16 @@ public class FoodTruckFragment extends Fragment{
             }
         });
     }
-
+    private void fillHeart(boolean faved){
+        if (faved){
+            heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart));
+        } else {
+            heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart_filled));
+        }
+    }
     private void fillTruckFragment(FoodTruck truck){
         //setValues
+        fillHeart(UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId()));
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
@@ -300,6 +351,10 @@ public class FoodTruckFragment extends Fragment{
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
             }
         });
+    }
+
+    private void populateReviews(){
+
     }
 
 }

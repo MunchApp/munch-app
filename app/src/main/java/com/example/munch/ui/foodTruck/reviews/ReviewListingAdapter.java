@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.munch.R;
+import com.example.munch.data.model.Review;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ReviewListingAdapter extends ArrayAdapter<ReviewListing>{
 
     //Just need a context() and will make a list of reviews each styled by review_layout
     private Context Context;
-    private List<ReviewListing> Reviews;
+    private ArrayList<ReviewListing> Reviews;
 
     //Constructor
     public ReviewListingAdapter(Context context, ArrayList<ReviewListing> list) {

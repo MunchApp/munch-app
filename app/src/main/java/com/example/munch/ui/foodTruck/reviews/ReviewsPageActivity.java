@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.munch.HttpRequests;
 import com.example.munch.R;
+import com.example.munch.data.model.Review;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import org.json.JSONArray;
@@ -126,7 +127,6 @@ public class ReviewsPageActivity extends AppCompatActivity {
                     String responseCode = reviewRequests.getStatus().toString();
                     System.out.println(responseCode);
                     populateReviews(findViewById(R.id.review_page));
-
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -77,17 +77,22 @@
             android:scaleY=".5"
             android:transformPivotX="0dp"
             android:transformPivotY="0dp"
-            android:isIndicator="false"/>
+            android:isIndicator="false"
+            android:progressTint="@color/munchOrangeDark"/>
 
         <Button
             android:id="@+id/button"
             android:layout_width="387dp"
             android:layout_height="wrap_content"
-            android:text="Go To Food Truck"
-            android:backgroundTint="@color/colorPrimary"
+            android:text="GO TO FOOD TRUCK"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/rambla"
+            android:textSize="25dp"
+            android:backgroundTint="@color/munchOrange"
+            android:background="@drawable/button_shape_2"
             android:onClick="goToFoodTruck"
             android:layout_marginLeft="13dp"
-            android:layout_marginTop="175dp" />
+            android:layout_marginTop="185dp" />
 
         <LinearLayout
             android:id="@+id/line1"

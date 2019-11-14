@@ -28,4 +28,9 @@
         <item name="android:textColorPrimary">#FFFFFF</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/munchGreyLight</item>
+        <item name="colorControlActivated">@color/munchOrange</item>
+    </style>
+
 </resources>
