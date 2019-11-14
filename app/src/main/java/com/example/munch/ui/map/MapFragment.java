@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -32,6 +34,7 @@ public class MapFragment extends Fragment{
 
     private MapViewModel mapViewModel;
     public ImageView firstIm;
+    EditText searchText;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +59,26 @@ public class MapFragment extends Fragment{
 
         populatePins(root);
         populatePopularTrucksList(root);
+
+        searchText = root.findViewById(R.id.search_explore_pg1);
+        Button searchButton = root.findViewById(R.id.doSearch);
+
+        String name;
+        String address;
+        ArrayList<String> tags;
+//        searchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String userInput = searchText.getText().toString();
+//
+//
+//                HttpRequests searchRequest = new HttpRequests();
+//                String serverURL = "https://munch-server.herokuapp.com/";
+//                searchRequest.execute(serverURL + "foodtrucks?name=" + name + "&tags=" + tags + "&address=" + address);
+//            }
+//        });
+
+
 
 
         return root;
