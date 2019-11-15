@@ -126,6 +126,10 @@ public class LoggedInUser {
         return id;
     }
 
+    public ArrayList<String> getFavorites() {
+        return favorites;
+    }
+
     public String getAccessToken() { return accessToken;}
     public String getGender() {
         return gender;

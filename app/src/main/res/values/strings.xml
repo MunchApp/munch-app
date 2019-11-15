@@ -31,7 +31,7 @@
     <string name="yasiraName">"Yasira Younus"</string>
     <string name="yasiraBiography">"Major: Electrical and Computer Engineering \nBio: Hi, I am Yasira, and I love coding and memes\nResponsibilities: UI setup\nNumber of unit tests: 0"</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_map">Map</string>
+    <string name="title_map">Explore</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_user_profile">User Profile</string>
     <string name="title_login">Login</string>

@@ -3,22 +3,23 @@
 
     <item
         android:id="@+id/navigation_map"
-        android:icon="@drawable/ic_action_name"
-        android:title="@string/title_map" />
+        android:icon="@drawable/nav_explore"
+        android:title="@string/title_map"
+        />
 
     <item
         android:id="@+id/navigation_favorites"
-        android:icon="@drawable/ic_favorite"
+        android:icon="@drawable/nav_favorite"
         android:title="@string/title_favorites" />
 
     <item
         android:id="@+id/navigation_user_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/nav_profile"
         android:title="@string/title_user_profile" />
 
     <item
         android:id="@+id/navigation_more"
-        android:icon="@drawable/ic_more"
+        android:icon="@drawable/nav_more"
         android:title="About" />
 
 </menu>
