@@ -138,11 +138,121 @@
             app:layout_constraintTop_toTopOf="parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="180dp">
                 </Space>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="CATEGORIES"
+                    >
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/catAmerican"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="American"
+                    >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/catAsian"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Asian Fusion"
+                    >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/catBarbeque"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Barbeque"
+                    >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/catSouthern"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Southern"
+                    >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/catBreakfast"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Breakfast"
+                    >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/catMexican"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Mexican"
+                    >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/catSeafood"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Seafood"
+                    >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/catDessert"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Dessert"
+                    >
+                </CheckBox>
+
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="RATING"
+                    >
+                </TextView>
+
+<!--                <CheckBox-->
+<!--                    android:id="@+id/rating4"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="4 Stars And Above"-->
+<!--                    >-->
+<!--                </CheckBox>-->
+
+<!--                <CheckBox-->
+<!--                    android:id="@+id/rating3"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="3 Stars And Above"-->
+<!--                    >-->
+<!--                </CheckBox>-->
+
+<!--                <CheckBox-->
+<!--                    android:id="@+id/rating2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="2 Stars And Above"-->
+<!--                    >-->
+<!--                </CheckBox>-->
+
+
+
+
             </LinearLayout>
         </ScrollView>
         <androidx.constraintlayout.widget.ConstraintLayout

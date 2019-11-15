@@ -2,14 +2,12 @@ package com.example.munch.ui.map;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.HttpRequests;
 import com.example.munch.LocationCalculator;
@@ -35,21 +32,42 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class MapFragment extends Fragment{
 
-    private MapViewModel mapViewModel;
     public ImageView firstIm;
     EditText searchText;
+    ArrayList<String> tagInputArray;
+    ListView resultsList;
+
+    CheckBox mAmercianCheck;
+    ArrayList<String> amerTags;
+    CheckBox mAsianCheck;
+    ArrayList<String> asianTags;
+    CheckBox mBarbequeCheck;
+    ArrayList<String> barbTags;
+    CheckBox mSouthernCheck;
+    ArrayList<String> southTags;
+    CheckBox mBreakfastCheck;
+    ArrayList<String> breakTags;
+    CheckBox mMexicanCheck;
+    ArrayList<String> mexiTags;
+    CheckBox mSeafoodCheck;
+    ArrayList<String> seaTags;
+    CheckBox mDessertCheck;
+    ArrayList<String> dessTags;
+    ArrayList<FoodTruck> searchListings;
+
+//    CheckBox mRating4;
+//    CheckBox mRating3;
+//    CheckBox mRating2;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mapViewModel =
-                ViewModelProviders.of(this).get(MapViewModel.class);
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);  //use SuppoprtMapFragment for using in fragment instead of activity  MapFragment = activity   SupportMapFragment = fragment
@@ -149,6 +167,12 @@ public class MapFragment extends Fragment{
 
         TextView close = (TextView)root.findViewById(R.id.close_button);
         TextView search = (TextView)root.findViewById(R.id.search_button);
+        tagInputArray = new ArrayList<>();
+
+        initializeCategoryTags(root);
+
+
+
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,23 +184,43 @@ public class MapFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 closeSearch(slideUpPanel,logoText,searchBar,locationBar,background,options);
-                //todo put call search route and search functionality here
-            }
-        });
-
-        String name;
-        String address;
-        ArrayList<String> tags;
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 String userInput = searchText.getText().toString();
                 String formattedInput = userInput.replaceAll(" ", "+");
-                ArrayList<String> tagInputArray = new ArrayList<>();
                 tagInputArray.add(formattedInput);
+                if (mAmercianCheck.isChecked()){
+                    tagInputArray.addAll(amerTags);
+                }
+                if (mAsianCheck.isChecked()){
+                    tagInputArray.addAll(asianTags);
+                }
+                if (mBarbequeCheck.isChecked()){
+                    tagInputArray.addAll(barbTags);
+                }
+                if (mSouthernCheck.isChecked()){
+                    tagInputArray.addAll(southTags);
+                }
+                if (mBreakfastCheck.isChecked()){
+                    tagInputArray.addAll(breakTags);
+                }
+                if (mMexicanCheck.isChecked()){
+                    tagInputArray.addAll(mexiTags);
+                }
+                if (mSeafoodCheck.isChecked()){
+                    tagInputArray.addAll(seaTags);
+                }
+                if (mDessertCheck.isChecked()){
+                    tagInputArray.addAll(dessTags);
+                }
+
+                String sb = "";
+                for (String s : tagInputArray){
+                    sb += s;
+                    sb += "+";
+                }
                 HttpRequests searchRequest = new HttpRequests();
                 String serverURL = "https://munch-server.herokuapp.com/";
-                searchRequest.execute(serverURL + "foodtrucks?name=" + formattedInput, "GET");
+                searchRequest.execute(serverURL + "foodtrucks?name=Andrea's+Test", "GET");
+                searchListings = new ArrayList<>();
                 String responseSearch = null;
                 try {
                     responseSearch = searchRequest.get();
@@ -184,27 +228,105 @@ public class MapFragment extends Fragment{
                     e.printStackTrace();
                 }
 
-
                 try {
                     JSONArray searchData = new JSONArray(responseSearch);
                     for (int i = 0; i < searchData.length(); i++) {
                         JSONObject jsonobject = searchData.getJSONObject(i);
+                        String id = jsonobject.getString("id");
 
-
+                        FoodTruck truckListing = new FoodTruck(id);
+                        searchListings.add(truckListing);
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
+                SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                resultsList.setAdapter(mAdapter);
             }
         });
 
 
-
-
         return root;
+    }
+
+    private void initializeCategoryTags(View root) {
+        mAmercianCheck = root.findViewById(R.id.catAmerican);
+        amerTags = new ArrayList<>();
+        amerTags.add("American");
+        amerTags.add("Hot Dogs");
+        amerTags.add("Burgers");
+        amerTags.add("Pizza");
+        amerTags.add("Sandwiches");
+        amerTags.add("Hawaiian");
+        amerTags.add("Steak");
+
+        mAsianCheck = root.findViewById(R.id.catAsian);
+        asianTags = new ArrayList<>();
+        asianTags.add("Asian");
+        asianTags.add("Thai");
+        asianTags.add("Korean");
+        asianTags.add("Japanese");
+        asianTags.add("Asian Fusion");
+        asianTags.add("Vietnamese");
+        asianTags.add("Chinese");
+        asianTags.add("Indian");
+        asianTags.add("Filipino");
+//        asianTags.add("");
+//        asianTags.add("");
+
+        mBarbequeCheck = root.findViewById(R.id.catBarbeque);
+        barbTags = new ArrayList<>();
+        barbTags.add("Barbeque");
+        barbTags.add("Barbecue");
+        barbTags.add("Korean Barbeque");
+        barbTags.add("Brisket");
+
+        mSouthernCheck = root.findViewById(R.id.catSouthern);
+        southTags = new ArrayList<>();
+        southTags.add("Southern");
+        southTags.add("Potatoes");
+//        southTags.add("");
+//        southTags.add("");
+
+
+        mBreakfastCheck = root.findViewById(R.id.catBreakfast);
+        breakTags = new ArrayList<>();
+        breakTags.add("Breakfast");
+        breakTags.add("Brunch");
+        breakTags.add("Eggs");
+        breakTags.add("Pancakes");
+//        breakTags.add("");
+
+        mMexicanCheck = root.findViewById(R.id.catMexican);
+        mexiTags = new ArrayList<>();
+        mexiTags.add("Mexican");
+        mexiTags.add("Latin");
+        mexiTags.add("Tacos");
+        mexiTags.add("Burritos");
+        mexiTags.add("Quesadillas");
+//        mexiTags.add("");
+//        mexiTags.add("");
+
+        mSeafoodCheck = root.findViewById(R.id.catSeafood);
+        seaTags = new ArrayList<>();
+        seaTags.add("Seafood");
+        seaTags.add("Fish");
+        seaTags.add("Shrimp");
+        seaTags.add("Sushi");
+//        seaTags.add("");
+
+        mDessertCheck = root.findViewById(R.id.catDessert);
+        dessTags = new ArrayList<>();
+        dessTags.add("Dessert");
+        dessTags.add("Ice Cream");
+        dessTags.add("Crepes");
+        dessTags.add("Sweet");
+        dessTags.add("Bakery");
+        dessTags.add("Cakes");
+        dessTags.add("Donuts");
+
+
     }
 
     private void closeSearch (SlidingUpPanelLayout slideUpPanel, TextView logoText,View searchBar,View locationBar, View background, View options){
@@ -244,25 +366,17 @@ public class MapFragment extends Fragment{
     //sort by distance, rating, and most reviewed
     //filter by rating, food tags and categories
         /*
-        Asian Fusion
-        Thai
-        Hawaiian
-        Vietnamese
-        Seafood
-        Southern
+        Hawaiian    Seafood Southern
         Brazilian
         Burgers
         Korean
         Barbeque
         Chinese
         Sandwiches
-        Hot Dogs
-        American
-
          */
 
     private void populatePopularTrucksList(View root) {
-        ListView resultsList = (ListView) root.findViewById(R.id.search_results);
+        resultsList = (ListView) root.findViewById(R.id.search_results);
         ArrayList<FoodTruck> listings = new ArrayList<>();
         HttpRequests foodTruckRequest = new HttpRequests();
         String serverURL = "https://munch-server.herokuapp.com/";
@@ -273,8 +387,6 @@ public class MapFragment extends Fragment{
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-
         try {
             JSONArray truckData = new JSONArray(responseTruck);
             for (int i = 0; i < truckData.length(); i++) {
@@ -291,16 +403,7 @@ public class MapFragment extends Fragment{
 
         SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), listings);
         resultsList.setAdapter(mAdapter);
-
-
-        //TODO create GET request and get the results needed to populate, store in ArrayList of Map
-//        for (int i = 0; i < 5; i++){
-//
-//        }
-
-
     }
-
 
 
 
