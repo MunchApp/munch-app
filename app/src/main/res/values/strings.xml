@@ -49,6 +49,14 @@
     <string name="githubLink">Github Link: https://github.com/MunchApp/munch-app </string>
     <string name="githubServerLink">Github Server Link: https://github.com/MunchApp/munchserver</string>
 
+    <string name="sort_prompt">Sort By</string>
+
+    <string-array name="sort_options">
+        <item>Distance</item>
+        <item>Highest Rated</item>
+        <item>Number of Reviews</item>
+    </string-array>
+
 
     <string name="janineCommits">Number of commits:</string>
     <string name="janineIssues">Number of issues:\n</string>

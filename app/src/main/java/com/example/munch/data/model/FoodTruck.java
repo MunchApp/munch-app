@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-public class FoodTruck{
+public class FoodTruck implements Comparable{
 
     String id;
     Boolean status;
@@ -284,5 +284,10 @@ public class FoodTruck{
     private JSONObject foodTruckToJson () {
         //todo implement this function and add parameters
         return null;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

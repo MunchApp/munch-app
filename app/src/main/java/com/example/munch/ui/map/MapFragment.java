@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,10 @@ public class MapFragment extends Fragment{
     CheckBox mDessertCheck;
     ArrayList<String> dessTags;
     ArrayList<FoodTruck> searchListings;
+
+    TextView sortByText;
+    Spinner sortBySpinner;
+    public static final CharSequence[] sortList = {"Sort By", "Distance", "Rating", "Number of Reviews"};
 
 //    CheckBox mRating4;
 //    CheckBox mRating3;
@@ -171,8 +176,6 @@ public class MapFragment extends Fragment{
 
         initializeCategoryTags(root);
 
-
-
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,6 +183,9 @@ public class MapFragment extends Fragment{
             }
         });
 
+
+
+        //region search and filter logic
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,38 +223,73 @@ public class MapFragment extends Fragment{
                     sb += s;
                     sb += "+";
                 }
-                HttpRequests searchRequest = new HttpRequests();
-                String serverURL = "https://munch-server.herokuapp.com/";
-                searchRequest.execute(serverURL + "foodtrucks?name=Andrea's+Test", "GET");
-                searchListings = new ArrayList<>();
-                String responseSearch = null;
-                try {
-                    responseSearch = searchRequest.get();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    JSONArray searchData = new JSONArray(responseSearch);
-                    for (int i = 0; i < searchData.length(); i++) {
-                        JSONObject jsonobject = searchData.getJSONObject(i);
-                        String id = jsonobject.getString("id");
-
-                        FoodTruck truckListing = new FoodTruck(id);
-                        searchListings.add(truckListing);
+                if (!sb.equals("")){
+                    HttpRequests searchRequest = new HttpRequests();
+                    String serverURL = "https://munch-server.herokuapp.com/";
+                    searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
+                    searchListings = new ArrayList<>();
+                    String responseSearch = null;
+                    try {
+                        responseSearch = searchRequest.get();
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    try {
+                        JSONArray searchData = new JSONArray(responseSearch);
+                        for (int i = 0; i < searchData.length(); i++) {
+                            JSONObject jsonobject = searchData.getJSONObject(i);
+                            String id = jsonobject.getString("id");
+
+                            FoodTruck truckListing = new FoodTruck(id);
+                            searchListings.add(truckListing);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                    resultsList.setAdapter(mAdapter);
                 }
-                SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
-                resultsList.setAdapter(mAdapter);
+
             }
         });
+        //endregion
+
+//        sortByText = root.findViewById(R.id.sort_by_text);
+//        sortByText.setOnClickListener(           //action triggered on button click
+//                new View.OnClickListener() {
+//                    public void onClick(View view) {
+//
+//                    }
+//                });
+
+//        sortBySpinner = root.findViewById(R.id.spinner_sort_by);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String> (getActivity(), R.layout.support_simple_spinner_dropdown_item, sortList);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        sortBySpinner.setAdapter(adapter);
+
+
+
+
 
 
         return root;
     }
+
+
+//    public void sortByNumReviews() {
+//
+//        Collections.sort(data, new Comparator<FoodTruck>() {
+//            @Override
+//            public int compare(YourDataModel data1, YourDataModel data2) {
+//                if (data1.getDistance() < data2.getDistance())
+//                    return 1;
+//                else
+//                    return 0;
+//            }
+//        });
+//    }
 
     private void initializeCategoryTags(View root) {
         mAmercianCheck = root.findViewById(R.id.catAmerican);

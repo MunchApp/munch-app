@@ -85,15 +85,23 @@
                 android:fontFamily="@font/hp_simplified_font"
                 android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+<!--            <TextView-->
+<!--                android:id="@+id/sort_by_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:paddingEnd="15dp"-->
+<!--                android:paddingTop="20dp"-->
+<!--                android:text="Sort By"-->
+<!--                android:fontFamily="@font/hp_simplified_font"-->
+<!--                android:textSize="20sp" />-->
+
+            <Spinner
+                android:id="@+id/spinner_sort"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:paddingEnd="15dp"
-                android:paddingTop="20dp"
-                android:text="Sort By"
-                android:fontFamily="@font/hp_simplified_font"
-                android:textSize="20sp" />
+                android:entries="@array/sort_options"
+                android:prompt="@string/sort_prompt" />
 
             <ListView
                 android:id="@+id/search_results"
