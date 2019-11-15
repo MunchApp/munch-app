@@ -2,6 +2,7 @@ package com.example.munch;
 
 
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setItemIconTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.munchOrangeDark)));
+        navView.setItemTextColor(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.munchOrangeDark)));
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

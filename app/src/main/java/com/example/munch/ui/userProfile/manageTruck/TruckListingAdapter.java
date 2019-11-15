@@ -61,11 +61,12 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
                 fragmentTransaction.commit();
             }
         });
-        Picasso.with(mContext).load(currentResult.getPhotos().get(0))
-                .resize(390, 260)
-                .centerCrop()
-                .into(image1);
-
+        if (currentResult.getPhotos().size() > 0) {
+            Picasso.with(mContext).load(currentResult.getPhotos().get(0))
+                    .resize(390, 260)
+                    .centerCrop()
+                    .into(image1);
+        }
 
         TextView truckName = (TextView)listItem.findViewById(R.id.truck_name);
         truckName.setText(currentResult.getName());

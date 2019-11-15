@@ -36,6 +36,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
         android:layout_height="5dp"
+        app:itemIconTint="@drawable/nav_selector"
+        app:itemTextColor="@drawable/nav_selector"
         app:srcCompat="@drawable/shadow_top"/>
 
     <TextView

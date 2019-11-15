@@ -11,12 +11,12 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/search_explore_pg1"
+        app:layout_constraintRight_toLeftOf="@id/location_explore_pg1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_weight=".5"/>
 
     <EditText
-        android:id="@+id/search_explore_pg1"
+        android:id="@+id/location_explore_pg1"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
@@ -25,7 +25,7 @@
         android:inputType="textEmailAddress"
         android:paddingLeft="60dp"
         android:paddingBottom="3dp"
-        android:hint="SEARCH SOMETHING"
+        android:hint="ENTER LOCATION"
         android:textColorHint="@color/munchGrey"
         android:textSize="15sp"
         app:layout_constraintHorizontal_weight="9"
@@ -39,9 +39,9 @@
         android:id="@+id/search_bar_image"
         android:src="@drawable/ex_search_icon"
         app:layout_constraintVertical_bias=".45"
-        app:layout_constraintTop_toTopOf="@id/search_explore_pg1"
-        app:layout_constraintBottom_toBottomOf="@id/search_explore_pg1"
-        app:layout_constraintLeft_toLeftOf="@id/search_explore_pg1"/>
+        app:layout_constraintTop_toTopOf="@id/location_explore_pg1"
+        app:layout_constraintBottom_toBottomOf="@id/location_explore_pg1"
+        app:layout_constraintLeft_toLeftOf="@id/location_explore_pg1"/>
 
     <Space
         android:id="@+id/spacer2"
@@ -49,8 +49,9 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintHorizontal_weight="0.5"
-        app:layout_constraintLeft_toRightOf="@id/search_explore_pg1"
+        app:layout_constraintLeft_toRightOf="@id/location_explore_pg1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
