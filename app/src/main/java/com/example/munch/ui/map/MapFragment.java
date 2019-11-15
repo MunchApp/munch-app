@@ -75,7 +75,7 @@ public class MapFragment extends Fragment{
                 tagInputArray.add(formattedInput);
                 HttpRequests searchRequest = new HttpRequests();
                 String serverURL = "https://munch-server.herokuapp.com/";
-                searchRequest.execute(serverURL + "foodtrucks?name=" + formattedInput + "&tags=" + tagInputArray + "&address=" + formattedInput, "GET");
+                searchRequest.execute(serverURL + "foodtrucks?name=" + formattedInput, "GET");
                 String responseSearch = null;
                 try {
                     responseSearch = searchRequest.get();
@@ -105,6 +105,26 @@ public class MapFragment extends Fragment{
 
         return root;
     }
+
+    //sort by distance, rating, and most reviewed
+    //filter by rating, food tags and categories
+        /*
+        Asian Fusion
+        Thai
+        Hawaiian
+        Vietnamese
+        Seafood
+        Southern
+        Brazilian
+        Burgers
+        Korean
+        Barbeque
+        Chinese
+        Sandwiches
+        Hot Dogs
+        American
+
+         */
 
     private void populatePopularTrucksList(View root) {
         ListView resultsList = (ListView) root.findViewById(R.id.search_results);
