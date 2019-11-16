@@ -15,17 +15,13 @@ import com.example.munch.R;
 
 public class MoreFragment extends Fragment {
 
-    private MoreViewModel moreViewModel;
+
     Button mSubmitButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-       moreViewModel =
-                ViewModelProviders.of(this).get(MoreViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_more, container, false);
 
-//        Intent intent = new Intent(getActivity(), AboutPageActivity.class);
-//        startActivity(intent);
+        View root = inflater.inflate(R.layout.fragment_more, container, false);
 
         mSubmitButton = root.findViewById(R.id.button2);
             mSubmitButton.setOnClickListener(new View.OnClickListener() {

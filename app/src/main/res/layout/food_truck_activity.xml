@@ -34,29 +34,38 @@ android:layout_height="match_parent">
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
-        <ImageView
-            android:id="@+id/status"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="@dimen/left_margin"
-            android:tint="@color/onlineGreen"
-            app:layout_constraintTop_toTopOf="@id/truck_name"
-            app:layout_constraintBottom_toBottomOf="@+id/truck_name"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:srcCompat="@drawable/fv_offline_circle" />
-
-        <TextView
-            android:id="@+id/truck_name"
+        <LinearLayout
+            android:id="@+id/truck_contain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TRUCK NAME"
-            android:layout_marginTop="@dimen/top_margin"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/rambla"
-            android:textColor="@color/munchGreenDark"
-            android:textSize="25sp"
-            app:layout_constraintLeft_toRightOf="@id/status"
-            app:layout_constraintTop_toBottomOf="@id/truck_image"/>
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="@dimen/left_margin"
+            app:layout_constraintTop_toBottomOf="@id/truck_image"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/status"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:tint="@color/onlineGreen"
+                app:srcCompat="@drawable/fv_offline_circle"
+                android:layout_gravity="center_vertical"/>
+
+            <Space
+                android:id="@+id/gap"
+                android:layout_width="10dp"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:id="@+id/truck_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rambla"
+                android:text="DEE DEE"
+                android:textColor="@color/munchGreenDark"
+                android:textSize="25sp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/edit_name"
@@ -64,9 +73,9 @@ android:layout_height="match_parent">
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/edit_pencil"
-            app:layout_constraintLeft_toRightOf="@id/truck_name"
-            app:layout_constraintTop_toTopOf="@id/truck_name"
-            app:layout_constraintBottom_toBottomOf="@id/truck_name"/>
+            app:layout_constraintLeft_toRightOf="@id/truck_contain"
+            app:layout_constraintTop_toTopOf="@id/truck_contain"
+            app:layout_constraintBottom_toBottomOf="@id/truck_contain"/>
 
         <TextView
             android:id="@+id/truck_distance"
@@ -78,7 +87,7 @@ android:layout_height="match_parent">
             android:fontFamily="@font/hp_simplified_font"
             android:textSize="18sp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/truck_name" />
+            app:layout_constraintTop_toBottomOf="@id/truck_contain" />
 
         <TextView
             android:id="@+id/status_string"
@@ -90,7 +99,7 @@ android:layout_height="match_parent">
             android:fontFamily="@font/hp_simplified_font"
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/truck_name" />
+            app:layout_constraintTop_toBottomOf="@id/truck_contain" />
 
         <Switch
             android:id="@+id/switch_status"
@@ -394,7 +403,7 @@ android:layout_height="match_parent">
             android:id="@+id/friday_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tuesday"
+            android:text="friday"
             android:textColor="@color/munchGrey"
             android:fontFamily="@font/hp_simplified_light_font"
             android:textSize="20sp"
@@ -502,13 +511,19 @@ android:layout_height="match_parent">
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line2"/>
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/truck_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/review_prompt"
             app:layout_constraintLeft_toLeftOf="parent"/>
-
+        <!--<LinearLayout
+            android:id="@+id/truck_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/review_prompt"
+            app:layout_constraintLeft_toLeftOf="parent"/>-->
         <Space
             android:layout_width="match_parent"
             android:layout_height="150dp"
@@ -517,6 +532,8 @@ android:layout_height="match_parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+
+
 
     <ImageView
         android:layout_width="match_parent"
@@ -539,12 +556,12 @@ android:layout_height="match_parent">
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="13">
+        android:weightSum="10">
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
-        <Button
+        <!--<Button
             android:id="@+id/add_photo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -563,11 +580,11 @@ android:layout_height="match_parent">
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
-
+-->
         <Button
             android:id="@+id/add_review"
             android:layout_width="0dp"
-            android:layout_weight="5"
+            android:layout_weight="8"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/top_margin"
             android:background="@drawable/button_shape"

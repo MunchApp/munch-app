@@ -61,6 +61,32 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/init_prompt_2" />
 
+            <Switch
+                android:id="@+id/switch_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:switchMinWidth="50dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/day_prompt"
+                android:fontFamily="@font/rambla"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:checked="true" />
+
+            <TextView
+                android:id="@+id/string_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="OPEN"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toRightOf="@id/switch_open"
+                app:layout_constraintTop_toTopOf="@id/switch_open"
+                app:layout_constraintBottom_toBottomOf="@id/switch_open"/>
+
             <TextView
                 android:id="@+id/start_prompt"
                 android:layout_width="wrap_content"
@@ -72,7 +98,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/day_prompt" />
+                app:layout_constraintTop_toBottomOf="@+id/switch_open" />
 
             <Space
                 android:id="@+id/spacer1"

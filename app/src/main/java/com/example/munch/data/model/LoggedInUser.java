@@ -288,4 +288,49 @@ public class LoggedInUser {
     public void setAddress(String city) {
         this.city = city;
     }*/
+   public int addFavorite(String foodTruckId){
+       HttpRequests reviewRequest = new HttpRequests();
+       if (foodTruckId != null) {
+           reviewRequest.execute(serverURL + "foodtrucks/" + foodTruckId +"?action=add", "GET");
+           String responseReview = null;
+           try {
+               responseReview = reviewRequest.get();
+           } catch (ExecutionException | InterruptedException e) {
+               e.printStackTrace();
+           }
+           try {
+               JSONObject jsonReview = new JSONObject(responseReview);
+           } catch (JSONException e){
+
+           }
+       }
+       int statusCode = reviewRequest.getStatusCode();
+       if (statusCode == 200){
+           favorites.add(foodTruckId);
+       }
+       return statusCode;
+   }
+
+    public int deleteFavorite(String foodTruckId){
+        HttpRequests reviewRequest = new HttpRequests();
+        if (foodTruckId != null) {
+            reviewRequest.execute(serverURL + "foodtrucks/" + foodTruckId +"?action=delete", "GET");
+            String responseReview = null;
+            try {
+                responseReview = reviewRequest.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                JSONObject jsonReview = new JSONObject(responseReview);
+            } catch (JSONException e){
+
+            }
+        }
+        int statusCode = reviewRequest.getStatusCode();
+        if (statusCode == 200){
+            favorites.remove(foodTruckId);
+        }
+        return statusCode;
+    }
 }

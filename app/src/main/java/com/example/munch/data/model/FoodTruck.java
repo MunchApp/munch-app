@@ -39,7 +39,7 @@ public class FoodTruck{
     }
 
     //Constructor for adding new Truck to database
-    public FoodTruck(String token, String name, String address, String[][] hours, String[] photos, String owner ){
+    public FoodTruck(String token, String name, String address, String[][] hours, String[] photos, String owner, ArrayList<String> tags, float[] location){
         this.hours = new String[7][2];
         this.photos = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
@@ -47,10 +47,13 @@ public class FoodTruck{
         //Creating JSON Object to pass in Request
         JSONObject truck = new JSONObject();
         try {
+            truck.put("status", "false");
             truck.put("name", name);
             truck.put("address", address);
             truck.put("photos", new JSONArray(photos));
             truck.put("hours", new JSONArray(hours));
+            truck.put("tags", new JSONArray(tags));
+            truck.put("location", new JSONArray(location));
             //truck.put("owner", owner);
         } catch (JSONException ex) {
             System.out.println("Truck Creation Failed");
@@ -226,7 +229,11 @@ public class FoodTruck{
     public String[] getRegHours() {
         String[] regHours = new String[7];
         for (int c = 0; c < 7; c++){
-           regHours[c] =  milToReg(hours[c][0]) + " to " + milToReg(hours[c][1]);
+           if (hours[c][0].equals("99:99") || hours[c][1].equals("99:99"))
+               regHours[c] = "CLOSED TODAY";
+           else
+            regHours[c] =  milToReg(hours[c][0]) + " to " + milToReg(hours[c][1]);
+
         }
         return regHours;
     }
@@ -249,7 +256,7 @@ public class FoodTruck{
 
         return hours + ":" + min + " " +ampm;
     }
-    public int updateTruck(String token, HashMap<String, String> vals, Boolean online){
+    public int updateTruck(String token, HashMap<String, String> vals, Boolean online, String[][] hours){
         JSONObject truck = new JSONObject();
         if (online != null){
             try {
@@ -264,6 +271,14 @@ public class FoodTruck{
                 } catch (JSONException ex) {
                 }
             }
+        }
+        if (hours != null) {
+
+            try {
+                truck.put("hours", new JSONArray(hours));
+            } catch (JSONException ex) {
+            }
+
         }
         HttpRequests getTruckRequests = new HttpRequests();
         getTruckRequests.execute(serverURL + "foodtrucks/" + id, "PUT", truck.toString(), token);

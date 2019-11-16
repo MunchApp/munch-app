@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_edit"
+    android:layout_width="wrap_content"
+    android:layout_height="400dp"
+    android:background="@color/munchGreenDark">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/edit_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip"
+            android:fontFamily="@font/rambla"
+            android:text="ENTER NEW TIME"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <Spinner
+                android:id="@+id/day"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_input"
+                android:backgroundTint="#FFFFFF"
+                android:fontFamily="@font/hp_simplified_light_font"
+                android:textColor="@color/munchOrangeLight"
+                android:textColorHint="@color/munchOrangeLight" />
+
+            <Switch
+                android:id="@+id/switch_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:checked="true"
+                android:fontFamily="@font/rambla"
+                android:switchMinWidth="50dp"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/day_prompt" />
+
+            <TextView
+                android:id="@+id/string_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/rambla"
+                android:text="OPEN"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/start_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/rambla"
+            android:text="OPENING TIME"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TimePicker
+            android:id="@+id/timePicker1"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:numbersInnerTextColor="#FFFFFF"
+            android:numbersTextColor="#FFFFFF"
+            android:theme="@style/timePickerTheme"
+            android:timePickerMode="spinner" />
+
+        <TextView
+            android:id="@+id/end_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/rambla"
+            android:text="CLOSING TIME"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TimePicker
+            android:id="@+id/timePicker2"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:numbersInnerTextColor="#FFFFFF"
+            android:numbersTextColor="#FFFFFF"
+            android:theme="@style/timePickerTheme"
+            android:timePickerMode="spinner" />
+
+        <Button
+            android:id="@+id/save_info"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_shape"
+            android:backgroundTint="#FFFFFF"
+            android:enabled="true"
+            android:fontFamily="@font/rambla"
+            android:text="SAVE"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_shape"
+            android:backgroundTint="#FFFFFF"
+            android:enabled="true"
+            android:fontFamily="@font/rambla"
+            android:text="CLOSE"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </LinearLayout>
+</ScrollView>
