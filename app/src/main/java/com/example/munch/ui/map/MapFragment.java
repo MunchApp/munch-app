@@ -50,12 +50,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public ImageView firstIm;
     static GoogleMap munMap;
+    String sb;
 
 
     private Marker lastClicked;
@@ -83,6 +85,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     ArrayList<String> dessTags;
     ArrayList<FoodTruck> searchListings;
     String locInput;
+    String responseTruck;
+
+    HttpRequests foodTruckRequest;
 
     TextView sortByText;
     Spinner sortBySpinner;
@@ -231,7 +236,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 if (mDessertCheck.isChecked()){
                     tagInputArray.addAll(dessTags);
                 }
-                String sb = "";
+                sb = "";
 
                 if (!(tagInputArray.size() == 0)) {
 
@@ -293,28 +298,114 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if (position == 0){     //distance
+                        if (position == 0 || position == 1){     //distance
                             LocationCalculator locCal = new LocationCalculator(getContext());
-                            if (locText.equals("")){    //no location specified
-                                locCal.getLocation();
+                            String lat = "";
+                            String lng = "";
+                            if (locText.getText().toString().equals("")){    //no location specified
+                                lat = Double.toString(locCal.getLat());
+                                lng = Double.toString(locCal.getLng());
+
                             } else {
+                                String address = locText.getText().toString();
+                                String[] splitAddress = address.split(" ");
+                                String parsedAddress = splitAddress[0];
+                                String API_KEY = view.getResources().getString(R.string.GOOGLE_MAPS_API_KEY);
+                                for (int s = 1; s < splitAddress.length; s++){
+                                    parsedAddress += "+" + splitAddress[s];
+                                }
+
+                                parsedAddress = parsedAddress.split("\n")[0] + parsedAddress.split("\n")[1];
+                                String response = null;
+                                HttpRequests getTruckRequests = new HttpRequests();
+                                getTruckRequests.execute("https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress +
+                                        "&key=" + API_KEY, "GET");
+                                try {
+                                    response = getTruckRequests.get();
+                                } catch (ExecutionException | InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                try{
+                                    JSONObject myResponse = new JSONObject(response);
+                                    JSONArray results = myResponse.getJSONArray("results");
+                                    for (int i = 0; i < results.length(); i++) {
+                                        JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");
+                                        lat = location.optString("lat");
+                                        lng = location.optString("lng");
+                                    }
+                                }catch (JSONException e){
+
+                                }
 
                             }
 
+                            resultsList = (ListView) getActivity().findViewById(R.id.search_results);
+                            searchListings = new ArrayList<>();
+                            foodTruckRequest = new HttpRequests();
+                            String serverURL = "https://munch-server.herokuapp.com/";
+                            if (searchText.getText().toString().equals("")){
+                                sb = "";
+                            }
+                            foodTruckRequest.execute(serverURL + "foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
+                            responseTruck = null;
+                            try {
+                                responseTruck = foodTruckRequest.get();
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                JSONArray truckData = new JSONArray(responseTruck);
+                                for (int i = 0; i < truckData.length(); i++) {
+                                    JSONObject jsonobject = truckData.getJSONObject(i);
+                                    String truckID = jsonobject.getString("id");
 
-                            String lat = Double.toString(locCal.getLat());
-//                            String serverURL = "https://munch-server.herokuapp.com/";
-//                            searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
-                        } else if (position == 1){      //rating
+                                    FoodTruck truckListing = new FoodTruck(truckID);
+                                    searchListings.add(truckListing);
+                                }
 
-                        } else if (position == 2){      //num reviews
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
+                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                            resultsList.setAdapter(mAdapter);
+
+                        }
+                        if (position == 2){      //rating
+
+                            searchListings.sort(new Comparator<FoodTruck>() {
+                                @Override
+                                public int compare(FoodTruck data1, FoodTruck data2) {
+                                    if( data1.getAvgRating() < data2.getAvgRating() )
+                                        return 1;
+                                    else
+                                        return -1;
+                                }
+                            });
+
+                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                            resultsList.setAdapter(mAdapter);
+
+                        }
+                        if (position == 3){      //num reviews
+                            searchListings.sort(new Comparator<FoodTruck>() {
+                                @Override
+                                public int compare(FoodTruck data1, FoodTruck data2) {
+                                    if( data1.getReviews().size() < data2.getReviews().size() )
+                                        return 1;
+                                    else
+                                        return -1;
+                                }
+                            });
+
+                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                            resultsList.setAdapter(mAdapter);
                         }
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
+                        populatePopularTrucksList(getView());
                     }
 
                 });
@@ -353,28 +444,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-
-
-
-
-//        sortByText = root.findViewById(R.id.sort_by_text);
-//        sortByText.setOnClickListener(           //action triggered on button click
-//                new View.OnClickListener() {
-//                    public void onClick(View view) {
-//
-//                    }
-//                });
-
-//        sortBySpinner = root.findViewById(R.id.spinner_sort_by);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String> (getActivity(), R.layout.support_simple_spinner_dropdown_item, sortList);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        sortBySpinner.setAdapter(adapter);
-
-
-
-
-
-
     private GoogleMap.OnMarkerClickListener myMarkerClick = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker markey) {
@@ -390,18 +459,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     };
 
 
-//    public void sortByNumReviews() {
-//
-//        Collections.sort(data, new Comparator<FoodTruck>() {
-//            @Override
-//            public int compare(YourDataModel data1, YourDataModel data2) {
-//                if (data1.getDistance() < data2.getDistance())
-//                    return 1;
-//                else
-//                    return 0;
-//            }
-//        });
-//    }
+
 
     private void initializeCategoryTags(View root) {
         mAmercianCheck = root.findViewById(R.id.catAmerican);
