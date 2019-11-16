@@ -78,26 +78,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         double lat = locationCalculator.getLat();
         double lng = locationCalculator.getLng();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(8.0f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11.0f));
         munMap = mMap;
 
-
-
-        //delete
-//        populateTruckPin(30.415229f, -97.74265f, "Testing", "Truck122");
-        MarkerOptions markeres = new MarkerOptions().position(new LatLng(30.315229f, -97.0726)).title("TestTruck4");
-        Marker market = munMap.addMarker(markeres);
-        market.showInfoWindow();
-        market.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_dot));
-        market.setSnippet("5.000f noPic");
-        munMap.setInfoWindowAdapter(new CustomInfoWindowAdaptor(getContext()));
-
-        if (listing != null) {
-//            populateNearbyTrucks(listing);
-//            munMap.setOnMarkerClickListener(myMarkerClick);
-//            munMap.setOnInfoWindowClickListener(myWindowClick);
-        }
         initialePopulation();
+        munMap.setInfoWindowAdapter(new CustomInfoWindowAdaptor(getContext()));
         munMap.setOnMarkerClickListener(myMarkerClick);
         munMap.setOnInfoWindowClickListener(myWindowClick);
 
@@ -123,12 +108,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 lastClicked.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_dot));
 
             }
-//            change icon
             markey.showInfoWindow();
             markey.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_truck));;
             lastClicked = markey;
 
-//            populateNearbyTrucksTwo(listing);
             return true;
         }
     };
@@ -154,7 +137,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 String id = jsonobject.getString("id");
 
                 FoodTruck truckListing = new FoodTruck(id);
-//                populateOfFoodTruck(truckListing);
                 listings.add(truckListing);
             }
 
@@ -171,8 +153,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         listing = listings;
         forWindow = listing;
-//        populateNearbyTrucks(listings);
-
     }
 
     private ArrayList<FoodTruck> sampleTrucks() {
@@ -184,25 +164,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             testTrucks.add(tester);
         }
         return testTrucks;
-    }
-
-    private void populateNearbyTrucks(ArrayList<FoodTruck> nearby) {
-        //Todo  input list of trucks output pins on map
-        //place pins on map from ArrayList of trucks
-        if (nearby != null) {
-            for (int i = 0; i < nearby.size(); i++) {
-
-                populateFromFT(nearby.get(i));
-
-//                popFoodTruck(nearby.get(i).getMarkerOption());
-//                populateTruckPin(
-//                        nearby.get(i).getLatitude(),
-//                        nearby.get(i).getLongitude(),
-//                        nearby.get(i).getName(),
-//                        nearby.get(i).getId()
-//                );
-            }
-        }
     }
 
     private void repopulateFromList(ArrayList<FoodTruck> nearby) {
@@ -251,25 +212,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-//    private void populateTrucksFromTag(ArrayList<FoodTruck> nearby, String tag){
-//        //place pins on map from ArrayList of trucks
-//        for(int i = 0; i < listing.size(); i++){
-//            if(listing.get(i).getTags() == null){
-//                boolean flag = false;
-//                for(int j = 0; j <  listing.get(i).getTags().size(); j++){
-//                      if(listing.get(i).getTags().get(j) == tag){
-//                            flag = true;
-//                      }
-//                if(flag = true){
-//                      displayFTMarker(listing.get(i);
-//                  }
-//                }
-//
-//            }
-//        }
-//            }
-//        }
-//    }
 
     private void populateFromFT(FoodTruck truck){
         //creates new marker for FoodTruck and displays them on map
@@ -282,7 +224,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             marker.setSnippet(truck.getAvgRating() + " " + truck.getPhotos().get(0));
         }
         else if(truck.getPhotos().size() == 0){
-            marker.setSnippet(truck.getAvgRating() + " None");
+            marker.setSnippet(truck.getAvgRating() + " " + "None");
         }
     }
 
@@ -316,6 +258,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
 
 
+//    private void populateTrucksFromTag(ArrayList<FoodTruck> nearby, String tag){
+//        //place pins on map from ArrayList of trucks
+//        for(int i = 0; i < listing.size(); i++){
+//            if(listing.get(i).getTags() == null){
+//                boolean flag = false;
+//                for(int j = 0; j <  listing.get(i).getTags().size(); j++){
+//                      if(listing.get(i).getTags().get(j) == tag){
+//                            flag = true;
+//                      }
+//                if(flag = true){
+//                      displayFTMarker(listing.get(i);
+//                  }
+//                }
+//
+//            }
+//        }
+//            }
+//        }
+//    }
 
 ///////////////TRASH    Below
 //    private void populateOfFoodTruck(FoodTruck truck){
