@@ -1,6 +1,9 @@
 package com.example.munch.data.model;
 
 import com.example.munch.HttpRequests;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +31,11 @@ public class FoodTruck{
     ArrayList<String> tags;
     Float avgRating;
     String serverURL = "https://munch-server.herokuapp.com/";
+
+    MarkerOptions markO;
+    Marker mark;
+    boolean visible;
+
     //Constructor for already existing Trucks in database
     public FoodTruck(String truckId){
         this.hours = new String[7][2];
@@ -36,7 +44,19 @@ public class FoodTruck{
         this.tags = new ArrayList<String>();
         this.id = truckId;
         getTruck(truckId);
+        this.markO = new MarkerOptions().position(new LatLng(this.lat, this.lng)).title(this.name);
     }
+
+
+    //Constructor for testing Trucks in map
+    public FoodTruck(String truckId, String name, float lat, float lng){
+        this.id = truckId;
+        this.name = name;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public FoodTruck(){}
 
     //Constructor for adding new Truck to database
     public FoodTruck(String token, String name, String address, String[][] hours, String[] photos, String owner, ArrayList<String> tags, float[] location){
@@ -161,6 +181,26 @@ public class FoodTruck{
         return website;
     }
 
+    public MarkerOptions getMarkerOption() {
+        return markO;
+    }
+
+    public Marker getMarker() {
+        return mark;
+    }
+
+    public void setMarker(Marker marker) {
+        mark = marker;
+    }
+
+    public void setVisibilityOff () {
+        visible = false;
+    }
+
+    public void setVisibilityOn () {
+        visible = true;
+    }
+
     private void jsonToFoodTruck (JSONObject jsonTruck) {
         try {
             this.name = jsonTruck.get("name").toString();
@@ -224,6 +264,12 @@ public class FoodTruck{
 
     public String getOwner() {
         return owner;
+    }
+
+    public float getLongitude() { return lng; }
+
+    public float getLatitude() {
+        return lat;
     }
 
     public String[] getRegHours() {
