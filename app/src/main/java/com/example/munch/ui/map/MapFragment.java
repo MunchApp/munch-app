@@ -11,9 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +26,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.HttpRequests;
 import com.example.munch.LocationCalculator;
@@ -48,23 +51,59 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    private MapViewModel mapViewModel;
     public ImageView firstIm;
     static GoogleMap munMap;
+    String sb;
+
     private ArrayList<FoodTruck> listing;
     static ArrayList<FoodTruck> forWindow;
+    EditText searchText;
 
     private Marker lastClicked;
+
     EditText searchText;
+    EditText locText;
+    ArrayList<String> tagInputArray;
+    ListView resultsList;
+
+    CheckBox mAmercianCheck;
+    ArrayList<String> amerTags;
+    CheckBox mAsianCheck;
+    ArrayList<String> asianTags;
+    CheckBox mBarbequeCheck;
+    ArrayList<String> barbTags;
+    CheckBox mSouthernCheck;
+    ArrayList<String> southTags;
+    CheckBox mBreakfastCheck;
+    ArrayList<String> breakTags;
+    CheckBox mMexicanCheck;
+    ArrayList<String> mexiTags;
+    CheckBox mSeafoodCheck;
+    ArrayList<String> seaTags;
+    CheckBox mDessertCheck;
+    ArrayList<String> dessTags;
+    ArrayList<FoodTruck> searchListings;
+    String locInput;
+    String responseTruck;
+
+    HttpRequests foodTruckRequest;
+
+    TextView sortByText;
+    Spinner sortBySpinner;
+    public static final CharSequence[] sortList = {"Sort By", "Distance", "Rating", "Number of Reviews"};
+
+//    CheckBox mRating4;
+//    CheckBox mRating3;
+//    CheckBox mRating2;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mapViewModel =
-                ViewModelProviders.of(this).get(MapViewModel.class);
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);  //use SuppoprtMapFragment for using in fragment instead of activity  MapFragment = activity   SupportMapFragment = fragment
@@ -72,7 +111,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
         searchText = root.findViewById(R.id.search_explore_pg1);
+        locText = root.findViewById(R.id.location_explore_pg1);
+        sortBySpinner = (Spinner) root.findViewById(R.id.spinner_sort);
 
+        //region slidingPanel
         final SlidingUpPanelLayout slideUpPanel = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
         final View searchBar = (View) root.findViewById(R.id.search_map);
         final View locationBar = (View) root.findViewById(R.id.location_map);
@@ -115,72 +157,263 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
         searchText.setClickable(true);
         searchText.setOnClickListener(new View.OnClickListener() {
-           @Override
+            @Override
             public void onClick(View v) {
-               AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
-               fadeOut.setDuration(1000);
-               AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-               fadeIn.setDuration(1000);
-               fadeIn.setFillAfter(true);
-               ObjectAnimator animation = ObjectAnimator.ofFloat(searchBar, "translationY", -170f);
-               animation.setDuration(1000);
-               animation.start();
-               if(logoText.getVisibility() == View.VISIBLE) {
-                   logoText.setVisibility(View.INVISIBLE);
-                   logoText.startAnimation(fadeOut);
-               }
-               if (locationBar.getVisibility() == View.GONE) {
-                   locationBar.setVisibility(View.VISIBLE);
-                   locationBar.startAnimation(fadeIn);
-               }
-               background.setVisibility(View.VISIBLE);
-               int negHeight = background.getHeight() * -1;
-               TranslateAnimation animate = new TranslateAnimation(
-                       0,
-                       0,
-                       negHeight,
-                       0);
-               animate.setDuration(1000);
-               animate.setFillAfter(true);
-               background.startAnimation(animate);
-               options.setVisibility(View.VISIBLE);
-               options.startAnimation(fadeIn);
+                AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+                fadeOut.setDuration(1000);
+                AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+                fadeIn.setDuration(1000);
+                fadeIn.setFillAfter(true);
+                ObjectAnimator animation = ObjectAnimator.ofFloat(searchBar, "translationY", -170f);
+                animation.setDuration(1000);
+                animation.start();
+                if(logoText.getVisibility() == View.VISIBLE) {
+                    logoText.setVisibility(View.INVISIBLE);
+                    logoText.startAnimation(fadeOut);
+                }
+                if (locationBar.getVisibility() == View.GONE) {
+                    locationBar.setVisibility(View.VISIBLE);
+                    locationBar.startAnimation(fadeIn);
+                }
+                background.setVisibility(View.VISIBLE);
+                int negHeight = background.getHeight() * -1;
+                TranslateAnimation animate = new TranslateAnimation(
+                        0,
+                        0,
+                        negHeight,
+                        0);
+                animate.setDuration(1000);
+                animate.setFillAfter(true);
+                background.startAnimation(animate);
+                options.setVisibility(View.VISIBLE);
+                options.startAnimation(fadeIn);
             }
         });
 
         TextView close = (TextView)root.findViewById(R.id.close_button);
         TextView search = (TextView)root.findViewById(R.id.search_button);
+        tagInputArray = new ArrayList<>();
+
+        initializeCategoryTags(root);
+
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeSearch(slideUpPanel,logoText,searchBar,locationBar,background,options);
             }
         });
+        //endregion
 
+        //region search and filter logic
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeSearch(slideUpPanel,logoText,searchBar,locationBar,background,options);
-                //todo put call search route and search functionality here
+                locInput = locText.getText().toString();
+                String userInput = searchText.getText().toString();
+                tagInputArray.clear();
+                String formattedInput = userInput.replaceAll(" ", "+");
+                if (!formattedInput.equals("")) {
+                    tagInputArray.add(formattedInput);
+                }
+                if (mAmercianCheck.isChecked()){
+                    tagInputArray.addAll(amerTags);
+                }
+                if (mAsianCheck.isChecked()){
+                    tagInputArray.addAll(asianTags);
+                }
+                if (mBarbequeCheck.isChecked()){
+                    tagInputArray.addAll(barbTags);
+                }
+                if (mSouthernCheck.isChecked()){
+                    tagInputArray.addAll(southTags);
+                }
+                if (mBreakfastCheck.isChecked()){
+                    tagInputArray.addAll(breakTags);
+                }
+                if (mMexicanCheck.isChecked()){
+                    tagInputArray.addAll(mexiTags);
+                }
+                if (mSeafoodCheck.isChecked()){
+                    tagInputArray.addAll(seaTags);
+                }
+                if (mDessertCheck.isChecked()){
+                    tagInputArray.addAll(dessTags);
+                }
+                sb = "";
+
+                if (!(tagInputArray.size() == 0)) {
+
+                    for (int i = 0; i < tagInputArray.size(); i++) {
+                        sb += tagInputArray.get(i);
+                        sb += "+";
+                    }
+                    while (sb.charAt(0) == '+') {
+                        sb = sb.substring(1);
+                    }
+                    while (sb.charAt(sb.length() - 1) == '+') {
+                        sb = sb.substring(0, sb.length() - 1);
+                    }
+
+                    if (!sb.equals("")) {
+                        HttpRequests searchRequest = new HttpRequests();
+                        String serverURL = "https://munch-server.herokuapp.com/";
+                        searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
+                        searchListings = new ArrayList<>();
+                        String responseSearch = null;
+                        try {
+                            responseSearch = searchRequest.get();
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            JSONArray searchData = new JSONArray(responseSearch);
+                            for (int i = 0; i < searchData.length(); i++) {
+                                JSONObject jsonobject = searchData.getJSONObject(i);
+                                String id = jsonobject.getString("id");
+
+                                FoodTruck truckListing = new FoodTruck(id);
+                                searchListings.add(truckListing);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                        resultsList.setAdapter(mAdapter);
+                    }
+                }
+
             }
         });
+        //endregion
 
-        String name;
-        String address;
-        ArrayList<String> tags;
-//        searchButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String userInput = searchText.getText().toString();
-//
-//
-//                HttpRequests searchRequest = new HttpRequests();
-//                String serverURL = "https://munch-server.herokuapp.com/";
-//                searchRequest.execute(serverURL + "foodtrucks?name=" + name + "&tags=" + tags + "&address=" + address);
-//            }
-//        });
+        //region sort by logic
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.sort_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortBySpinner.setPrompt("SORT");
+        sortBySpinner.setAdapter(
+                new NothingSelectedSpinnerAdapter(
+                        adapter,
+                        R.layout.contact_spinner_row_nothing_selected, // Optional
+                        getActivity()));
+        sortBySpinner.setOnItemSelectedListener(           //action triggered on button click
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position == 0 || position == 1){     //distance
+                            LocationCalculator locCal = new LocationCalculator(getContext());
+                            String lat = "";
+                            String lng = "";
+                            if (locText.getText().toString().equals("")){    //no location specified
+                                lat = Double.toString(locCal.getLat());
+                                lng = Double.toString(locCal.getLng());
 
+                            } else {
+                                String address = locText.getText().toString();
+                                String[] splitAddress = address.split(" ");
+                                String parsedAddress = splitAddress[0];
+                                String API_KEY = view.getResources().getString(R.string.GOOGLE_MAPS_API_KEY);
+                                for (int s = 1; s < splitAddress.length; s++){
+                                    parsedAddress += "+" + splitAddress[s];
+                                }
 
+                                parsedAddress = parsedAddress.split("\n")[0] + parsedAddress.split("\n")[1];
+                                String response = null;
+                                HttpRequests getTruckRequests = new HttpRequests();
+                                getTruckRequests.execute("https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress +
+                                        "&key=" + API_KEY, "GET");
+                                try {
+                                    response = getTruckRequests.get();
+                                } catch (ExecutionException | InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                try{
+                                    JSONObject myResponse = new JSONObject(response);
+                                    JSONArray results = myResponse.getJSONArray("results");
+                                    for (int i = 0; i < results.length(); i++) {
+                                        JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");
+                                        lat = location.optString("lat");
+                                        lng = location.optString("lng");
+                                    }
+                                }catch (JSONException e){
+
+                                }
+
+                            }
+
+                            resultsList = (ListView) getActivity().findViewById(R.id.search_results);
+                            searchListings = new ArrayList<>();
+                            foodTruckRequest = new HttpRequests();
+                            String serverURL = "https://munch-server.herokuapp.com/";
+                            if (searchText.getText().toString().equals("")){
+                                sb = "";
+                            }
+                            foodTruckRequest.execute(serverURL + "foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
+                            responseTruck = null;
+                            try {
+                                responseTruck = foodTruckRequest.get();
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                JSONArray truckData = new JSONArray(responseTruck);
+                                for (int i = 0; i < truckData.length(); i++) {
+                                    JSONObject jsonobject = truckData.getJSONObject(i);
+                                    String truckID = jsonobject.getString("id");
+
+                                    FoodTruck truckListing = new FoodTruck(truckID);
+                                    searchListings.add(truckListing);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                            resultsList.setAdapter(mAdapter);
+
+                        }
+                        if (position == 2){      //rating
+
+                            searchListings.sort(new Comparator<FoodTruck>() {
+                                @Override
+                                public int compare(FoodTruck data1, FoodTruck data2) {
+                                    if( data1.getAvgRating() < data2.getAvgRating() )
+                                        return 1;
+                                    else
+                                        return -1;
+                                }
+                            });
+
+                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                            resultsList.setAdapter(mAdapter);
+
+                        }
+                        if (position == 3){      //num reviews
+                            searchListings.sort(new Comparator<FoodTruck>() {
+                                @Override
+                                public int compare(FoodTruck data1, FoodTruck data2) {
+                                    if( data1.getReviews().size() < data2.getReviews().size() )
+                                        return 1;
+                                    else
+                                        return -1;
+                                }
+                            });
+
+                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                            resultsList.setAdapter(mAdapter);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        populatePopularTrucksList(getView());
+                    }
+
+                });
+        //endregion
 
 
         return root;
@@ -240,9 +473,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         options.setVisibility(View.GONE);
     }
 
+    //sort by distance, rating, and most reviewed
+    //filter by rating, food tags and categories
+        /*
+        Hawaiian    Seafood Southern
+        Brazilian
+        Burgers
+        Korean
+        Barbeque
+        Chinese
+        Sandwiches
+         */
+
     private void populatePopularTrucksList(View root) {
-        ListView resultsList = (ListView) root.findViewById(R.id.search_results);
-        ArrayList<FoodTruck> listings = new ArrayList<>();
+        resultsList = (ListView) root.findViewById(R.id.search_results);
+        searchListings = new ArrayList<>();
         HttpRequests foodTruckRequest = new HttpRequests();
         String serverURL = "https://munch-server.herokuapp.com/";
         foodTruckRequest.execute(serverURL + "foodtrucks", "GET");
@@ -252,8 +497,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-
         try {
             JSONArray truckData = new JSONArray(responseTruck);
             for (int i = 0; i < truckData.length(); i++) {
@@ -261,21 +504,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 String id = jsonobject.getString("id");
 
                 FoodTruck truckListing = new FoodTruck(id);
-                listings.add(truckListing);
+//                populateOfFoodTruck(truckListing);
+                searchListings.add(truckListing);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), listings);
+        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
         resultsList.setAdapter(mAdapter);
 
-        while (listings.size() < 10) {
+        while (searchListings.size() < 10) {
 
         }
 
-        listing = listings;
+//        populateNearbyTrucks(listings);
+
+        listing = searchListings;
         forWindow = listing;
     }
 
@@ -317,12 +563,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //The arrayList listing cannot be null or crashes
 
 
-        for (int i = 0; i < listing.size(); i++) {
-            if (listing.get(i).getMarker().equals(myMark)) {
-                return listing.get(i);
+        for (int i = 0; i < searchListings.size(); i++) {
+            if (searchListings.get(i).getMarker().equals(myMark)) {
+                return searchListings.get(i);
             }
         }
-        return listing.get(0);
+        return searchListings.get(0);
     }
 
 
@@ -411,7 +657,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //May delete
         munMap.addMarker(markO);
     }
-
 
     public void populateTruckPin(float lat, float lng, String name, String id){
         //Todo set create pin from truck info
