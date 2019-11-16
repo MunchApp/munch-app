@@ -2,7 +2,6 @@ package com.example.munch.ui.map;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -10,9 +9,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,14 +26,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.HttpRequests;
 import com.example.munch.LocationCalculator;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.ui.foodTruck.FoodTruckFragment;
-import com.example.munch.ui.more.AboutPageActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -41,11 +39,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,11 +56,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public ImageView firstIm;
     static GoogleMap munMap;
-    private ArrayList<FoodTruck> listing;
+
 
     private Marker lastClicked;
 
     EditText searchText;
+    EditText locText;
     ArrayList<String> tagInputArray;
     ListView resultsList;
 
@@ -83,6 +82,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     CheckBox mDessertCheck;
     ArrayList<String> dessTags;
     ArrayList<FoodTruck> searchListings;
+    String locInput;
 
     TextView sortByText;
     Spinner sortBySpinner;
@@ -100,53 +100,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);  //use SuppoprtMapFragment for using in fragment instead of activity  MapFragment = activity   SupportMapFragment = fragment
         populatePopularTrucksList(root);
         mapFragment.getMapAsync(this);
-        return root;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap mMap) {
-
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        mMap.clear(); //clear old markers
-        LocationCalculator locationCalculator = new LocationCalculator(getContext());
-        double lat = locationCalculator.getLat();
-        double lng = locationCalculator.getLng();
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(8.0f));
-        munMap = mMap;
-
-
-
-        //delete
-        populateTruckPin(30.415229f, -97.74265f, "Testing", "Truck122");
-        MarkerOptions markeres = new MarkerOptions().position(new LatLng(30.315229f, -97.0726)).title("TestTruck4");
-        Marker market = munMap.addMarker(markeres);
-        market.showInfoWindow();
-        market.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_dot));
-
-        if (listing != null) {
-            populateNearbyTrucks(listing);
-            munMap.setOnMarkerClickListener(myMarkerClick);
-            munMap.setOnInfoWindowClickListener(myWindowClick);
-        }
-
-    }
-
-    private GoogleMap.OnInfoWindowClickListener myWindowClick = new GoogleMap.OnInfoWindowClickListener() {
-        @Override
-        public void onInfoWindowClick(Marker markey) {
-            FragmentActivity activity = (FragmentActivity) getContext();
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            FoodTruckFragment NAME = new FoodTruckFragment(getTruckFromMarker(markey), false);
-            fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
-            fragmentTransaction.commit();
-        }
-    };
 
         searchText = root.findViewById(R.id.search_explore_pg1);
+        locText = root.findViewById(R.id.location_explore_pg1);
+        sortBySpinner = (Spinner) root.findViewById(R.id.spinner_sort);
 
+        //region slidingPanel
         final SlidingUpPanelLayout slideUpPanel = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
         final View searchBar = (View) root.findViewById(R.id.search_map);
         final View locationBar = (View) root.findViewById(R.id.location_map);
@@ -189,36 +148,36 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
         searchText.setClickable(true);
         searchText.setOnClickListener(new View.OnClickListener() {
-           @Override
+            @Override
             public void onClick(View v) {
-               AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
-               fadeOut.setDuration(1000);
-               AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-               fadeIn.setDuration(1000);
-               fadeIn.setFillAfter(true);
-               ObjectAnimator animation = ObjectAnimator.ofFloat(searchBar, "translationY", -170f);
-               animation.setDuration(1000);
-               animation.start();
-               if(logoText.getVisibility() == View.VISIBLE) {
-                   logoText.setVisibility(View.INVISIBLE);
-                   logoText.startAnimation(fadeOut);
-               }
-               if (locationBar.getVisibility() == View.GONE) {
-                   locationBar.setVisibility(View.VISIBLE);
-                   locationBar.startAnimation(fadeIn);
-               }
-               background.setVisibility(View.VISIBLE);
-               int negHeight = background.getHeight() * -1;
-               TranslateAnimation animate = new TranslateAnimation(
-                       0,
-                       0,
-                       negHeight,
-                       0);
-               animate.setDuration(1000);
-               animate.setFillAfter(true);
-               background.startAnimation(animate);
-               options.setVisibility(View.VISIBLE);
-               options.startAnimation(fadeIn);
+                AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+                fadeOut.setDuration(1000);
+                AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+                fadeIn.setDuration(1000);
+                fadeIn.setFillAfter(true);
+                ObjectAnimator animation = ObjectAnimator.ofFloat(searchBar, "translationY", -170f);
+                animation.setDuration(1000);
+                animation.start();
+                if(logoText.getVisibility() == View.VISIBLE) {
+                    logoText.setVisibility(View.INVISIBLE);
+                    logoText.startAnimation(fadeOut);
+                }
+                if (locationBar.getVisibility() == View.GONE) {
+                    locationBar.setVisibility(View.VISIBLE);
+                    locationBar.startAnimation(fadeIn);
+                }
+                background.setVisibility(View.VISIBLE);
+                int negHeight = background.getHeight() * -1;
+                TranslateAnimation animate = new TranslateAnimation(
+                        0,
+                        0,
+                        negHeight,
+                        0);
+                animate.setDuration(1000);
+                animate.setFillAfter(true);
+                background.startAnimation(animate);
+                options.setVisibility(View.VISIBLE);
+                options.startAnimation(fadeIn);
             }
         });
 
@@ -234,17 +193,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 closeSearch(slideUpPanel,logoText,searchBar,locationBar,background,options);
             }
         });
-
-
+        //endregion
 
         //region search and filter logic
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeSearch(slideUpPanel,logoText,searchBar,locationBar,background,options);
+                locInput = locText.getText().toString();
                 String userInput = searchText.getText().toString();
+                tagInputArray.clear();
                 String formattedInput = userInput.replaceAll(" ", "+");
-                tagInputArray.add(formattedInput);
+                if (!formattedInput.equals("")) {
+                    tagInputArray.add(formattedInput);
+                }
                 if (mAmercianCheck.isChecked()){
                     tagInputArray.addAll(amerTags);
                 }
@@ -269,44 +231,131 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 if (mDessertCheck.isChecked()){
                     tagInputArray.addAll(dessTags);
                 }
-
                 String sb = "";
-                for (String s : tagInputArray){
-                    sb += s;
-                    sb += "+";
-                }
-                if (!sb.equals("")){
-                    HttpRequests searchRequest = new HttpRequests();
-                    String serverURL = "https://munch-server.herokuapp.com/";
-                    searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
-                    searchListings = new ArrayList<>();
-                    String responseSearch = null;
-                    try {
-                        responseSearch = searchRequest.get();
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
+
+                if (!(tagInputArray.size() == 0)) {
+
+                    for (int i = 0; i < tagInputArray.size(); i++) {
+                        sb += tagInputArray.get(i);
+                        sb += "+";
+                    }
+                    while (sb.charAt(0) == '+') {
+                        sb = sb.substring(1);
+                    }
+                    while (sb.charAt(sb.length() - 1) == '+') {
+                        sb = sb.substring(0, sb.length() - 1);
                     }
 
-                    try {
-                        JSONArray searchData = new JSONArray(responseSearch);
-                        for (int i = 0; i < searchData.length(); i++) {
-                            JSONObject jsonobject = searchData.getJSONObject(i);
-                            String id = jsonobject.getString("id");
-
-                            FoodTruck truckListing = new FoodTruck(id);
-                            searchListings.add(truckListing);
+                    if (!sb.equals("")) {
+                        HttpRequests searchRequest = new HttpRequests();
+                        String serverURL = "https://munch-server.herokuapp.com/";
+                        searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
+                        searchListings = new ArrayList<>();
+                        String responseSearch = null;
+                        try {
+                            responseSearch = searchRequest.get();
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        try {
+                            JSONArray searchData = new JSONArray(responseSearch);
+                            for (int i = 0; i < searchData.length(); i++) {
+                                JSONObject jsonobject = searchData.getJSONObject(i);
+                                String id = jsonobject.getString("id");
+
+                                FoodTruck truckListing = new FoodTruck(id);
+                                searchListings.add(truckListing);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+                        resultsList.setAdapter(mAdapter);
                     }
-                    SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
-                    resultsList.setAdapter(mAdapter);
                 }
 
             }
         });
         //endregion
+
+        //region sort by logic
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.sort_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortBySpinner.setPrompt("SORT");
+        sortBySpinner.setAdapter(
+                new NothingSelectedSpinnerAdapter(
+                        adapter,
+                        R.layout.contact_spinner_row_nothing_selected, // Optional
+                        getActivity()));
+        sortBySpinner.setOnItemSelectedListener(           //action triggered on button click
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position == 0){     //distance
+                            LocationCalculator locCal = new LocationCalculator(getContext());
+                            if (locText.equals("")){    //no location specified
+                                locCal.getLocation();
+                            } else {
+
+                            }
+
+
+                            String lat = Double.toString(locCal.getLat());
+//                            String serverURL = "https://munch-server.herokuapp.com/";
+//                            searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
+                        } else if (position == 1){      //rating
+
+                        } else if (position == 2){      //num reviews
+
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+
+                });
+        //endregion
+
+
+        return root;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap mMap) {
+
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        mMap.clear(); //clear old markers
+        LocationCalculator locationCalculator = new LocationCalculator(getContext());
+        double lat = locationCalculator.getLat();
+        double lng = locationCalculator.getLng();
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(8.0f));
+        munMap = mMap;
+
+
+        //delete
+        populateTruckPin(30.415229f, -97.74265f, "Testing", "Truck122");
+        MarkerOptions markeres = new MarkerOptions().position(new LatLng(30.315229f, -97.0726)).title("TestTruck4");
+        Marker market = munMap.addMarker(markeres);
+        market.showInfoWindow();
+        market.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_dot));
+
+        if (searchListings != null) {
+            populateNearbyTrucks(searchListings);
+            munMap.setOnMarkerClickListener(myMarkerClick);
+            munMap.setOnInfoWindowClickListener(myWindowClick);
+        }
+
+    }
+
+
+
+
 
 //        sortByText = root.findViewById(R.id.sort_by_text);
 //        sortByText.setOnClickListener(           //action triggered on button click
@@ -358,7 +407,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mAmercianCheck = root.findViewById(R.id.catAmerican);
         amerTags = new ArrayList<>();
         amerTags.add("American");
-        amerTags.add("Hot Dogs");
+        amerTags.add("Hot+Dogs");
         amerTags.add("Burgers");
         amerTags.add("Pizza");
         amerTags.add("Sandwiches");
@@ -371,7 +420,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         asianTags.add("Thai");
         asianTags.add("Korean");
         asianTags.add("Japanese");
-        asianTags.add("Asian Fusion");
+        asianTags.add("Asian+Fusion");
         asianTags.add("Vietnamese");
         asianTags.add("Chinese");
         asianTags.add("Indian");
@@ -383,7 +432,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         barbTags = new ArrayList<>();
         barbTags.add("Barbeque");
         barbTags.add("Barbecue");
-        barbTags.add("Korean Barbeque");
+        barbTags.add("Korean+Barbeque");
         barbTags.add("Brisket");
 
         mSouthernCheck = root.findViewById(R.id.catSouthern);
@@ -423,7 +472,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mDessertCheck = root.findViewById(R.id.catDessert);
         dessTags = new ArrayList<>();
         dessTags.add("Dessert");
-        dessTags.add("Ice Cream");
+        dessTags.add("Ice+Cream");
         dessTags.add("Crepes");
         dessTags.add("Sweet");
         dessTags.add("Bakery");
@@ -481,7 +530,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private void populatePopularTrucksList(View root) {
         resultsList = (ListView) root.findViewById(R.id.search_results);
-        ArrayList<FoodTruck> listings = new ArrayList<>();
+        searchListings = new ArrayList<>();
         HttpRequests foodTruckRequest = new HttpRequests();
         String serverURL = "https://munch-server.herokuapp.com/";
         foodTruckRequest.execute(serverURL + "foodtrucks", "GET");
@@ -499,21 +548,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 FoodTruck truckListing = new FoodTruck(id);
 //                populateOfFoodTruck(truckListing);
-                listings.add(truckListing);
+                searchListings.add(truckListing);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), listings);
+        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
         resultsList.setAdapter(mAdapter);
 
-        while (listings.size() < 10) {
+        while (searchListings.size() < 10) {
 
         }
 
-        listing = listings;
 //        populateNearbyTrucks(listings);
 
     }
@@ -554,12 +602,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //The arrayList listing cannot be null or crashes
 
 
-        for (int i = 0; i < listing.size(); i++) {
-            if (listing.get(i).getMarker().equals(myMark)) {
-                return listing.get(i);
+        for (int i = 0; i < searchListings.size(); i++) {
+            if (searchListings.get(i).getMarker().equals(myMark)) {
+                return searchListings.get(i);
             }
         }
-        return listing.get(0);
+        return searchListings.get(0);
     }
 
 
@@ -678,5 +726,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.17265)).title("TestTruck"));
         munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.07265)).title("TestTruck2"));
     }
+
+    private GoogleMap.OnInfoWindowClickListener myWindowClick = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker markey) {
+            FragmentActivity activity = (FragmentActivity) getContext();
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            FoodTruckFragment NAME = new FoodTruckFragment(getTruckFromMarker(markey), false);
+            fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
+            fragmentTransaction.commit();
+        }
+    };
 
 }

@@ -75,15 +75,6 @@
                 android:fontFamily="@font/hp_simplified_font"
                 android:textSize="30sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="100dp"
-                android:paddingTop="20dp"
-                android:layout_gravity="end"
-                android:text="Filter"
-                android:fontFamily="@font/hp_simplified_font"
-                android:textSize="20sp" />
 
 <!--            <TextView-->
 <!--                android:id="@+id/sort_by_text"-->
@@ -98,9 +89,14 @@
 
             <Spinner
                 android:id="@+id/spinner_sort"
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="15dp"
+                android:paddingTop="20dp"
+                android:fontFamily="@font/hp_simplified_font"
                 android:entries="@array/sort_options"
+                android:textSize="20sp"
                 android:prompt="@string/sort_prompt" />
 
             <ListView
