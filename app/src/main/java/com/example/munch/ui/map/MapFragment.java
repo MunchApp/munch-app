@@ -62,7 +62,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private ArrayList<FoodTruck> listing;
     static ArrayList<FoodTruck> forWindow;
-    EditText searchText;
 
     private Marker lastClicked;
 
@@ -439,6 +438,116 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    private GoogleMap.OnInfoWindowClickListener myWindowClick = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker markey) {
+            FragmentActivity activity = (FragmentActivity) getContext();
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            FoodTruckFragment NAME = new FoodTruckFragment(getTruckFromMarker(markey), false);
+            fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
+            fragmentTransaction.commit();
+        }
+    };
+
+
+    private GoogleMap.OnMarkerClickListener myMarkerClick = new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker markey) {
+            if(lastClicked != null) {
+                lastClicked.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_dot));
+
+            }
+            markey.showInfoWindow();
+            markey.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_truck));;
+            lastClicked = markey;
+
+            return true;
+        }
+    };
+
+
+
+
+    private void initializeCategoryTags(View root) {
+        mAmercianCheck = root.findViewById(R.id.catAmerican);
+        amerTags = new ArrayList<>();
+        amerTags.add("American");
+        amerTags.add("Hot+Dogs");
+        amerTags.add("Burgers");
+        amerTags.add("Pizza");
+        amerTags.add("Sandwiches");
+        amerTags.add("Hawaiian");
+        amerTags.add("Steak");
+
+        mAsianCheck = root.findViewById(R.id.catAsian);
+        asianTags = new ArrayList<>();
+        asianTags.add("Asian");
+        asianTags.add("Thai");
+        asianTags.add("Korean");
+        asianTags.add("Japanese");
+        asianTags.add("Asian+Fusion");
+        asianTags.add("Vietnamese");
+        asianTags.add("Chinese");
+        asianTags.add("Indian");
+        asianTags.add("Filipino");
+//        asianTags.add("");
+//        asianTags.add("");
+
+        mBarbequeCheck = root.findViewById(R.id.catBarbeque);
+        barbTags = new ArrayList<>();
+        barbTags.add("Barbeque");
+        barbTags.add("Barbecue");
+        barbTags.add("Korean+Barbeque");
+        barbTags.add("Brisket");
+
+        mSouthernCheck = root.findViewById(R.id.catSouthern);
+        southTags = new ArrayList<>();
+        southTags.add("Southern");
+        southTags.add("Potatoes");
+//        southTags.add("");
+//        southTags.add("");
+
+
+        mBreakfastCheck = root.findViewById(R.id.catBreakfast);
+        breakTags = new ArrayList<>();
+        breakTags.add("Breakfast");
+        breakTags.add("Brunch");
+        breakTags.add("Eggs");
+        breakTags.add("Pancakes");
+//        breakTags.add("");
+
+        mMexicanCheck = root.findViewById(R.id.catMexican);
+        mexiTags = new ArrayList<>();
+        mexiTags.add("Mexican");
+        mexiTags.add("Latin");
+        mexiTags.add("Tacos");
+        mexiTags.add("Burritos");
+        mexiTags.add("Quesadillas");
+//        mexiTags.add("");
+//        mexiTags.add("");
+
+        mSeafoodCheck = root.findViewById(R.id.catSeafood);
+        seaTags = new ArrayList<>();
+        seaTags.add("Seafood");
+        seaTags.add("Fish");
+        seaTags.add("Shrimp");
+        seaTags.add("Sushi");
+//        seaTags.add("");
+
+        mDessertCheck = root.findViewById(R.id.catDessert);
+        dessTags = new ArrayList<>();
+        dessTags.add("Dessert");
+        dessTags.add("Ice+Cream");
+        dessTags.add("Crepes");
+        dessTags.add("Sweet");
+        dessTags.add("Bakery");
+        dessTags.add("Cakes");
+        dessTags.add("Donuts");
+
+
+    }
+
     private void closeSearch (SlidingUpPanelLayout slideUpPanel, TextView logoText,View searchBar,View locationBar, View background, View options){
         AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
         fadeOut.setDuration(1000);
@@ -519,8 +628,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         }
 
-//        populateNearbyTrucks(listings);
-
         listing = searchListings;
         forWindow = listing;
     }
@@ -563,12 +670,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //The arrayList listing cannot be null or crashes
 
 
-        for (int i = 0; i < searchListings.size(); i++) {
-            if (searchListings.get(i).getMarker().equals(myMark)) {
-                return searchListings.get(i);
+        for (int i = 0; i < listing.size(); i++) {
+            if (listing.get(i).getMarker().equals(myMark)) {
+                return listing.get(i);
             }
         }
-        return searchListings.get(0);
+        return listing.get(0);
     }
 
 
@@ -695,32 +802,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.17265)).title("TestTruck"));
         munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.07265)).title("TestTruck2"));
     }
-
-    private GoogleMap.OnInfoWindowClickListener myWindowClick = new GoogleMap.OnInfoWindowClickListener() {
-        @Override
-        public void onInfoWindowClick(Marker markey) {
-            FragmentActivity activity = (FragmentActivity) getContext();
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            FoodTruckFragment NAME = new FoodTruckFragment(getTruckFromMarker(markey), false);
-            fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
-            fragmentTransaction.commit();
-        }
-    };
-
-    private GoogleMap.OnMarkerClickListener myMarkerClick = new GoogleMap.OnMarkerClickListener() {
-        @Override
-        public boolean onMarkerClick(Marker markey) {
-            if(lastClicked != null) {
-                lastClicked.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_dot));
-
-            }
-            markey.showInfoWindow();
-            markey.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_truck));;
-            lastClicked = markey;
-
-            return true;
-        }
-    };
 
 }

@@ -3,8 +3,6 @@ package com.example.munch.ui.foodTruck;
 
 import android.content.Context;
 
-import android.content.Context;
-
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,15 +11,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.munch.HttpRequests;
 import com.example.munch.R;
 import com.example.munch.data.model.Review;
-import com.example.munch.HttpRequests;
-import com.example.munch.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
