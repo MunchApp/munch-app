@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                         String username = emailEditText.getText().toString();
                         int statusCode = 0;
                         if (password != null && username != null && firstname !=null && dateofbirth_day != null && dateofbirth_month != null && dateofbirth_year != null) {
-                            UserProfileFragment.currentUser.register(pass, user, firstname, lastname, dateofbirth_day, dateofbirth_month, dateofbirth_year);
+                            UserProfileFragment.currentUser.register(password, username, firstname, lastname, dateofbirth_day, dateofbirth_month, dateofbirth_year);
                             statusCode = UserProfileFragment.currentUser.login(user,pass);
                         }
                         if (statusCode != 200) {

@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/rambla"
             android:text="Enter new something"
             android:textColor="@color/munchGreenDark"

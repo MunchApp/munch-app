@@ -10,21 +10,102 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.munch.R;
 import com.example.munch.data.model.Review;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+public class ReviewListingAdapter extends RecyclerView.Adapter<ReviewListingAdapter.MyViewHolder> {
+    private List<Review> reviews;
+    private Context context;
 
-public class ReviewListingAdapter extends ArrayAdapter<ReviewListing>{
+    // Provide a reference to the views for each data item
+    // Complex data items may need more than one view per item, and
+    // you provide access to all the views for a data item in a view holder
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        public View view;
+        public MyViewHolder(View v) {
+            super(v);
+            view = v;
+        }
+    }
+
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public ReviewListingAdapter(ArrayList<Review> reviews, Context context) {
+        this.reviews = reviews;
+        this.context = context;
+    }
+
+    // Create new views (invoked by the layout manager)
+    @Override
+    public ReviewListingAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                     int viewType) {
+        // create a new view
+        View root = LayoutInflater.from(context).inflate(R.layout.review_layout, parent,false);
+
+        MyViewHolder vh = new MyViewHolder(root);
+        return vh;
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+
+
+        final Review currentReview = reviews.get(position);
+
+        //Set the author in view
+        TextView author = (TextView)holder.view.findViewById(R.id.review_author);
+        author.setText(currentReview.getAuthorName());
+
+        //Set the body of review in view
+        TextView review = (TextView)holder.view.findViewById(R.id.reviewbod);
+        review.setText(currentReview.getReviewBody());
+
+        //Set the date in view
+        TextView date = (TextView)holder.view.findViewById(R.id.dateofreview);
+        date.setText(currentReview.getDate());
+
+        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        DateFormat df2 = new SimpleDateFormat("MM/dd/yy h:mm a");
+        String string1 = currentReview.getDate();
+        try {
+            Date result1 = df1.parse(string1);
+            String formattedDate = df2.format(result1);
+            date.setText(formattedDate);
+
+        } catch (ParseException e) {
+        }
+
+        RatingBar rating = (RatingBar)holder.view.findViewById(R.id.ratingbar_on_review);
+        rating.setRating((float)currentReview.getRating());
+
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        return reviews.size();
+    }
+}
+/*
+public class ReviewListingAdapter extends ArrayAdapter<Review>{
 
     //Just need a context() and will make a list of reviews each styled by review_layout
     private Context Context;
-    private ArrayList<ReviewListing> Reviews;
+    private List<Review> Reviews;
 
     //Constructor
-    public ReviewListingAdapter(Context context, ArrayList<ReviewListing> list) {
+    public ReviewListingAdapter(Context context, ArrayList<Review> list) {
         super(context, 0, list);
         Context = context;
         Reviews = list;
@@ -38,11 +119,11 @@ public class ReviewListingAdapter extends ArrayAdapter<ReviewListing>{
         if(aReview == null)
             aReview = LayoutInflater.from(Context).inflate(R.layout.review_layout,parent,false);
 
-        ReviewListing currentReview = Reviews.get(position);
+        final Review currentReview = Reviews.get(position);
 
         //Set the author in view
         TextView author = (TextView)aReview.findViewById(R.id.review_author);
-        author.setText(currentReview.getAuthor());
+        author.setText(currentReview.getAuthorName());
 
         //Set the body of review in view
         TextView review = (TextView)aReview.findViewById(R.id.reviewbod);
@@ -52,9 +133,21 @@ public class ReviewListingAdapter extends ArrayAdapter<ReviewListing>{
         TextView date = (TextView)aReview.findViewById(R.id.dateofreview);
         date.setText(currentReview.getDate());
 
+        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        DateFormat df2 = new SimpleDateFormat("MM/dd/yy h:mm a");
+        String string1 = currentReview.getDate();
+        try {
+            Date result1 = df1.parse(string1);
+            String formattedDate = df2.format(result1);
+            date.setText(formattedDate);
+
+        } catch (ParseException e) {
+        }
+
         RatingBar rating = (RatingBar)aReview.findViewById(R.id.ratingbar_on_review);
         rating.setRating((float)currentReview.getRating());
 
         return aReview;
     }
 }
+*/

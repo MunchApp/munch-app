@@ -76,12 +76,17 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
 
         TextView truckStatus= (TextView)listItem.findViewById(R.id.status_string);
         ImageView truckStatusIcon= (ImageView)listItem.findViewById(R.id.status);
+        View gap = listItem.findViewById(R.id.gap);
         if (currentResult.getStatus()){
+            truckStatusIcon.setVisibility(View.VISIBLE);
+            gap.setVisibility(View.VISIBLE);
             ImageViewCompat.setImageTintList(truckStatusIcon, ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.onlineGreen)));
             truckStatus.setText("ONLINE");
         } else {
-            ImageViewCompat.setImageTintList(truckStatusIcon, ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.offlineRed)));
-            truckStatus.setText("OFFLINE");
+            truckStatusIcon.setVisibility(View.GONE);
+            gap.setVisibility(View.GONE);
+            /*ImageViewCompat.setImageTintList(truckStatusIcon, ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.offlineRed)));
+            truckStatus.setText("OFFLINE");*/
         }
 
         return listItem;

@@ -1,3 +1,4 @@
+/*
 package com.example.munch.ui.foodTruck.reviews;
 
 import android.app.Activity;
@@ -137,5 +138,6 @@ public class ReviewsPageActivity extends AppCompatActivity {
     }
 
 }
+*/
 
 
