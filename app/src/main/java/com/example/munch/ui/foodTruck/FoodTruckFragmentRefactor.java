@@ -156,7 +156,7 @@ public class FoodTruckFragmentRefactor extends Fragment{
                 ViewModelProviders.of(this,new MyViewModelFactory(foodTruck,getActivity())).get(FoodTruckViewModel.class);
 
         setObservers();
-
+        return root;
     }
 
     private void setObservers(){
