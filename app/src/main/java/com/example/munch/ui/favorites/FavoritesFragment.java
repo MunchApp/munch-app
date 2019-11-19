@@ -5,21 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.fragment.app.Fragment;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
-import com.example.munch.ui.foodTruck.FoodTruckFragment;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.example.munch.ui.userProfile.manageTruck.TruckListingAdapter;
 
@@ -56,7 +49,7 @@ public class FavoritesFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                FoodTruckFragment NAME = new FoodTruckFragment();
+                FoodTruckFragmentRefactor NAME = new FoodTruckFragmentRefactor();
                 fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
                 fragmentTransaction.commit();
             }

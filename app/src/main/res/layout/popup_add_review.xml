@@ -6,11 +6,11 @@
     android:orientation="vertical"
     android:id="@+id/popup_edit"
     android:padding="20dp"
-    android:background="#FFFFFF">
+    android:background="@color/munchGreenDark">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="326dp">
+        android:layout_height="230dp">
 
         <TextView
             android:id="@+id/add_prompt"
@@ -20,7 +20,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/rambla"
             android:text="Add Review"
-            android:textColor="@color/munchGreenDark"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -44,6 +44,7 @@
 
         <EditText
             android:id="@id/reviewContent"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -53,9 +54,11 @@
             android:hint="Enter your feedback"
             android:inputType="textMultiLine"
             android:lines="8"
-            android:maxLines="10"
+            android:maxLines="12"
             android:minLines="6"
             android:scrollbars="vertical"
+            android:textColor="@color/munchGreenDark"
+            android:textColorHint="@color/munchGreenDark"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_prompt" />
 
@@ -69,11 +72,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_shape"
-        android:backgroundTint="@color/munchGreenDark"
+        android:backgroundTint="#FFFFFF"
         android:enabled="true"
         android:fontFamily="@font/rambla"
         android:text="POST"
-        android:textColor="@color/munchGreenDark"
+        android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
     <Button
@@ -84,11 +87,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_shape"
-        android:backgroundTint="@color/munchGreenDark"
+        android:backgroundTint="#FFFFFF"
         android:enabled="true"
         android:fontFamily="@font/rambla"
         android:text="CLOSE"
-        android:textColor="@color/munchGreenDark"
+        android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
 </LinearLayout>

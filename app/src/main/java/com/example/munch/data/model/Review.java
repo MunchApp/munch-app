@@ -1,20 +1,10 @@
 package com.example.munch.data.model;
 
-import android.view.Gravity;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-
 import com.example.munch.HttpRequests;
-import com.example.munch.R;
-import com.example.munch.ui.foodTruck.reviews.ReviewListing;
-import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
-import com.example.munch.ui.userProfile.UserProfileFragment;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class Review {

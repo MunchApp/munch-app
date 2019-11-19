@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.UnicodeSet;
 import android.os.Bundle;
 import android.text.Editable;
@@ -53,6 +55,9 @@ public class createTruckActivity2 extends AppCompatActivity {
         newTruck.setAddress(getIntent().getStringExtra("address"));
         String[] photos = {getIntent().getStringExtra("photo")};
         String tags = getIntent().getStringExtra("tags");
+        Bitmap bmp;
+        //final String image = getIntent().getStringExtra("bitmap");
+
         newTruck.setPhotos(photos);
 
         final TimePicker startTime = (TimePicker) findViewById(R.id.timePicker1);
@@ -147,7 +152,7 @@ public class createTruckActivity2 extends AppCompatActivity {
                                 String token = UserProfileFragment.currentUser.getAccessToken();
                                 String ownerId = UserProfileFragment.currentUser.getId();
 
-                                FoodTruck foodTruck = new FoodTruck(token, newTruck.getName(), newTruck.getAddress(), newTruck.getHours(), newTruck.getPhotos(),ownerId, newTruck.getTag(), newTruck.getLocation(context));
+                                FoodTruck foodTruck = new FoodTruck(token, newTruck.getName(), newTruck.getAddress(), newTruck.getHours(),ownerId, newTruck.getTag(), newTruck.getLocation(context));
                                 UserProfileFragment.currentUser.addTruck(foodTruck.getId());
                                 Intent toMainIntent = new Intent(createTruckActivity2.this, MainActivity.class);
                                 startActivity(toMainIntent);

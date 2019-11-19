@@ -17,7 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
-import com.example.munch.ui.foodTruck.FoodTruckFragment;
+import com.example.munch.ui.foodTruck.FoodTruckFragmentRefactor;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
                 FragmentActivity activity = (FragmentActivity)mContext;
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                FoodTruckFragment NAME = new FoodTruckFragment(currentResult, false);
+                FoodTruckFragmentRefactor NAME = new FoodTruckFragmentRefactor(currentResult, false);
                 fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
                 fragmentTransaction.commit();
             }
@@ -89,10 +89,10 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
 //            @Override
 //            public void onClick(View v) {
 //                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-//                Fragment myFragment = new FoodTruckFragment();
+//                Fragment myFragment = new FoodTruckFragmentRefactor();
 //                activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
 //
-////                Fragment newFragment = new FoodTruckFragment();
+////                Fragment newFragment = new FoodTruckFragmentRefactor();
 ////                FragmentTransaction transaction = getFragmentManager().beginTransaction();
 ////
 ////                transaction.replace(R.id.m, newFragment);

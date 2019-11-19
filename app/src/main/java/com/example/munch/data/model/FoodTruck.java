@@ -1,11 +1,17 @@
 package com.example.munch.data.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import com.example.munch.Config;
 import com.example.munch.HttpRequests;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -39,7 +45,7 @@ public class FoodTruck{
     }
 
     //Constructor for adding new Truck to database
-    public FoodTruck(String token, String name, String address, String[][] hours, String[] photos, String owner, ArrayList<String> tags, float[] location){
+    public FoodTruck(String token, String name, String address, String[][] hours, String owner, ArrayList<String> tags, float[] location){
         this.hours = new String[7][2];
         this.photos = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
@@ -47,10 +53,9 @@ public class FoodTruck{
         //Creating JSON Object to pass in Request
         JSONObject truck = new JSONObject();
         try {
-            truck.put("status", "false");
             truck.put("name", name);
             truck.put("address", address);
-            truck.put("photos", new JSONArray(photos));
+            //truck.put("photos", new JSONArray(photos));
             truck.put("hours", new JSONArray(hours));
             truck.put("tags", new JSONArray(tags));
             truck.put("location", new JSONArray(location));
@@ -69,11 +74,22 @@ public class FoodTruck{
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+        try{
+            JSONObject jsonTruck = new JSONObject(response);
+            jsonToFoodTruck(jsonTruck);
+        }catch (JSONException e){
 
+        }
         //Return response
-        id = response;
         int statusCode = httpRequests.getStatusCode();
-        getTruck(id);
+
+        HttpRequests imageRequests = new HttpRequests();
+        imageRequests.execute(serverURL + "foodtrucks/upload/" + this.id, "PUT", null, token, Config.bitmapImage);
+        try {
+            response = imageRequests.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     //Get existing truck from database
@@ -163,6 +179,7 @@ public class FoodTruck{
 
     private void jsonToFoodTruck (JSONObject jsonTruck) {
         try {
+            this.id = jsonTruck.get("id").toString();
             this.name = jsonTruck.get("name").toString();
             this.address = jsonTruck.get("address").toString();
             this.name = jsonTruck.get("name").toString();

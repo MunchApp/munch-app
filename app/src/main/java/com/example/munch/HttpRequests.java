@@ -1,8 +1,12 @@
 package com.example.munch;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -15,6 +19,10 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
     public HttpRequests (){
         statusCode = 0;
     }
+    String boundary = "***" + System.currentTimeMillis() + "***";
+    String twoHyphens = "--";
+    String crlf = "\r\n";
+    String output = "";
 
     @Override
     protected String doInBackground(String... strings) {
@@ -39,12 +47,22 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             }
 
             //Pass json object with parameters
-            if (method.equals("POST") || method.equals("PUT")){
+            if ((method.equals("POST") || method.equals("PUT"))&&strings.length !=5){
                 String json = strings[2];
                 try(OutputStream os = con.getOutputStream()) {
                     byte[] input = json.getBytes("utf-8");
                     os.write(input, 0, input.length);
                 }
+            }
+
+            if(strings.length == 5){
+                byte[] decodedByte = Base64.decode(strings[4], 0);
+                DataOutputStream request = new DataOutputStream(con.getOutputStream());
+                request.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"image1.jpg\"" + crlf);
+                request.writeBytes(crlf);
+                request.write(decodedByte);
+                request.writeBytes(crlf);
+                request.writeBytes(twoHyphens + boundary + crlf);
             }
 
             //connect
@@ -73,5 +91,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
     public int getStatusCode(){
         return statusCode;
     }
+
+
 
 }
