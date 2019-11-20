@@ -101,8 +101,8 @@ public class FoodTruckFragment extends Fragment{
     private RecyclerView allReviews;
     private View gap;
     private Button postReview;
-    private ArrayList<ImageView> editButtons;
-
+    private HashMap<ImageView, String> editButtons;
+    private HashMap<TextView,View> infoButtons;
 
     public FoodTruckFragment(FoodTruck foodTruck, Boolean owner) {
         this.foodTruck = foodTruck;
@@ -153,20 +153,217 @@ public class FoodTruckFragment extends Fragment{
         heart = (ImageView) root.findViewById(R.id.favorite_heart);
         postReview = root.findViewById(R.id.add_review);
 
+        editButtons = new HashMap<>();
+        editButtons.put(edit_name, "name");
+        editButtons.put(edit_address, "address");
+        editButtons.put(edit_website, "website");
+        editButtons.put(edit_phone, "phoneNumber");
+        editButtons.put(edit_hours, "hours");
+        editButtons.put(edit_descrip, "description");
+
+        infoButtons = new HashMap<>();
+        infoButtons.put(phone_prompt,phone);
+        infoButtons.put(website_prompt, website);
+        infoButtons.put(hours_prompt,hours);
+        infoButtons.put(descrip_prompt,descrip);
+
         //Get View Model
         foodTruckViewModel =
                 ViewModelProviders.of(this,new MyViewModelFactory(foodTruck,getActivity())).get(FoodTruckViewModel.class);
 
-
-        ArrayList<ImageView> editButtons = new ArrayList<>();
-        editButtons.add(edit_name);
-        editButtons.add(edit_address);
-        editButtons.add(edit_website);
-        editButtons.add(edit_phone);
-        editButtons.add(edit_hours);
-        editButtons.add(edit_descrip);
         setObservers();
+        populateReviews();
+        newReview();
+
+        final FoodTruckController foodTruckController = new FoodTruckController(foodTruckViewModel,foodTruck);
+
+        //set heart
+        heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                foodTruckController.favorite(foodTruck.getId());
+            }
+        });
+
+        //Set edit buttons
+        for (final ImageView key: editButtons.keySet()) {
+            key.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (editButtons.get(key).equals("hours")) {
+                        showPopupHours(key,editButtons.get(key), foodTruckController);
+                    } else
+                        showPopup(key,editButtons.get(key), foodTruckController);
+                    }
+            });
+        }
+
+        //Set info buttons
+        for (final TextView prompt: infoButtons.keySet()){
+            infoButtons.get(prompt).setVisibility(View.GONE);
+            prompt.setClickable(true);
+            prompt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    if (infoButtons.get(prompt).getVisibility() == View.GONE) {
+                        infoButtons.get(prompt).setVisibility(View.VISIBLE);
+                    } else {
+                        infoButtons.get(prompt).setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
         return root;
+    }
+
+
+    private void showPopup (final ImageView field, final String jsonField, final FoodTruckController foodTruckController){
+        final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_field, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final EditText popupInput1 = (EditText) popupView.findViewById(R.id.input1);
+        final EditText popupInput2 = (EditText) popupView.findViewById(R.id.input2);
+        final Button save = (Button)popupView.findViewById(R.id.save_info);
+        final Button exit = (Button)popupView.findViewById(R.id.exit);
+
+        field.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                //Popup window set up
+                popupWindow.setFocusable(true);
+                popupWindow.setBackgroundDrawable(new ColorDrawable());
+                int location[] = new int[2];
+                view.getLocationOnScreen(location);
+
+
+                //Styling Popup
+                LinearLayout popupLayout = (LinearLayout) popupView.findViewById(R.id.popup_edit);
+                TextView popupPrompt= (TextView) popupView.findViewById(R.id.edit_prompt);
+
+                popupInput2.setVisibility(View.GONE);
+                if (jsonField.equals("address")){
+                    popupInput2.setVisibility(View.VISIBLE);
+                }
+
+                int munchGreen = ContextCompat.getColor(getContext(), R.color.munchGreenDark);
+                String newField = jsonField;
+                if (jsonField.equals("phoneNumber")){
+                    newField = "phone number";
+                }
+                popupPrompt.setText("ENTER NEW " + newField.toUpperCase());
+                popupPrompt.setTextColor(Color.WHITE);
+                popupInput1.setTextColor(Color.WHITE);
+                popupInput2.setTextColor(Color.WHITE);
+                popupInput1.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                popupInput2.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                save.setTextColor(Color.WHITE);
+                exit.setTextColor(Color.WHITE);
+                save.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                exit.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                popupLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.munchGreenDark));
+                popupWindow.setBackgroundDrawable(new ColorDrawable(munchGreen));
+                popupWindow.setElevation(10);
+
+                //Show popup
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            }
+        });
+
+        // Save and Exit buttons
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                String input = popupInput1.getText().toString();
+                if (popupInput2.getVisibility() == View.VISIBLE){
+                    input+=popupInput2.getText();
+                }
+                foodTruckController.saveEdit(jsonField,input);
+                popupWindow.dismiss();
+
+            }
+        });
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    private void showPopupHours (final View field, final String jsonField, final FoodTruckController foodTruckController){
+        final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_hours, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final Spinner day = (Spinner)popupView.findViewById(R.id.day);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.days, R.layout.spinner_layout);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        day.setAdapter(adapter);
+        final Button save = (Button)popupView.findViewById(R.id.save_info);
+        final Button exit = (Button)popupView.findViewById(R.id.exit);
+
+        final TimePicker startTime = (TimePicker) popupView.findViewById(R.id.timePicker1);
+        startTime.setIs24HourView(false);
+        final TimePicker endTime = (TimePicker) popupView.findViewById(R.id.timePicker2);
+        endTime.setIs24HourView(false);
+        final Switch closed = (Switch) popupView.findViewById(R.id.switch_open);
+        final TextView startPrompt = (TextView) popupView.findViewById(R.id.start_prompt);
+        final TextView stopPrompt = (TextView) popupView.findViewById(R.id.end_prompt);
+        final TextView stringOpen = (TextView) popupView.findViewById(R.id.string_open);
+
+        closed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    startPrompt.setVisibility(View.VISIBLE);
+                    startTime.setVisibility(View.VISIBLE);
+                    endTime.setVisibility(View.VISIBLE);
+                    stopPrompt.setVisibility(View.VISIBLE);
+                    stringOpen.setText("OPEN");
+
+                } else {
+                    startPrompt.setVisibility(View.GONE);
+                    startTime.setVisibility(View.GONE);
+                    endTime.setVisibility(View.GONE);
+                    stopPrompt.setVisibility(View.GONE);
+                    stringOpen.setText("CLOSED");
+                }
+            }
+        });
+
+        field.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                //Popup window set up
+                popupWindow.setFocusable(true);
+                popupWindow.setBackgroundDrawable(new ColorDrawable());
+                int location[] = new int[2];
+                view.getLocationOnScreen(location);
+
+                TextView popupPrompt= (TextView) popupView.findViewById(R.id.edit_prompt);
+                popupWindow.setElevation(10);
+
+                //Show popup
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            }
+        });
+
+        // Save and Exit buttons
+        save.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        String dayOfWeek = day.getSelectedItem().toString();
+                        foodTruckController.saveHours(dayOfWeek,closed.getShowText(),startTime,endTime);
+                        popupWindow.dismiss();
+                    }
+                }
+        );
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                popupWindow.dismiss();
+            }
+        });
     }
 
     private void setObservers(){
@@ -205,13 +402,6 @@ public class FoodTruckFragment extends Fragment{
             }
         };
 
-        final Observer<String> Observer = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String newWebsite) {
-                name.setText(newWebsite);
-            }
-        };
-
         final Observer<String> distanceObserver = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String newDistance) {
@@ -222,10 +412,15 @@ public class FoodTruckFragment extends Fragment{
         final Observer<Boolean> favoriteObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable final Boolean newFavorite) {
-                if (newFavorite){
-                    heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart_filled));
+                if (UserProfileFragment.currentUser.getLoggedIn()) {
+                    heart.setVisibility(View.VISIBLE);
+                    if (newFavorite) {
+                        heart.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.fv_heart_filled));
+                    } else {
+                        heart.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.fv_heart));
+                    }
                 } else {
-                    heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart));
+                    heart.setVisibility(View.GONE);
                 }
             }
         };
@@ -284,19 +479,89 @@ public class FoodTruckFragment extends Fragment{
             @Override
             public void onChanged(@Nullable final Boolean newEditable) {
                 if (newEditable){
-                    for (ImageView button: editButtons) {
+                    for (ImageView button: editButtons.keySet()) {
                         button.setVisibility(View.VISIBLE);
                         button.setClickable(true);
                     }
                 } else {
-                    for (ImageView button: editButtons) {
+                    for (ImageView button: editButtons.keySet()) {
                         button.setVisibility(View.GONE);
                     }
                 }
             }
         };
 
-
+        foodTruckViewModel.getName().observe(this, nameObserver);
+        foodTruckViewModel.getAddress().observe(this, addressObserver);
+        foodTruckViewModel.getWebsite().observe(this, websiteObserver);
+        foodTruckViewModel.getPhoneNumber().observe(this, phoneNumberObserver);
+        foodTruckViewModel.getDescription().observe(this, descriptionObserver);
+        foodTruckViewModel.getEditable().observe(this, editableObserver);
+        foodTruckViewModel.getPhotos().observe(this, photosObserver);
+        foodTruckViewModel.getRating().observe(this, ratingObserver);
+        foodTruckViewModel.getStatus().observe(this, statusObserver);
+        foodTruckViewModel.getFavorite().observe(this, favoriteObserver);
+        foodTruckViewModel.getNumReviews().observe(this, numReviewsObserver);
+        foodTruckViewModel.getDistance().observe(this, distanceObserver);
     }
 
+    private void populateReviews(){
+        ArrayList<String> listings = new ArrayList<String>();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        allReviews.setLayoutManager(layoutManager);
+        listings = foodTruck.getReviews();
+        if (listings.size() != 0) {
+            ArrayList<Review> reviewListings = new ArrayList<Review>();
+            for (String s: listings){
+                reviewListings.add(new Review(s));
+            }
+            ReviewListingAdapter mAdapter = new ReviewListingAdapter(reviewListings,getContext());
+            allReviews.setAdapter(mAdapter);
+        }
+    }
+
+    private void newReview(){
+        final View popupView = getLayoutInflater().inflate(R.layout.popup_add_review, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        final Button post = (Button)popupView.findViewById(R.id.post);
+        final Button cancel = (Button)popupView.findViewById(R.id.cancel);
+        final RatingBar rating = (RatingBar) popupView.findViewById(R.id.ratingbar_on_review);
+        final EditText content = (EditText) popupView.findViewById(R.id.reviewContent);
+
+        postReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                //Popup window set up
+                popupWindow.setFocusable(true);
+                popupWindow.setBackgroundDrawable(new ColorDrawable());
+                int location[] = new int[2];
+                view.getLocationOnScreen(location);
+
+                TextView popupPrompt= (TextView) popupView.findViewById(R.id.edit_prompt);
+                popupWindow.setElevation(10);
+
+                //Show popup
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            }
+        });
+
+        // Save and Exit buttons
+        post.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        String author = UserProfileFragment.currentUser.getId();
+                        Review newReview = new Review(token, author, foodTruck.getId(),content.getText().toString(), rating.getRating());
+                        popupWindow.dismiss();
+                    }
+                }
+        );
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                popupWindow.dismiss();
+            }
+        });
+    }
 }

@@ -40,6 +40,19 @@ public class FoodTruckViewModel extends ViewModel {
     private MutableLiveData<Boolean> editable;
 
     public FoodTruckViewModel(FoodTruck truck, Activity activity) {
+        name = new MutableLiveData<>();
+        phoneNumber = new MutableLiveData<>();
+        description = new MutableLiveData<>();
+        hours = new MutableLiveData<>();
+        website = new MutableLiveData<>();
+        status = new MutableLiveData<>();
+        address = new MutableLiveData<>();
+        rating = new MutableLiveData<>();
+        photos = new MutableLiveData<>();
+        numReviews = new MutableLiveData<>();
+        distance = new MutableLiveData<>();
+        favorite = new MutableLiveData<>();
+        editable = new MutableLiveData<>();
         name.setValue(truck.getName());
         phoneNumber.setValue(truck.getPhoneNumber());
         description.setValue(truck.getDescription());

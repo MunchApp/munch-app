@@ -97,7 +97,6 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             }
 
             //connect
-            System.out.println(con.getOutputStream().toString());
             con.connect();
 
             //get error code
