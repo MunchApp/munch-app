@@ -1,20 +1,25 @@
 package com.example.munch.ui.foodTruck;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
+import android.media.Rating;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
@@ -24,24 +29,37 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.munch.HttpRequests;
 import com.example.munch.LocationCalculator;
+import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.data.model.Review;
 import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
+import com.example.munch.ui.map.SearchListingAdapter;
 import com.example.munch.ui.userProfile.UserProfileFragment;
+import com.example.munch.ui.userProfile.manageTruck.TruckListingAdapter;
+import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class FoodTruckFragment extends Fragment{
 
@@ -70,12 +88,12 @@ public class FoodTruckFragment extends Fragment{
     private TextView phone_prompt;
     private TextView hours_prompt;
     private TextView descrip_prompt;
-    private ImageView edit_name;
+    /*private ImageView edit_name;
     private ImageView edit_address;
     private ImageView edit_website;
     private ImageView edit_phone;
     private ImageView edit_hours;
-    private ImageView edit_descrip;
+    private ImageView edit_descrip;*/
     private String token;
     private Switch sw;
     private TextView distance;
@@ -83,6 +101,8 @@ public class FoodTruckFragment extends Fragment{
     private RecyclerView allReviews;
     private View gap;
     private Button postReview;
+    private ArrayList<ImageView> editButtons;
+
 
     public FoodTruckFragment(FoodTruck foodTruck, Boolean owner) {
         this.foodTruck = foodTruck;
@@ -96,489 +116,187 @@ public class FoodTruckFragment extends Fragment{
         final View root = inflater.inflate(R.layout.food_truck_activity, container, false);
 
         //Initialize views that may change values
-        image = (ImageView)root.findViewById(R.id.truck_image);
-        name = (TextView)root.findViewById(R.id.truck_name);
-        statusIcon = (ImageView)root.findViewById(R.id.status);
-        status = (TextView)root.findViewById(R.id.status_string);
-        address = (TextView)root.findViewById(R.id.truck_address);
+        image = (ImageView) root.findViewById(R.id.truck_image);
+        name = (TextView) root.findViewById(R.id.truck_name);
+        statusIcon = (ImageView) root.findViewById(R.id.status);
+        status = (TextView) root.findViewById(R.id.status_string);
+        address = (TextView) root.findViewById(R.id.truck_address);
         rating = (RatingBar) root.findViewById(R.id.truck_rating_bar);
-        website = (TextView)root.findViewById(R.id.truck_website);
-        phone = (TextView)root.findViewById(R.id.truck_phone);
-        sun = (TextView)root.findViewById(R.id.sun_hours);
-        mon = (TextView)root.findViewById(R.id.mon_hours);
-        tue = (TextView)root.findViewById(R.id.tue_hours);
-        wed = (TextView)root.findViewById(R.id.wed_hours);
-        thu = (TextView)root.findViewById(R.id.thu_hours);
-        fri = (TextView)root.findViewById(R.id.fri_hours);
-        sat = (TextView)root.findViewById(R.id.sat_hours);
-        descrip = (TextView)root.findViewById(R.id.truck_descrip);
-        hours = (ConstraintLayout)root.findViewById(R.id.hours);
-        num_review = (TextView)root.findViewById(R.id.num_reviews);
+        website = (TextView) root.findViewById(R.id.truck_website);
+        phone = (TextView) root.findViewById(R.id.truck_phone);
+        sun = (TextView) root.findViewById(R.id.sun_hours);
+        mon = (TextView) root.findViewById(R.id.mon_hours);
+        tue = (TextView) root.findViewById(R.id.tue_hours);
+        wed = (TextView) root.findViewById(R.id.wed_hours);
+        thu = (TextView) root.findViewById(R.id.thu_hours);
+        fri = (TextView) root.findViewById(R.id.fri_hours);
+        sat = (TextView) root.findViewById(R.id.sat_hours);
+        descrip = (TextView) root.findViewById(R.id.truck_descrip);
+        hours = (ConstraintLayout) root.findViewById(R.id.hours);
+        num_review = (TextView) root.findViewById(R.id.num_reviews);
         distance = (TextView) root.findViewById(R.id.truck_distance);
         allReviews = (RecyclerView) root.findViewById(R.id.truck_reviews);
         gap = root.findViewById(R.id.gap);
 
         //Initialize views users interact with
-        phone_prompt = (TextView)root.findViewById(R.id.phone_prompt);
-        website_prompt = (TextView)root.findViewById(R.id.website_prompt);
-        hours_prompt = (TextView)root.findViewById(R.id.hours_prompt);
-        descrip_prompt = (TextView)root.findViewById(R.id.descrip_prompt);
-        edit_name = (ImageView)root.findViewById(R.id.edit_name);
-        edit_address = (ImageView)root.findViewById(R.id.edit_address);
-        edit_website = (ImageView)root.findViewById(R.id.edit_website);
-        edit_phone = (ImageView)root.findViewById(R.id.edit_phone);
-        edit_hours = (ImageView)root.findViewById(R.id.edit_hours);
-        edit_descrip = (ImageView)root.findViewById(R.id.edit_descrip);
+        phone_prompt = (TextView) root.findViewById(R.id.phone_prompt);
+        website_prompt = (TextView) root.findViewById(R.id.website_prompt);
+        hours_prompt = (TextView) root.findViewById(R.id.hours_prompt);
+        descrip_prompt = (TextView) root.findViewById(R.id.descrip_prompt);
+        ImageView edit_name = (ImageView) root.findViewById(R.id.edit_name);
+        ImageView edit_address = (ImageView) root.findViewById(R.id.edit_address);
+        ImageView edit_website = (ImageView) root.findViewById(R.id.edit_website);
+        ImageView edit_phone = (ImageView) root.findViewById(R.id.edit_phone);
+        ImageView edit_hours = (ImageView) root.findViewById(R.id.edit_hours);
+        ImageView edit_descrip = (ImageView) root.findViewById(R.id.edit_descrip);
         sw = (Switch) root.findViewById(R.id.switch_status);
         heart = (ImageView) root.findViewById(R.id.favorite_heart);
         postReview = root.findViewById(R.id.add_review);
 
         //Get View Model
         foodTruckViewModel =
-                ViewModelProviders.of(this).get(FoodTruckViewModel.class);
+                ViewModelProviders.of(this,new MyViewModelFactory(foodTruck,getActivity())).get(FoodTruckViewModel.class);
 
 
-        token = UserProfileFragment.currentUser.getAccessToken();
-
-
-        fillTruckFragment(foodTruck);
-        enableFavorite();
-        setInfoButtons(phone_prompt,phone);
-        setInfoButtons(website_prompt,website);
-        setInfoButtons(hours_prompt,hours);
-        setInfoButtons(descrip_prompt,descrip);
-
-        //todo edit hours
-        setSimpleEditButtons(edit_hours,null,"HOURS","hours");
-        setSimpleEditButtons(edit_name,name,"NAME", "name");
-        setSimpleEditButtons(edit_address,address,"ADDRESS", "address");
-        setSimpleEditButtons(edit_phone,phone,"PHONE NUMBER","phoneNumber");
-        setSimpleEditButtons(edit_website,website,"WEBSITE URL","website");
-        setSimpleEditButtons(edit_descrip,descrip, "DESCRIPTION","description");
-
-        Boolean owns = UserProfileFragment.currentUser.getFoodTrucks().contains(foodTruck.getId());
-
-        num_review.setClickable(true);
-        num_review.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                ScrollView scrollView = (ScrollView)root.findViewById(R.id.scrollView);
-                TextView review_prompt= (TextView) root.findViewById(R.id.review_prompt);
-                scrollView.scrollTo(0, review_prompt.getTop());
-            }
-        });
-        if (owns) {
-            sw.setVisibility(View.VISIBLE);
-            sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    View gap = root.findViewById(R.id.gap);
-                    if (isChecked) {
-                        foodTruck.updateTruck(token, null, true, null);
-                        statusIcon.setVisibility(View.VISIBLE);
-                        gap.setVisibility(View.VISIBLE);
-                        status.setText("ONLINE");
-                        ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.onlineGreen)));
-                    } else {
-                        status.setText("OFFLINE");
-                        statusIcon.setVisibility(View.GONE);
-                        gap.setVisibility(View.GONE);
-                        foodTruck.updateTruck(token, null, false, null);
-                        ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.offlineRed)));
-                    }
-                }
-            });
-        } else {
-            sw.setVisibility(View.GONE);
-        }
-        newReview();
+        ArrayList<ImageView> editButtons = new ArrayList<>();
+        editButtons.add(edit_name);
+        editButtons.add(edit_address);
+        editButtons.add(edit_website);
+        editButtons.add(edit_phone);
+        editButtons.add(edit_hours);
+        editButtons.add(edit_descrip);
+        setObservers();
         return root;
     }
 
-    private void enableFavorite () {
-        if (UserProfileFragment.currentUser.getLoggedIn()){
-            heart.setClickable(true);
-            heart.setVisibility(View.VISIBLE);
-            heart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view){
-                    if (UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId())){
-                        //todo make call to delete favorite
-                        UserProfileFragment.currentUser.deleteFavorite(foodTruck.getId());
+    private void setObservers(){
+        final Observer<String> nameObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newName) {
+                name.setText(newName);
+            }
+        };
 
-                    } else {
-                        //todo make call to add favorite
-                        UserProfileFragment.currentUser.addFavorite(foodTruck.getId());
+        final Observer<String> addressObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newAddress) {
+                address.setText(newAddress);
+            }
+        };
+
+        final Observer<String> websiteObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newWebsite) {
+                website.setText(newWebsite);
+            }
+        };
+
+        final Observer<String> descriptionObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newDescription) {
+                descrip.setText(newDescription);
+            }
+        };
+
+        final Observer<String> phoneNumberObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newPhoneNumber) {
+                phone.setText(newPhoneNumber);
+            }
+        };
+
+        final Observer<String> Observer = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newWebsite) {
+                name.setText(newWebsite);
+            }
+        };
+
+        final Observer<String> distanceObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newDistance) {
+                distance.setText(newDistance + " away");
+            }
+        };
+
+        final Observer<Boolean> favoriteObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable final Boolean newFavorite) {
+                if (newFavorite){
+                    heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart_filled));
+                } else {
+                    heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart));
+                }
+            }
+        };
+
+        final Observer<Float> ratingObserver = new Observer<Float>() {
+            @Override
+            public void onChanged(@Nullable final Float newRating) {
+                rating.setRating(newRating);
+
+            }
+        };
+
+        final Observer<Boolean> statusObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable final Boolean newStatus) {
+                if (newStatus){
+                    statusIcon.setVisibility(View.VISIBLE);
+                    status.setText("ONLINE");
+                    sw.setChecked(true);
+                    gap.setVisibility(View.VISIBLE);
+                    ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.onlineGreen)));
+                } else {
+                    statusIcon.setVisibility(View.GONE);
+                    gap.setVisibility(View.GONE);
+                    status.setText("OFFLINE");
+                    sw.setChecked(false);
+                }
+            }
+        };
+
+        final Observer<Integer> numReviewsObserver = new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable final Integer newNumReviews) {
+                num_review.setText(newNumReviews + " reviews");
+                if (newNumReviews == 0) {
+                    num_review.setText("no reviews");
+                }
+            }
+        };
+
+        final Observer<List<String>> photosObserver = new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable final List<String> newPhotos) {
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+                int width = displayMetrics.widthPixels;
+                Picasso.with(getActivity()).load(newPhotos.get(0))
+                        .resize(width, 650)
+                        .centerCrop()
+                        .into(image);
+            }
+        };
+
+        final Observer<Boolean> editableObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable final Boolean newEditable) {
+                if (newEditable){
+                    for (ImageView button: editButtons) {
+                        button.setVisibility(View.VISIBLE);
+                        button.setClickable(true);
                     }
-
-                    //todo uncomment when call is complete
-                    fillHeart(UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId()));
-                }
-            });
-        } else {
-            heart.setVisibility(View.GONE);
-        }
-
-    }
-    private void setSimpleEditButtons (final View button, final TextView editField, final String prompt, final String jsonField){
-        String userId = UserProfileFragment.currentUser.getId();
-        String ownerId = foodTruck.getOwner();
-        Boolean owns = UserProfileFragment.currentUser.getFoodTrucks().contains(foodTruck.getId());
-        if (owns){
-           button.setVisibility(View.VISIBLE);
-           button.setClickable(true);
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view){
-                    if (prompt.equals("HOURS")){
-                        showPopupHours(button, editField,prompt,jsonField);
-                    } else
-                    showPopup(button, editField, prompt,jsonField);
-                }
-            });
-        } else {
-            button.setVisibility(View.GONE);
-        }
-    }
-
-
-
-    private void setInfoButtons (View prompt,final View value){
-        value.setVisibility(View.GONE);
-        prompt.setClickable(true);
-        prompt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                if (value.getVisibility() == View.GONE) {
-                    value.setVisibility(View.VISIBLE);
                 } else {
-                    value.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-    private void fillHeart(boolean faved){
-        if (faved){
-            heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart_filled));
-        } else {
-            heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart));
-        }
-    }
-    private void fillTruckFragment(FoodTruck truck){
-        //setValues
-        fillHeart(UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId()));
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-        Picasso.with(getActivity()).load(truck.getPhotos().get(0))
-                .resize(width, 650)
-                .centerCrop()
-                .into(image);
-        name.setText(truck.getName());
-        if (truck.getStatus()){
-            statusIcon.setVisibility(View.VISIBLE);
-            status.setText("ONLINE");
-            sw.setChecked(true);
-            gap.setVisibility(View.VISIBLE);
-            ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.onlineGreen)));
-        } else {
-            statusIcon.setVisibility(View.GONE);
-            gap.setVisibility(View.GONE);
-            status.setText("OFFLINE");
-            sw.setChecked(false);
-            //ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.offlineRed)));
-        }
-        //todo get distance
-        LocationCalculator location = new LocationCalculator(getActivity());
-        String dist = location.getDistance(truck.getAddress(),"Current Location");
-        distance.setText( dist + " away");
-
-        //todo calculate open
-        address.setText(truck.getAddress());
-        rating.setRating(truck.getAvgRating());
-        website.setText(truck.getWebsite());
-        phone.setText(truck.getPhoneNumber());
-        sun.setText(truck.getRegHours()[0]);
-        mon.setText(truck.getRegHours()[1]);
-        tue.setText(truck.getRegHours()[2]);
-        wed.setText(truck.getRegHours()[3]);
-        thu.setText(truck.getRegHours()[4]);
-        fri.setText(truck.getRegHours()[5]);
-        sat.setText(truck.getRegHours()[6]);
-        descrip.setText(truck.getDescription());
-        num_review.setText(truck.getReviews().size() + " reviews");
-        if (truck.getReviews().size() == 0) {
-            num_review.setText("no reviews");
-        }
-        populateReviews();
-    }
-
-    private void showPopup (final View field, final TextView saveEdit, final String prompt, final String jsonField){
-        final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_field, null);
-        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final EditText popupInput1 = (EditText) popupView.findViewById(R.id.input1);
-        final EditText popupInput2 = (EditText) popupView.findViewById(R.id.input2);
-        final Button save = (Button)popupView.findViewById(R.id.save_info);
-        final Button exit = (Button)popupView.findViewById(R.id.exit);
-
-        field.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                //Popup window set up
-                popupWindow.setFocusable(true);
-                popupWindow.setBackgroundDrawable(new ColorDrawable());
-                int location[] = new int[2];
-                view.getLocationOnScreen(location);
-
-
-                //Styling Popup
-                LinearLayout popupLayout = (LinearLayout) popupView.findViewById(R.id.popup_edit);
-                TextView popupPrompt= (TextView) popupView.findViewById(R.id.edit_prompt);
-
-                popupInput2.setVisibility(View.GONE);
-                if (prompt.equals("ADDRESS")){
-                    popupInput2.setVisibility(View.VISIBLE);
-                }
-
-                int munchGreen = ContextCompat.getColor(getContext(), R.color.munchGreenDark);
-                popupPrompt.setText("ENTER NEW " + prompt);
-                popupPrompt.setTextColor(Color.WHITE);
-                popupInput1.setTextColor(Color.WHITE);
-                popupInput2.setTextColor(Color.WHITE);
-                popupInput1.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
-                popupInput2.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
-                save.setTextColor(Color.WHITE);
-                exit.setTextColor(Color.WHITE);
-                save.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
-                exit.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
-                popupLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.munchGreenDark));
-                popupWindow.setBackgroundDrawable(new ColorDrawable(munchGreen));
-                popupWindow.setElevation(10);
-
-                //Show popup
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-            }
-        });
-
-        // Save and Exit buttons
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                HashMap<String, String> newVals = new HashMap<String, String>();
-                String val;
-                if (prompt.equals("ADDRESS")){
-                    val = popupInput1.getText().toString() + "\n" +popupInput2.getText().toString();
-                } else {
-                    val = popupInput1.getText().toString();
-                }
-                newVals.put(jsonField,val);
-                int responseCode = foodTruck.updateTruck(token,newVals,null,null);
-                if (responseCode == 200){
-                    saveEdit.setText(val);
-                }
-                popupWindow.dismiss();
-
-            }
-        });
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                popupWindow.dismiss();
-            }
-        });
-    }
-    private void showPopupHours (final View field, final TextView saveEdit, final String prompt, final String jsonField){
-        final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_hours, null);
-        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final Spinner day = (Spinner)popupView.findViewById(R.id.day);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.days, R.layout.spinner_layout);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        day.setAdapter(adapter);
-        final Button save = (Button)popupView.findViewById(R.id.save_info);
-        final Button exit = (Button)popupView.findViewById(R.id.exit);
-
-        final TimePicker startTime = (TimePicker) popupView.findViewById(R.id.timePicker1);
-        startTime.setIs24HourView(false);
-        final TimePicker endTime = (TimePicker) popupView.findViewById(R.id.timePicker2);
-        endTime.setIs24HourView(false);
-        final Switch closed = (Switch) popupView.findViewById(R.id.switch_open);
-        final TextView startPrompt = (TextView) popupView.findViewById(R.id.start_prompt);
-        final TextView stopPrompt = (TextView) popupView.findViewById(R.id.end_prompt);
-        final TextView stringOpen = (TextView) popupView.findViewById(R.id.string_open);
-
-        closed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    startPrompt.setVisibility(View.VISIBLE);
-                    startTime.setVisibility(View.VISIBLE);
-                    endTime.setVisibility(View.VISIBLE);
-                    stopPrompt.setVisibility(View.VISIBLE);
-                    stringOpen.setText("OPEN");
-
-                } else {
-                    startPrompt.setVisibility(View.GONE);
-                    startTime.setVisibility(View.GONE);
-                    endTime.setVisibility(View.GONE);
-                    stopPrompt.setVisibility(View.GONE);
-                    stringOpen.setText("CLOSED");
-                }
-            }
-        });
-
-        field.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                //Popup window set up
-                popupWindow.setFocusable(true);
-                popupWindow.setBackgroundDrawable(new ColorDrawable());
-                int location[] = new int[2];
-                view.getLocationOnScreen(location);
-
-                TextView popupPrompt= (TextView) popupView.findViewById(R.id.edit_prompt);
-                popupWindow.setElevation(10);
-
-                //Show popup
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-            }
-        });
-
-        // Save and Exit buttons
-        save.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View view) {
-                        String dayOfWeek = day.getSelectedItem().toString();
-                        String[][] hours = foodTruck.getHours();
-                        int dayInt = 0;
-                        switch(dayOfWeek )
-                        {
-                            case "Sunday":
-                                dayInt =0;
-                                break;
-                            case "Monday":
-                                dayInt =1;
-                                break;
-                            case "Tuesday":
-                                dayInt =2;
-                                break;
-                            case "Wednesday":
-                                dayInt =3;
-                                break;
-                            case "Thursday":
-                                dayInt =4;
-                                break;
-                            case "Friday":
-                                dayInt =5;
-                                break;
-                            case "SATURDAY":
-                                dayInt =6;
-                                break;
-                            default:
-                                System.out.println("error");
-                        }
-                        if (!closed.isChecked()){
-                            hours[dayInt][0] = "99:99";
-                            hours[dayInt][1] = "99:99";
-                        } else {
-                            hours[dayInt][0] = parseTime(startTime);
-                            hours[dayInt][1] = parseTime(endTime);
-                        }
-                        int responseCode = foodTruck.updateTruck(token,null,null, hours);
-                        if (responseCode == 200){
-                            fillTruckFragment(foodTruck);
-                        }
-                        popupWindow.dismiss();
+                    for (ImageView button: editButtons) {
+                        button.setVisibility(View.GONE);
                     }
                 }
-        );
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                popupWindow.dismiss();
             }
-        });
-    }
-
-    private String parseTime(TimePicker start){
-        String time = "";
-        if (start.getHour() < 10){
-            time += "0" + start.getHour() + ":";
-        } else {
-            time += start.getHour() + ":";
-        }
-        if (start.getMinute() < 10){
-            time += "0" + start.getMinute();
-        } else {
-            time += start.getMinute();
-        }
-        return time;
-    }
-
-    private void populateReviews(){
-        ArrayList<String> listings = new ArrayList<String>();
+        };
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        allReviews.setLayoutManager(layoutManager);
-        listings = foodTruck.getReviews();
-        if (listings.size() != 0) {
-            ArrayList<Review> reviewListings = new ArrayList<Review>();
-            for (String s: listings){
-                reviewListings.add(new Review(s));
-            }
-            ReviewListingAdapter mAdapter = new ReviewListingAdapter(reviewListings,getContext());
-            allReviews.setAdapter(mAdapter);
-        }
-    }
-
-    private void newReview(){
-        final View popupView = getLayoutInflater().inflate(R.layout.popup_add_review, null);
-        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        final Button post = (Button)popupView.findViewById(R.id.post);
-        final Button cancel = (Button)popupView.findViewById(R.id.cancel);
-        final RatingBar rating = (RatingBar) popupView.findViewById(R.id.ratingbar_on_review);
-        final EditText content = (EditText) popupView.findViewById(R.id.reviewContent);
-
-        postReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                //Popup window set up
-                popupWindow.setFocusable(true);
-                popupWindow.setBackgroundDrawable(new ColorDrawable());
-                int location[] = new int[2];
-                view.getLocationOnScreen(location);
-
-                TextView popupPrompt= (TextView) popupView.findViewById(R.id.edit_prompt);
-                popupWindow.setElevation(10);
-
-                //Show popup
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-            }
-        });
-
-        // Save and Exit buttons
-        post.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View view) {
-                        String author = UserProfileFragment.currentUser.getId();
-                        Review newReview = new Review(token, author, foodTruck.getId(),content.getText().toString(), rating.getRating());
-                        fillTruckFragment(foodTruck);
-                        popupWindow.dismiss();
-                    }
-                }
-        );
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                popupWindow.dismiss();
-            }
-        });
     }
 
 }

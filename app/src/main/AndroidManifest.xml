@@ -43,7 +43,7 @@
                 android:resource="@xml/custom_rating_info" />
         </receiver>
 
-        <activity android:name=".ui.foodTruck.FoodTruckFragmentRefactor" />
+        <activity android:name=".ui.foodTruck.FoodTruckFragment" />
         <activity
             android:name=".ui.register.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

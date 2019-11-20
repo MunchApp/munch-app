@@ -113,7 +113,7 @@ public class createTruckActivity extends AppCompatActivity {
     {
         Bitmap immagex=image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        immagex.compress(Bitmap.CompressFormat.JPEG, 60, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
         return imageEncoded;

@@ -37,6 +37,7 @@ public class FoodTruckViewModel extends ViewModel {
     private MutableLiveData<Integer> numReviews;
     private MutableLiveData<String> distance;
     private MutableLiveData<Boolean> favorite;
+    private MutableLiveData<Boolean> editable;
 
     public FoodTruckViewModel(FoodTruck truck, Activity activity) {
         name.setValue(truck.getName());
@@ -49,14 +50,11 @@ public class FoodTruckViewModel extends ViewModel {
         rating.setValue(truck.getAvgRating());
         photos.setValue(truck.getPhotos());
         numReviews.setValue(truck.getReviews().size());
+        editable.setValue(truck.getOwner().equals(UserProfileFragment.currentUser.getId()));
         LocationCalculator location = new LocationCalculator(activity);
         String dist = location.getDistance(truck.getAddress(),"Current Location");
         distance.setValue(dist);
-        if (UserProfileFragment.currentUser.getFavorites().contains(truck.getId())){
-            favorite.setValue(true);
-        } else {
-            favorite.setValue(false);
-        }
+        favorite.setValue(UserProfileFragment.currentUser.getFavorites().contains(truck.getId()));
     }
 
     //getters
@@ -108,6 +106,10 @@ public class FoodTruckViewModel extends ViewModel {
         return name;
     }
 
+    public MutableLiveData<Boolean> getEditable() {
+        return editable;
+    }
+
     //setters
 
     public void setPhotos(ArrayList<String> photos) {
@@ -156,5 +158,9 @@ public class FoodTruckViewModel extends ViewModel {
 
     public void setName(String name) {
         this.name.setValue(name);
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable.setValue(editable);
     }
 }

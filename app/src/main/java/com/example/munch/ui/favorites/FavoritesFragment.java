@@ -49,7 +49,7 @@ public class FavoritesFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                FoodTruckFragmentRefactor NAME = new FoodTruckFragmentRefactor();
+                FoodTruckFragment NAME = new FoodTruckFragment();
                 fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
                 fragmentTransaction.commit();
             }

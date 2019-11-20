@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
-import com.example.munch.ui.foodTruck.FoodTruckFragmentRefactor;
+import com.example.munch.ui.foodTruck.FoodTruckFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
                 FragmentActivity activity = (FragmentActivity)mContext;
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                FoodTruckFragmentRefactor NAME = new FoodTruckFragmentRefactor(currentResult, true);
+                FoodTruckFragment NAME = new FoodTruckFragment(currentResult, true);
                 fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
                 fragmentTransaction.commit();
             }
