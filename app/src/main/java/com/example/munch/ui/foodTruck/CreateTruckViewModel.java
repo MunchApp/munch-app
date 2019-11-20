@@ -29,6 +29,7 @@ public class CreateTruckViewModel extends ViewModel {
     float[] location;
     ArrayList<String> tags;
 
+
     public CreateTruckViewModel() {
         hours = new String[7][2];
         location = new float[2];
@@ -105,6 +106,7 @@ public class CreateTruckViewModel extends ViewModel {
                 JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");
                 this.location[1] = Float.valueOf(location.optString("lat"));
                 this.location[0] = Float.valueOf(location.optString("lng"));
+
             }
         }catch (JSONException e){
 

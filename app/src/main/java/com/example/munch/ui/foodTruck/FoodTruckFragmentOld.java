@@ -1,25 +1,20 @@
 package com.example.munch.ui.foodTruck;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
-import android.media.Rating;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
@@ -29,39 +24,26 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.munch.HttpRequests;
 import com.example.munch.LocationCalculator;
-import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.data.model.Review;
 import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
-import com.example.munch.ui.map.SearchListingAdapter;
 import com.example.munch.ui.userProfile.UserProfileFragment;
-import com.example.munch.ui.userProfile.manageTruck.TruckListingAdapter;
-import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class FoodTruckFragment extends Fragment{
+public class FoodTruckFragmentOld extends Fragment{
 
     private FoodTruckViewModel foodTruckViewModel;
     private FoodTruck foodTruck;
@@ -88,12 +70,12 @@ public class FoodTruckFragment extends Fragment{
     private TextView phone_prompt;
     private TextView hours_prompt;
     private TextView descrip_prompt;
-    /*private ImageView edit_name;
+    private ImageView edit_name;
     private ImageView edit_address;
     private ImageView edit_website;
     private ImageView edit_phone;
     private ImageView edit_hours;
-    private ImageView edit_descrip;*/
+    private ImageView edit_descrip;
     private String token;
     private Switch sw;
     private TextView distance;
@@ -101,10 +83,8 @@ public class FoodTruckFragment extends Fragment{
     private RecyclerView allReviews;
     private View gap;
     private Button postReview;
-    private HashMap<ImageView, String> editButtons;
-    private HashMap<TextView,View> infoButtons;
 
-    public FoodTruckFragment(FoodTruck foodTruck, Boolean owner) {
+    public FoodTruckFragmentOld(FoodTruck foodTruck, Boolean owner) {
         this.foodTruck = foodTruck;
         this.owner = owner;
     }
@@ -116,108 +96,225 @@ public class FoodTruckFragment extends Fragment{
         final View root = inflater.inflate(R.layout.food_truck_activity, container, false);
 
         //Initialize views that may change values
-        image = (ImageView) root.findViewById(R.id.truck_image);
-        name = (TextView) root.findViewById(R.id.truck_name);
-        statusIcon = (ImageView) root.findViewById(R.id.status);
-        status = (TextView) root.findViewById(R.id.status_string);
-        address = (TextView) root.findViewById(R.id.truck_address);
+        image = (ImageView)root.findViewById(R.id.truck_image);
+        name = (TextView)root.findViewById(R.id.truck_name);
+        statusIcon = (ImageView)root.findViewById(R.id.status);
+        status = (TextView)root.findViewById(R.id.status_string);
+        address = (TextView)root.findViewById(R.id.truck_address);
         rating = (RatingBar) root.findViewById(R.id.truck_rating_bar);
-        website = (TextView) root.findViewById(R.id.truck_website);
-        phone = (TextView) root.findViewById(R.id.truck_phone);
-        sun = (TextView) root.findViewById(R.id.sun_hours);
-        mon = (TextView) root.findViewById(R.id.mon_hours);
-        tue = (TextView) root.findViewById(R.id.tue_hours);
-        wed = (TextView) root.findViewById(R.id.wed_hours);
-        thu = (TextView) root.findViewById(R.id.thu_hours);
-        fri = (TextView) root.findViewById(R.id.fri_hours);
-        sat = (TextView) root.findViewById(R.id.sat_hours);
-        descrip = (TextView) root.findViewById(R.id.truck_descrip);
-        hours = (ConstraintLayout) root.findViewById(R.id.hours);
-        num_review = (TextView) root.findViewById(R.id.num_reviews);
+        website = (TextView)root.findViewById(R.id.truck_website);
+        phone = (TextView)root.findViewById(R.id.truck_phone);
+        sun = (TextView)root.findViewById(R.id.sun_hours);
+        mon = (TextView)root.findViewById(R.id.mon_hours);
+        tue = (TextView)root.findViewById(R.id.tue_hours);
+        wed = (TextView)root.findViewById(R.id.wed_hours);
+        thu = (TextView)root.findViewById(R.id.thu_hours);
+        fri = (TextView)root.findViewById(R.id.fri_hours);
+        sat = (TextView)root.findViewById(R.id.sat_hours);
+        descrip = (TextView)root.findViewById(R.id.truck_descrip);
+        hours = (ConstraintLayout)root.findViewById(R.id.hours);
+        num_review = (TextView)root.findViewById(R.id.num_reviews);
         distance = (TextView) root.findViewById(R.id.truck_distance);
         allReviews = (RecyclerView) root.findViewById(R.id.truck_reviews);
         gap = root.findViewById(R.id.gap);
 
         //Initialize views users interact with
-        phone_prompt = (TextView) root.findViewById(R.id.phone_prompt);
-        website_prompt = (TextView) root.findViewById(R.id.website_prompt);
-        hours_prompt = (TextView) root.findViewById(R.id.hours_prompt);
-        descrip_prompt = (TextView) root.findViewById(R.id.descrip_prompt);
-        ImageView edit_name = (ImageView) root.findViewById(R.id.edit_name);
-        ImageView edit_address = (ImageView) root.findViewById(R.id.edit_address);
-        ImageView edit_website = (ImageView) root.findViewById(R.id.edit_website);
-        ImageView edit_phone = (ImageView) root.findViewById(R.id.edit_phone);
-        ImageView edit_hours = (ImageView) root.findViewById(R.id.edit_hours);
-        ImageView edit_descrip = (ImageView) root.findViewById(R.id.edit_descrip);
+        phone_prompt = (TextView)root.findViewById(R.id.phone_prompt);
+        website_prompt = (TextView)root.findViewById(R.id.website_prompt);
+        hours_prompt = (TextView)root.findViewById(R.id.hours_prompt);
+        descrip_prompt = (TextView)root.findViewById(R.id.descrip_prompt);
+        edit_name = (ImageView)root.findViewById(R.id.edit_name);
+        edit_address = (ImageView)root.findViewById(R.id.edit_address);
+        edit_website = (ImageView)root.findViewById(R.id.edit_website);
+        edit_phone = (ImageView)root.findViewById(R.id.edit_phone);
+        edit_hours = (ImageView)root.findViewById(R.id.edit_hours);
+        edit_descrip = (ImageView)root.findViewById(R.id.edit_descrip);
         sw = (Switch) root.findViewById(R.id.switch_status);
         heart = (ImageView) root.findViewById(R.id.favorite_heart);
         postReview = root.findViewById(R.id.add_review);
 
-        editButtons = new HashMap<>();
-        editButtons.put(edit_name, "name");
-        editButtons.put(edit_address, "address");
-        editButtons.put(edit_website, "website");
-        editButtons.put(edit_phone, "phoneNumber");
-        editButtons.put(edit_hours, "hours");
-        editButtons.put(edit_descrip, "description");
-
-        infoButtons = new HashMap<>();
-        infoButtons.put(phone_prompt,phone);
-        infoButtons.put(website_prompt, website);
-        infoButtons.put(hours_prompt,hours);
-        infoButtons.put(descrip_prompt,descrip);
-
         //Get View Model
         foodTruckViewModel =
-                ViewModelProviders.of(this,new MyViewModelFactory(foodTruck,getActivity())).get(FoodTruckViewModel.class);
+                ViewModelProviders.of(this).get(FoodTruckViewModel.class);
 
-        setObservers();
-        populateReviews();
-        newReview();
 
-        final FoodTruckController foodTruckController = new FoodTruckController(foodTruckViewModel,foodTruck);
+        token = UserProfileFragment.currentUser.getAccessToken();
 
-        //set heart
-        heart.setOnClickListener(new View.OnClickListener() {
+
+        fillTruckFragment(foodTruck);
+        enableFavorite();
+        setInfoButtons(phone_prompt,phone);
+        setInfoButtons(website_prompt,website);
+        setInfoButtons(hours_prompt,hours);
+        setInfoButtons(descrip_prompt,descrip);
+
+        //todo edit hours
+        setSimpleEditButtons(edit_hours,null,"HOURS","hours");
+        setSimpleEditButtons(edit_name,name,"NAME", "name");
+        setSimpleEditButtons(edit_address,address,"ADDRESS", "address");
+        setSimpleEditButtons(edit_phone,phone,"PHONE NUMBER","phoneNumber");
+        setSimpleEditButtons(edit_website,website,"WEBSITE URL","website");
+        setSimpleEditButtons(edit_descrip,descrip, "DESCRIPTION","description");
+
+        Boolean owns = UserProfileFragment.currentUser.getFoodTrucks().contains(foodTruck.getId());
+
+        num_review.setClickable(true);
+        num_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                foodTruckController.favorite(foodTruck.getId());
+                ScrollView scrollView = (ScrollView)root.findViewById(R.id.scrollView);
+                TextView review_prompt= (TextView) root.findViewById(R.id.review_prompt);
+                scrollView.scrollTo(0, review_prompt.getTop());
             }
         });
-
-        //Set edit buttons
-        for (final ImageView key: editButtons.keySet()) {
-            key.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (editButtons.get(key).equals("hours")) {
-                        showPopupHours(key,editButtons.get(key), foodTruckController);
-                    } else
-                        showPopup(key,editButtons.get(key), foodTruckController);
-                    }
-            });
-        }
-
-        //Set info buttons
-        for (final TextView prompt: infoButtons.keySet()){
-            infoButtons.get(prompt).setVisibility(View.GONE);
-            prompt.setClickable(true);
-            prompt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view){
-                    if (infoButtons.get(prompt).getVisibility() == View.GONE) {
-                        infoButtons.get(prompt).setVisibility(View.VISIBLE);
+        if (owns) {
+            sw.setVisibility(View.VISIBLE);
+            sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    View gap = root.findViewById(R.id.gap);
+                    if (isChecked) {
+                        foodTruck.updateTruck(token, null, true, null);
+                        statusIcon.setVisibility(View.VISIBLE);
+                        gap.setVisibility(View.VISIBLE);
+                        status.setText("ONLINE");
+                        ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.onlineGreen)));
                     } else {
-                        infoButtons.get(prompt).setVisibility(View.GONE);
+                        status.setText("OFFLINE");
+                        statusIcon.setVisibility(View.GONE);
+                        gap.setVisibility(View.GONE);
+                        foodTruck.updateTruck(token, null, false, null);
+                        ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.offlineRed)));
                     }
                 }
             });
+        } else {
+            sw.setVisibility(View.GONE);
         }
+        newReview();
         return root;
     }
 
+    private void enableFavorite () {
+        if (UserProfileFragment.currentUser.getLoggedIn()){
+            heart.setClickable(true);
+            heart.setVisibility(View.VISIBLE);
+            heart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    if (UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId())){
+                        //todo make call to delete favorite
+                        UserProfileFragment.currentUser.deleteFavorite(foodTruck.getId());
 
-    private void showPopup (final ImageView field, final String jsonField, final FoodTruckController foodTruckController){
+                    } else {
+                        //todo make call to add favorite
+                        UserProfileFragment.currentUser.addFavorite(foodTruck.getId());
+                    }
+
+                    //todo uncomment when call is complete
+                    fillHeart(UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId()));
+                }
+            });
+        } else {
+            heart.setVisibility(View.GONE);
+        }
+
+    }
+    private void setSimpleEditButtons (final View button, final TextView editField, final String prompt, final String jsonField){
+        String userId = UserProfileFragment.currentUser.getId();
+        String ownerId = foodTruck.getOwner();
+        Boolean owns = UserProfileFragment.currentUser.getFoodTrucks().contains(foodTruck.getId());
+        if (owns){
+           button.setVisibility(View.VISIBLE);
+           button.setClickable(true);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    if (prompt.equals("HOURS")){
+                        showPopupHours(button, editField,prompt,jsonField);
+                    } else
+                    showPopup(button, editField, prompt,jsonField);
+                }
+            });
+        } else {
+            button.setVisibility(View.GONE);
+        }
+    }
+
+
+
+    private void setInfoButtons (View prompt,final View value){
+        value.setVisibility(View.GONE);
+        prompt.setClickable(true);
+        prompt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                if (value.getVisibility() == View.GONE) {
+                    value.setVisibility(View.VISIBLE);
+                } else {
+                    value.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+    private void fillHeart(boolean faved){
+        if (faved){
+            heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart_filled));
+        } else {
+            heart.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.fv_heart));
+        }
+    }
+    private void fillTruckFragment(FoodTruck truck){
+        //setValues
+        fillHeart(UserProfileFragment.currentUser.getFavorites().contains(foodTruck.getId()));
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        Picasso.with(getActivity()).load(truck.getPhotos().get(0))
+                .resize(width, 650)
+                .centerCrop()
+                .into(image);
+        name.setText(truck.getName());
+        if (truck.getStatus()){
+            statusIcon.setVisibility(View.VISIBLE);
+            status.setText("ONLINE");
+            sw.setChecked(true);
+            gap.setVisibility(View.VISIBLE);
+            ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.onlineGreen)));
+        } else {
+            statusIcon.setVisibility(View.GONE);
+            gap.setVisibility(View.GONE);
+            status.setText("OFFLINE");
+            sw.setChecked(false);
+            //ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.offlineRed)));
+        }
+        //todo get distance
+        LocationCalculator location = new LocationCalculator(getActivity());
+        String dist = location.getDistance(truck.getAddress(),"Current Location");
+        distance.setText( dist + " away");
+
+        //todo calculate open
+        address.setText(truck.getAddress());
+        rating.setRating(truck.getAvgRating());
+        website.setText(truck.getWebsite());
+        phone.setText(truck.getPhoneNumber());
+        sun.setText(truck.getRegHours()[0]);
+        mon.setText(truck.getRegHours()[1]);
+        tue.setText(truck.getRegHours()[2]);
+        wed.setText(truck.getRegHours()[3]);
+        thu.setText(truck.getRegHours()[4]);
+        fri.setText(truck.getRegHours()[5]);
+        sat.setText(truck.getRegHours()[6]);
+        descrip.setText(truck.getDescription());
+        num_review.setText(truck.getReviews().size() + " reviews");
+        if (truck.getReviews().size() == 0) {
+            num_review.setText("no reviews");
+        }
+        populateReviews();
+    }
+
+    private void showPopup (final View field, final TextView saveEdit, final String prompt, final String jsonField){
         final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_field, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         final EditText popupInput1 = (EditText) popupView.findViewById(R.id.input1);
@@ -240,16 +337,12 @@ public class FoodTruckFragment extends Fragment{
                 TextView popupPrompt= (TextView) popupView.findViewById(R.id.edit_prompt);
 
                 popupInput2.setVisibility(View.GONE);
-                if (jsonField.equals("address")){
+                if (prompt.equals("ADDRESS")){
                     popupInput2.setVisibility(View.VISIBLE);
                 }
 
                 int munchGreen = ContextCompat.getColor(getContext(), R.color.munchGreenDark);
-                String newField = jsonField;
-                if (jsonField.equals("phoneNumber")){
-                    newField = "phone number";
-                }
-                popupPrompt.setText("ENTER NEW " + newField.toUpperCase());
+                popupPrompt.setText("ENTER NEW " + prompt);
                 popupPrompt.setTextColor(Color.WHITE);
                 popupInput1.setTextColor(Color.WHITE);
                 popupInput2.setTextColor(Color.WHITE);
@@ -272,11 +365,18 @@ public class FoodTruckFragment extends Fragment{
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                String input = popupInput1.getText().toString();
-                if (popupInput2.getVisibility() == View.VISIBLE){
-                    input+=popupInput2.getText();
+                HashMap<String, String> newVals = new HashMap<String, String>();
+                String val;
+                if (prompt.equals("ADDRESS")){
+                    val = popupInput1.getText().toString() + "\n" +popupInput2.getText().toString();
+                } else {
+                    val = popupInput1.getText().toString();
                 }
-                foodTruckController.saveEdit(jsonField,input);
+                newVals.put(jsonField,val);
+                int responseCode = foodTruck.updateTruck(token,newVals,null,null);
+                if (responseCode == 200){
+                    saveEdit.setText(val);
+                }
                 popupWindow.dismiss();
 
             }
@@ -288,8 +388,7 @@ public class FoodTruckFragment extends Fragment{
             }
         });
     }
-
-    private void showPopupHours (final View field, final String jsonField, final FoodTruckController foodTruckController){
+    private void showPopupHours (final View field, final TextView saveEdit, final String prompt, final String jsonField){
         final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_hours, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         final Spinner day = (Spinner)popupView.findViewById(R.id.day);
@@ -353,7 +452,45 @@ public class FoodTruckFragment extends Fragment{
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         String dayOfWeek = day.getSelectedItem().toString();
-                        foodTruckController.saveHours(dayOfWeek,closed.getShowText(),startTime,endTime);
+                        String[][] hours = foodTruck.getHours();
+                        int dayInt = 0;
+                        switch(dayOfWeek )
+                        {
+                            case "Sunday":
+                                dayInt =0;
+                                break;
+                            case "Monday":
+                                dayInt =1;
+                                break;
+                            case "Tuesday":
+                                dayInt =2;
+                                break;
+                            case "Wednesday":
+                                dayInt =3;
+                                break;
+                            case "Thursday":
+                                dayInt =4;
+                                break;
+                            case "Friday":
+                                dayInt =5;
+                                break;
+                            case "SATURDAY":
+                                dayInt =6;
+                                break;
+                            default:
+                                System.out.println("error");
+                        }
+                        if (!closed.isChecked()){
+                            hours[dayInt][0] = "99:99";
+                            hours[dayInt][1] = "99:99";
+                        } else {
+                            hours[dayInt][0] = parseTime(startTime);
+                            hours[dayInt][1] = parseTime(endTime);
+                        }
+                        int responseCode = foodTruck.updateTruck(token,null,null, hours);
+                        if (responseCode == 200){
+                            fillTruckFragment(foodTruck);
+                        }
                         popupWindow.dismiss();
                     }
                 }
@@ -366,147 +503,25 @@ public class FoodTruckFragment extends Fragment{
         });
     }
 
-    private void setObservers(){
-        final Observer<String> nameObserver = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String newName) {
-                name.setText(newName);
-            }
-        };
-
-        final Observer<String> addressObserver = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String newAddress) {
-                address.setText(newAddress);
-            }
-        };
-
-        final Observer<String> websiteObserver = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String newWebsite) {
-                website.setText(newWebsite);
-            }
-        };
-
-        final Observer<String> descriptionObserver = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String newDescription) {
-                descrip.setText(newDescription);
-            }
-        };
-
-        final Observer<String> phoneNumberObserver = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String newPhoneNumber) {
-                phone.setText(newPhoneNumber);
-            }
-        };
-
-        final Observer<String> distanceObserver = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String newDistance) {
-                distance.setText(newDistance + " away");
-            }
-        };
-
-        final Observer<Boolean> favoriteObserver = new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable final Boolean newFavorite) {
-                if (UserProfileFragment.currentUser.getLoggedIn()) {
-                    heart.setVisibility(View.VISIBLE);
-                    if (newFavorite) {
-                        heart.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.fv_heart_filled));
-                    } else {
-                        heart.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.fv_heart));
-                    }
-                } else {
-                    heart.setVisibility(View.GONE);
-                }
-            }
-        };
-
-        final Observer<Float> ratingObserver = new Observer<Float>() {
-            @Override
-            public void onChanged(@Nullable final Float newRating) {
-                rating.setRating(newRating);
-
-            }
-        };
-
-        final Observer<Boolean> statusObserver = new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable final Boolean newStatus) {
-                if (newStatus){
-                    statusIcon.setVisibility(View.VISIBLE);
-                    status.setText("ONLINE");
-                    sw.setChecked(true);
-                    gap.setVisibility(View.VISIBLE);
-                    ImageViewCompat.setImageTintList(statusIcon, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.onlineGreen)));
-                } else {
-                    statusIcon.setVisibility(View.GONE);
-                    gap.setVisibility(View.GONE);
-                    status.setText("OFFLINE");
-                    sw.setChecked(false);
-                }
-            }
-        };
-
-        final Observer<Integer> numReviewsObserver = new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable final Integer newNumReviews) {
-                num_review.setText(newNumReviews + " reviews");
-                if (newNumReviews == 0) {
-                    num_review.setText("no reviews");
-                }
-            }
-        };
-
-        final Observer<List<String>> photosObserver = new Observer<List<String>>() {
-            @Override
-            public void onChanged(@Nullable final List<String> newPhotos) {
-                DisplayMetrics displayMetrics = new DisplayMetrics();
-                getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                int height = displayMetrics.heightPixels;
-                int width = displayMetrics.widthPixels;
-                Picasso.with(getActivity()).load(newPhotos.get(0))
-                        .resize(width, 650)
-                        .centerCrop()
-                        .into(image);
-            }
-        };
-
-        final Observer<Boolean> editableObserver = new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable final Boolean newEditable) {
-                if (newEditable){
-                    for (ImageView button: editButtons.keySet()) {
-                        button.setVisibility(View.VISIBLE);
-                        button.setClickable(true);
-                    }
-                } else {
-                    for (ImageView button: editButtons.keySet()) {
-                        button.setVisibility(View.GONE);
-                    }
-                }
-            }
-        };
-
-        foodTruckViewModel.getName().observe(this, nameObserver);
-        foodTruckViewModel.getAddress().observe(this, addressObserver);
-        foodTruckViewModel.getWebsite().observe(this, websiteObserver);
-        foodTruckViewModel.getPhoneNumber().observe(this, phoneNumberObserver);
-        foodTruckViewModel.getDescription().observe(this, descriptionObserver);
-        foodTruckViewModel.getEditable().observe(this, editableObserver);
-        foodTruckViewModel.getPhotos().observe(this, photosObserver);
-        foodTruckViewModel.getRating().observe(this, ratingObserver);
-        foodTruckViewModel.getStatus().observe(this, statusObserver);
-        foodTruckViewModel.getFavorite().observe(this, favoriteObserver);
-        foodTruckViewModel.getNumReviews().observe(this, numReviewsObserver);
-        foodTruckViewModel.getDistance().observe(this, distanceObserver);
+    private String parseTime(TimePicker start){
+        String time = "";
+        if (start.getHour() < 10){
+            time += "0" + start.getHour() + ":";
+        } else {
+            time += start.getHour() + ":";
+        }
+        if (start.getMinute() < 10){
+            time += "0" + start.getMinute();
+        } else {
+            time += start.getMinute();
+        }
+        return time;
     }
 
     private void populateReviews(){
         ArrayList<String> listings = new ArrayList<String>();
+
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         allReviews.setLayoutManager(layoutManager);
@@ -553,6 +568,7 @@ public class FoodTruckFragment extends Fragment{
                     public void onClick(View view) {
                         String author = UserProfileFragment.currentUser.getId();
                         Review newReview = new Review(token, author, foodTruck.getId(),content.getText().toString(), rating.getRating());
+                        fillTruckFragment(foodTruck);
                         popupWindow.dismiss();
                     }
                 }
@@ -564,4 +580,5 @@ public class FoodTruckFragment extends Fragment{
             }
         });
     }
+
 }

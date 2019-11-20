@@ -28,12 +28,10 @@ import java.util.ArrayList;
 
 public class UserProfileFragment extends Fragment {
     public static LoggedInUser currentUser = new LoggedInUser();
-    private UserProfileViewModel userProfileViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        userProfileViewModel =
-                ViewModelProviders.of(this).get(UserProfileViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_user_profile, container, false);
         final Button signInOut = root.findViewById(R.id.sign_in_out);
         TextView personalInfo = root.findViewById(R.id.personal_information);

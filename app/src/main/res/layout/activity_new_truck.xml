@@ -262,7 +262,7 @@
                 app:layout_constraintRight_toLeftOf="@id/photo_url"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
+            <!--<EditText
                 android:id="@+id/photo_url"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -280,7 +280,24 @@
                 app:layout_constraintHorizontal_weight="8"
                 app:layout_constraintLeft_toRightOf="@id/spacer5"
                 app:layout_constraintRight_toLeftOf="@id/spacer6"
-                app:layout_constraintTop_toBottomOf="@+id/photo_prompt" />
+                app:layout_constraintTop_toBottomOf="@+id/photo_prompt" />-->
+
+            <Button
+                android:id="@+id/photo_url"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_shape"
+                android:enabled="true"
+                android:fontFamily="@font/rambla"
+                android:text="CHOOSE PICTURES"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toRightOf="@id/spacer5"
+                app:layout_constraintRight_toLeftOf="@id/spacer6"
+                app:layout_constraintTop_toBottomOf="@+id/photo_prompt"/>
 
             <Space
                 android:id="@+id/spacer6"
