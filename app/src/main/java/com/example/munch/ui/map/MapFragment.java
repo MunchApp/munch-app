@@ -56,6 +56,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    //region global variables
     public ImageView firstIm;
     static GoogleMap munMap;
     String sb;
@@ -99,6 +100,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //    CheckBox mRating4;
 //    CheckBox mRating3;
 //    CheckBox mRating2;
+    //endregion
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -295,7 +297,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         sortBySpinner.setAdapter(
                 new NothingSelectedSpinnerAdapter(
                         adapter,
-                        R.layout.contact_spinner_row_nothing_selected, // Optional
+                        R.layout.contact_spinner_row_nothing_selected,
                         getActivity()));
         sortBySpinner.setOnItemSelectedListener(           //action triggered on button click
                 new AdapterView.OnItemSelectedListener() {
