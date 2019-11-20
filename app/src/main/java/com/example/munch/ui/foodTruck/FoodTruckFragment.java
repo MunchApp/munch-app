@@ -479,11 +479,13 @@ public class FoodTruckFragment extends Fragment{
             @Override
             public void onChanged(@Nullable final Boolean newEditable) {
                 if (newEditable){
+                    sw.setVisibility(View.VISIBLE);
                     for (ImageView button: editButtons.keySet()) {
                         button.setVisibility(View.VISIBLE);
                         button.setClickable(true);
                     }
                 } else {
+                    sw.setVisibility(View.GONE);
                     for (ImageView button: editButtons.keySet()) {
                         button.setVisibility(View.GONE);
                     }

@@ -163,7 +163,7 @@ public class LoggedInUser {
         this.dateOfBirth_month = "";
         this.dateOfBirth_year = "";
         this.dateOfBirth_day = "";
-        this.id = "";
+        this.id = "NOT LOGGED IN";
         this.foodTrucks = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
         this.favorites = new ArrayList<String>();
