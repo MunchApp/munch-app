@@ -5,15 +5,22 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Base64;
 
-import com.android.internal.http.multipart.MultipartEntity;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.entity.mime.HttpMultipartMode;
+import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
+import cz.msebera.android.httpclient.entity.mime.content.ByteArrayBody;
+import cz.msebera.android.httpclient.entity.mime.content.ContentBody;
 
 
 public class HttpRequests extends AsyncTask<String, Void, String> {
@@ -48,7 +55,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
                 con.setRequestProperty("Content-Type", "application/json");
             }
             else {
-                con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" +boundary);
+                //con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" +boundary);
             }
 
             if (strings.length >= 4){
@@ -67,12 +74,25 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
 
             if(strings.length == 5){
                 byte[] decodedByte = Base64.decode(strings[4], 0);
-                DataOutputStream request = new DataOutputStream(con.getOutputStream());
+                ContentBody contentPart = new ByteArrayBody(decodedByte, "image.jpg");
+                MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+
+                /* example for setting a HttpMultipartMode */
+                builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+                builder.addPart("image", contentPart);
+
+                HttpEntity reqEntity = builder.build();
+                con.addRequestProperty(reqEntity.getContentType().getName(), reqEntity.getContentType().getValue());
+                OutputStream os = con.getOutputStream();
+                reqEntity.writeTo(con.getOutputStream());
+                os.close();
+
+                /*DataOutputStream request = new DataOutputStream(con.getOutputStream());
                 request.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"image\"" + crlf);
                 request.writeBytes(crlf);
                 request.write(decodedByte);
                 request.writeBytes(crlf);
-                request.writeBytes(twoHyphens + boundary + crlf);
+                request.writeBytes(twoHyphens + boundary + crlf);*/
 
             }
 
