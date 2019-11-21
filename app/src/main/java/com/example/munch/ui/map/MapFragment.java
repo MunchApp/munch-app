@@ -41,7 +41,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
@@ -283,6 +282,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         }
                         SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
                         resultsList.setAdapter(mAdapter);
+                        listing = searchListings;
+                        forWindow = listing;
+                        initialePopulation();
                     }
                 }
 
@@ -374,6 +376,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                             SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
                             resultsList.setAdapter(mAdapter);
+                            listing = searchListings;
+                            forWindow = listing;
+                            initialePopulation();
 
                         }
                         if (position == 2){      //rating
@@ -390,6 +395,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                             SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
                             resultsList.setAdapter(mAdapter);
+                            listing = searchListings;
+                            forWindow = listing;
+                            initialePopulation();
 
                         }
                         if (position == 3){      //num reviews
@@ -405,6 +413,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                             SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
                             resultsList.setAdapter(mAdapter);
+                            listing = searchListings;
+                            forWindow = listing;
+                            initialePopulation();
                         }
                     }
 
@@ -634,30 +645,32 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         forWindow = listing;
     }
 
-    private ArrayList<FoodTruck> sampleTrucks() {
-        //creates dummy trucks for map pin testing
-        ArrayList<FoodTruck> testTrucks = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            FoodTruck tester = new FoodTruck("identification" + i, "testTruck" + i, 30.2672f + i * 0.1f, -97.7431f - i * .1f);
-            testTrucks.add(tester);
-        }
-        return testTrucks;
-    }
-
-    private void repopulateFromList(ArrayList<FoodTruck> nearby) {
-        //Clears map of pins and populates with new list
-        //place pins on map from ArrayList of trucks
-        munMap.clear();
-        if (nearby != null) {
-            for (int i = 0; i < 3; i++) {
-                populateFromFT(nearby.get(i));
-            }
-        }
-    }
+//    private ArrayList<FoodTruck> sampleTrucks() {
+//        //creates dummy trucks for map pin testing
+//        ArrayList<FoodTruck> testTrucks = new ArrayList<>();
+//
+//        for (int i = 0; i < 5; i++) {
+//            FoodTruck tester = new FoodTruck("identification" + i, "testTruck" + i, 30.2672f + i * 0.1f, -97.7431f - i * .1f);
+//            testTrucks.add(tester);
+//        }
+//        return testTrucks;
+//    }
+//
+//    private void repopulateFromList(ArrayList<FoodTruck> nearby) {
+//        //Clears map of pins and populates with new list
+//        //place pins on map from ArrayList of trucks
+//        munMap.clear();
+//        if (nearby != null) {
+//            for (int i = 0; i < 3; i++) {
+//                populateFromFT(nearby.get(i));
+//            }
+//        }
+//    }
 
     private void initialePopulation() {
         //initial Food Truck Population
+        munMap.clear();
+        lastClicked = null;
         if (listing != null) {
             for (int i = 0; i < listing.size(); i++) {
                 populateFromFT(listing.get(i));
@@ -681,15 +694,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-    private void populateTrucksFromList(ArrayList<FoodTruck> nearby) {
-        //Todo  input list of trucks output pins on map
-        //place pins on map from ArrayList of trucks
-        if (nearby != null) {
-            for (int i = 0; i < 2; i++) {
-                populateFromFT(nearby.get(i));
-            }
-        }
-    }
+//    private void populateTrucksFromList(ArrayList<FoodTruck> nearby) {
+//        //Todo  input list of trucks output pins on map
+//        //place pins on map from ArrayList of trucks
+//        if (nearby != null) {
+//            for (int i = 0; i < 2; i++) {
+//                populateFromFT(nearby.get(i));
+//            }
+//        }
+//    }
 
 
     private void populateFromFT(FoodTruck truck){
@@ -707,17 +720,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void hideFTMarker(FoodTruck truck){
-        //hides a specific FoodTrucks marker from the map
-        truck.getMarker().setVisible(false);
-        truck.setVisibilityOff();
-    }
-
-    private void displayFTMarker(FoodTruck truck){
-        //displays a specific FoodTrucks marker on the map
-        truck.getMarker().setVisible(true);
-        truck.setVisibilityOn();
-    }
+//    private void hideFTMarker(FoodTruck truck){
+//        //hides a specific FoodTrucks marker from the map
+//        truck.getMarker().setVisible(false);
+//        truck.setVisibilityOff();
+//    }
+//
+//    private void displayFTMarker(FoodTruck truck){
+//        //displays a specific FoodTrucks marker on the map
+//        truck.getMarker().setVisible(true);
+//        truck.setVisibilityOn();
+//    }
 
 
 
@@ -762,47 +775,47 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //        populateTruckPin(truck.getLatitude(), truck.getLongitude(), truck.getName(), truck.getId());
 //    }
 
-    private void popFoodTruck(MarkerOptions markO){
-        //May delete
-        munMap.addMarker(markO);
-    }
+//    private void popFoodTruck(MarkerOptions markO){
+//        //May delete
+//        munMap.addMarker(markO);
+//    }
 
-    public void populateTruckPin(float lat, float lng, String name, String id){
-        //Todo set create pin from truck info
-        //helper function for populateNearbyTrucks
-
-        Marker marker = munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
-
-//        marker.set
-//        MarkerOptions markeres = new MarkerOptions().position(new LatLng(30.3152, (-97.0726))).title("TestTruck2");
-////        munMap.addMarker(markeres);
-//        munMap.addMarker(markeres);
-
-//        MarkerOptions markeres = new MarkerOptions().position(new LatLng(lat, lng)).title("TestTruck2");
-////        munMap.addMarker(markeres);
-//        Marker market = munMap.addMarker(markeres);
-
-//        if i set the title as the id, i can find the name, or i can find the info in the text window
-
+//    public void populateTruckPin(float lat, float lng, String name, String id){
+//        //Todo set create pin from truck info
+//        //helper function for populateNearbyTrucks
 //
-    }
+//        Marker marker = munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
+//
+////        marker.set
+////        MarkerOptions markeres = new MarkerOptions().position(new LatLng(30.3152, (-97.0726))).title("TestTruck2");
+//////        munMap.addMarker(markeres);
+////        munMap.addMarker(markeres);
+//
+////        MarkerOptions markeres = new MarkerOptions().position(new LatLng(lat, lng)).title("TestTruck2");
+//////        munMap.addMarker(markeres);
+////        Marker market = munMap.addMarker(markeres);
+//
+////        if i set the title as the id, i can find the name, or i can find the info in the text window
+//
+////
+//    }
 
-    private void populateSearchedTruckPin(float lat, float lng, String name, String id){
-        //Todo set pin for single truck found through searchbar
-        //sets pin for truck found from searching
+//    private void populateSearchedTruckPin(float lat, float lng, String name, String id){
+//        //Todo set pin for single truck found through searchbar
+//        //sets pin for truck found from searching
+////        munMap.clear();
+////        Marker markered =
+//                munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
+////        markered.showInfoWindow();
+////        munMap.setOnMarkerClickListener(onMarkerClickedListener);
+//    }
+//
+//
+//    private void populatePins() {
+//        //TODO get pins for existing food trucks to populate initial map
 //        munMap.clear();
-//        Marker markered =
-                munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
-//        markered.showInfoWindow();
-//        munMap.setOnMarkerClickListener(onMarkerClickedListener);
-    }
-
-
-    private void populatePins() {
-        //TODO get pins for existing food trucks to populate initial map
-        munMap.clear();
-        munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.17265)).title("TestTruck"));
-        munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.07265)).title("TestTruck2"));
-    }
+//        munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.17265)).title("TestTruck"));
+//        munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.07265)).title("TestTruck2"));
+//    }
 
 }
