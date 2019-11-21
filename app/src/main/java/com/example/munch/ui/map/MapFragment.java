@@ -459,6 +459,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             FoodTruckFragment NAME = new FoodTruckFragment(getTruckFromMarker(markey), false);
             fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
+            fragmentTransaction.addToBackStack("map");
             fragmentTransaction.commit();
         }
     };

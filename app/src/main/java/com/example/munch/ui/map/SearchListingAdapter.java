@@ -18,10 +18,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.ui.foodTruck.FoodTruckFragment;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -82,6 +78,7 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 FoodTruckFragment NAME = new FoodTruckFragment(currentResult, false);
                 fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
+                fragmentTransaction.addToBackStack("map");
                 fragmentTransaction.commit();
             }
         });
