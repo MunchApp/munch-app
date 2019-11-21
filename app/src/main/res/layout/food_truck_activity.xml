@@ -34,6 +34,24 @@ android:layout_height="match_parent">
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
+        <TextView
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BACK"
+            android:shadowColor="#000000"
+            android:shadowDx="1.5"
+            android:shadowDy="1.5"
+            android:textStyle="bold"
+            android:shadowRadius="2"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/rambla"
+            android:textSize="20sp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="25dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
         <LinearLayout
             android:id="@+id/truck_contain"
             android:layout_width="wrap_content"

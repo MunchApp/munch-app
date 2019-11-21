@@ -28,6 +28,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -71,6 +72,7 @@ public class FoodTruckFragment extends Fragment{
     private TextView phone_prompt;
     private TextView hours_prompt;
     private TextView descrip_prompt;
+    private TextView back_button;
     /*private ImageView edit_name;
     private ImageView edit_address;
     private ImageView edit_website;
@@ -126,6 +128,7 @@ public class FoodTruckFragment extends Fragment{
         website_prompt = (TextView) root.findViewById(R.id.website_prompt);
         hours_prompt = (TextView) root.findViewById(R.id.hours_prompt);
         descrip_prompt = (TextView) root.findViewById(R.id.descrip_prompt);
+        back_button = (TextView) root.findViewById(R.id.back_button);
         ImageView edit_name = (ImageView) root.findViewById(R.id.edit_name);
         ImageView edit_address = (ImageView) root.findViewById(R.id.edit_address);
         ImageView edit_website = (ImageView) root.findViewById(R.id.edit_website);
@@ -159,6 +162,14 @@ public class FoodTruckFragment extends Fragment{
         newReview();
 
         final FoodTruckController foodTruckController = new FoodTruckController(foodTruckViewModel,foodTruck);
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+            }
+        });
 
         //set heart
         heart.setOnClickListener(new View.OnClickListener() {
