@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.data.model.Review;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import java.util.HashMap;
@@ -25,6 +26,14 @@ public class FoodTruckController {
         this.foodTruckViewModel = foodTruckViewModel;
         this.foodTruck = foodTruck;
         token = UserProfileFragment.currentUser.getAccessToken();
+    }
+
+    public void addReview (String content, double rating){
+        String author = UserProfileFragment.currentUser.getId();
+        Review newReview = new Review(token, foodTruck.getId(),content, rating);
+        if (!newReview.getDate().equals("")){
+            foodTruckViewModel.setReviews(newReview);
+        }
     }
 
     public void favorite(String id){

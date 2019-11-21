@@ -234,6 +234,7 @@ public class LoggedInUser {
             this.email = jsonUser.get("email").toString();
             this.firstName = jsonUser.get("firstName").toString();
             this.lastName = jsonUser.get("lastName").toString();
+            this.id = jsonUser.get("id").toString();
             this.dateOfBirth_month = monthNames[month];
             this.dateOfBirth_day = String.valueOf(day);
             this.dateOfBirth_year = String.valueOf(year);

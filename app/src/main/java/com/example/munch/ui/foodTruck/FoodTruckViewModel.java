@@ -12,11 +12,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.munch.LocationCalculator;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.data.model.Review;
+import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import java.util.ArrayList;
@@ -38,6 +41,7 @@ public class FoodTruckViewModel extends ViewModel {
     private MutableLiveData<String> distance;
     private MutableLiveData<Boolean> favorite;
     private MutableLiveData<Boolean> editable;
+    private MutableLiveData<ArrayList<Review>> reviews;
 
     public FoodTruckViewModel(FoodTruck truck, Activity activity) {
         name = new MutableLiveData<>();
@@ -53,6 +57,7 @@ public class FoodTruckViewModel extends ViewModel {
         distance = new MutableLiveData<>();
         favorite = new MutableLiveData<>();
         editable = new MutableLiveData<>();
+        reviews = new MutableLiveData<>();
         name.setValue(truck.getName());
         phoneNumber.setValue(truck.getPhoneNumber());
         description.setValue(truck.getDescription());
@@ -68,6 +73,15 @@ public class FoodTruckViewModel extends ViewModel {
         String dist = location.getDistance(truck.getAddress(),"Current Location");
         distance.setValue(dist);
         favorite.setValue(UserProfileFragment.currentUser.getFavorites().contains(truck.getId()));
+        ArrayList<String> listings = new ArrayList<>();
+        ArrayList<Review> reviewListings = new ArrayList<>();
+        listings = truck.getReviews();
+        if (listings.size() != 0) {
+            for (String s: listings){
+                reviewListings.add(new Review(s));
+            }
+        }
+        reviews.setValue(reviewListings);
     }
 
     //getters
@@ -123,6 +137,10 @@ public class FoodTruckViewModel extends ViewModel {
         return editable;
     }
 
+    public MutableLiveData<ArrayList<Review>> getReviews() {
+        return reviews;
+    }
+
     //setters
 
     public void setPhotos(ArrayList<String> photos) {
@@ -176,4 +194,10 @@ public class FoodTruckViewModel extends ViewModel {
     public void setEditable(Boolean editable) {
         this.editable.setValue(editable);
     }
+
+    public void setReviews(Review review) {
+        this.reviews.getValue().add(review);
+    }
+
+
 }

@@ -46,6 +46,7 @@ import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.data.model.Review;
 import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
+import com.example.munch.ui.login.LoginActivity;
 import com.example.munch.ui.map.SearchListingAdapter;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.example.munch.ui.userProfile.manageTruck.TruckListingAdapter;
@@ -170,12 +171,12 @@ public class FoodTruckFragment extends Fragment{
         //Get View Model
         foodTruckViewModel =
                 ViewModelProviders.of(this,new MyViewModelFactory(foodTruck,getActivity())).get(FoodTruckViewModel.class);
+        final FoodTruckController foodTruckController = new FoodTruckController(foodTruckViewModel,foodTruck);
 
         setObservers();
-        populateReviews();
-        newReview();
+        newReview(foodTruckController);
 
-        final FoodTruckController foodTruckController = new FoodTruckController(foodTruckViewModel,foodTruck);
+
 
         //set heart
         heart.setOnClickListener(new View.OnClickListener() {
@@ -493,6 +494,26 @@ public class FoodTruckFragment extends Fragment{
             }
         };
 
+        final Observer<ArrayList<Review>> reviewsObserver = new Observer<ArrayList<Review>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<Review> newReviews) {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                allReviews.setLayoutManager(layoutManager);
+                if (newReviews.size() != 0) {
+                    ReviewListingAdapter mAdapter = new ReviewListingAdapter(newReviews,getContext());
+                    allReviews.setAdapter(mAdapter);
+                }
+            }
+        };
+
+        final Observer<ArrayList<String[][]>> hoursObserver = new Observer<ArrayList<String[][]>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<String[][]> newReviews) {
+
+            }
+        };
+
         foodTruckViewModel.getName().observe(this, nameObserver);
         foodTruckViewModel.getAddress().observe(this, addressObserver);
         foodTruckViewModel.getWebsite().observe(this, websiteObserver);
@@ -505,65 +526,60 @@ public class FoodTruckFragment extends Fragment{
         foodTruckViewModel.getFavorite().observe(this, favoriteObserver);
         foodTruckViewModel.getNumReviews().observe(this, numReviewsObserver);
         foodTruckViewModel.getDistance().observe(this, distanceObserver);
+        foodTruckViewModel.getReviews().observe(this, reviewsObserver);
     }
 
-    private void populateReviews(){
-        ArrayList<String> listings = new ArrayList<String>();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        allReviews.setLayoutManager(layoutManager);
-        listings = foodTruck.getReviews();
-        if (listings.size() != 0) {
-            ArrayList<Review> reviewListings = new ArrayList<Review>();
-            for (String s: listings){
-                reviewListings.add(new Review(s));
-            }
-            ReviewListingAdapter mAdapter = new ReviewListingAdapter(reviewListings,getContext());
-            allReviews.setAdapter(mAdapter);
-        }
-    }
-
-    private void newReview(){
+    private void newReview(final FoodTruckController foodTruckController){
         final View popupView = getLayoutInflater().inflate(R.layout.popup_add_review, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
         final Button post = (Button)popupView.findViewById(R.id.post);
         final Button cancel = (Button)popupView.findViewById(R.id.cancel);
         final RatingBar rating = (RatingBar) popupView.findViewById(R.id.ratingbar_on_review);
         final EditText content = (EditText) popupView.findViewById(R.id.reviewContent);
 
-        postReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                //Popup window set up
-                popupWindow.setFocusable(true);
-                popupWindow.setBackgroundDrawable(new ColorDrawable());
-                int location[] = new int[2];
-                view.getLocationOnScreen(location);
-
-                TextView popupPrompt= (TextView) popupView.findViewById(R.id.edit_prompt);
-                popupWindow.setElevation(10);
-
-                //Show popup
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-            }
-        });
-
-        // Save and Exit buttons
-        post.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View view) {
-                        String author = UserProfileFragment.currentUser.getId();
-                        Review newReview = new Review(token, author, foodTruck.getId(),content.getText().toString(), rating.getRating());
-                        popupWindow.dismiss();
-                    }
+        if (!UserProfileFragment.currentUser.getLoggedIn()){
+            postReview.setText("SIGN IN TO LEAVE A REVIEW");
+            postReview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    Intent toLoginPage = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(toLoginPage);
                 }
-        );
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                popupWindow.dismiss();
-            }
-        });
+            });
+        } else {
+            postReview.setText("LEAVE A REVIEW");
+            postReview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Popup window set up
+                    popupWindow.setFocusable(true);
+                    popupWindow.setBackgroundDrawable(new ColorDrawable());
+                    int location[] = new int[2];
+                    view.getLocationOnScreen(location);
+
+                    TextView popupPrompt = (TextView) popupView.findViewById(R.id.edit_prompt);
+                    popupWindow.setElevation(10);
+
+                    //Show popup
+                    popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                }
+            });
+
+            // Save and Exit buttons
+            post.setOnClickListener(
+                    new View.OnClickListener() {
+                        public void onClick(View view) {
+                            foodTruckController.addReview(content.getText().toString(), rating.getRating());
+                            popupWindow.dismiss();
+                        }
+                    }
+            );
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    popupWindow.dismiss();
+                }
+            });
+        }
     }
 }
