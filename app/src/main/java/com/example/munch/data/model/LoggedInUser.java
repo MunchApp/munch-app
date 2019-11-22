@@ -44,10 +44,11 @@ public class LoggedInUser {
     String serverURL = "https://munch-server.herokuapp.com/";
 
     //, String gender, String city, String state, String phoneNum
-    public LoggedInUser () {
+    public LoggedInUser() {
         signOut();
     }
-    public int login(String email, String password){
+
+    public int login(String email, String password) {
         JSONObject logUser = new JSONObject();
         try {
             logUser.put("email", email);
@@ -63,11 +64,11 @@ public class LoggedInUser {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        try{
+        try {
             JSONObject jsonToken = new JSONObject(responseLogin);
             accessToken = jsonToken.get("token").toString();
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
 
         }
 
@@ -75,7 +76,7 @@ public class LoggedInUser {
         if (statusCode == 200) {
             loggedIn = true;
             HttpRequests proRequests = new HttpRequests();
-            proRequests.execute(serverURL + "profile", "GET", null,accessToken);
+            proRequests.execute(serverURL + "profile", "GET", null, accessToken);
             String responseProfile = null;
             try {
                 responseProfile = proRequests.get();
@@ -88,6 +89,7 @@ public class LoggedInUser {
         }
         return statusCode;
     }
+
     public void register(String password, String email, String firstName, String lastName, String day, String month, String year) {
 
         //Create JSON Object to be passed through authentication
@@ -98,7 +100,7 @@ public class LoggedInUser {
             user.put("lastName", lastName);
             user.put("email", email);
             user.put("password", password);
-            user.put("dateOfBirth", getISOdob(year,day,month));
+            user.put("dateOfBirth", getISOdob(year, day, month));
         } catch (JSONException ex) {
             System.out.println("Login Failed");
         }
@@ -111,7 +113,10 @@ public class LoggedInUser {
             e.printStackTrace();
         }
     }
-    public boolean getLoggedIn() { return loggedIn;}
+
+    public boolean getLoggedIn() {
+        return loggedIn;
+    }
 
     public String getEmail() {
         return email;
@@ -133,13 +138,16 @@ public class LoggedInUser {
         return favorites;
     }
 
-    public String getAccessToken() { return accessToken;}
+    public String getAccessToken() {
+        return accessToken;
+    }
+
     public String getGender() {
         return gender;
     }
 
     public String getDateOfBirth() {
-        return dateOfBirth_month + " " +dateOfBirth_day +", " +dateOfBirth_year;
+        return dateOfBirth_month + " " + dateOfBirth_day + ", " + dateOfBirth_year;
     }
 
     public String getAddress() {
@@ -154,7 +162,7 @@ public class LoggedInUser {
         return firstName + " " + lastName;
     }
 
-    public void signOut(){
+    public void signOut() {
         loggedIn = false;
         this.lastName = "";
         this.firstName = "Guest";
@@ -172,40 +180,53 @@ public class LoggedInUser {
         this.favorites = new ArrayList<String>();
     }
 
-    private static int getMonth (String month) {
+    private static int getMonth(String month) {
         int monthNum = -1;
         switch (month) {
-            case "January": monthNum = 0;
+            case "January":
+                monthNum = 0;
                 break;
-            case "February": monthNum = 1;
+            case "February":
+                monthNum = 1;
                 break;
-            case "March": monthNum = 2;
+            case "March":
+                monthNum = 2;
                 break;
-            case "April": monthNum = 3;
+            case "April":
+                monthNum = 3;
                 break;
-            case "May": monthNum = 4;
+            case "May":
+                monthNum = 4;
                 break;
-            case "June": monthNum = 5;
+            case "June":
+                monthNum = 5;
                 break;
-            case "July": monthNum = 6;
+            case "July":
+                monthNum = 6;
                 break;
-            case "August": monthNum = 7;
+            case "August":
+                monthNum = 7;
                 break;
-            case "September": monthNum = 8;
+            case "September":
+                monthNum = 8;
                 break;
-            case "October": monthNum = 9;
+            case "October":
+                monthNum = 9;
                 break;
-            case "November": monthNum = 10;
+            case "November":
+                monthNum = 10;
                 break;
-            case "December": monthNum = 11;
+            case "December":
+                monthNum = 11;
                 break;
-            default: monthNum = -1;
+            default:
+                monthNum = -1;
                 break;
         }
         return monthNum;
     }
 
-    private String getISOdob (String dateOfBirth_year, String dateOfBirth_day, String dateOfBirth_month){
+    private String getISOdob(String dateOfBirth_year, String dateOfBirth_day, String dateOfBirth_month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Integer.valueOf(dateOfBirth_year), getMonth(dateOfBirth_month), Integer.valueOf(dateOfBirth_day), 00, 00, 00);
         calendar.set(Calendar.MILLISECOND, 0);
@@ -216,14 +237,16 @@ public class LoggedInUser {
         return isoDOB;
 
     }
-    public ArrayList<String> getFoodTrucks(){
+
+    public ArrayList<String> getFoodTrucks() {
         return foodTrucks;
     }
-    public void addTruck(String truck){
+
+    public void addTruck(String truck) {
         foodTrucks.add(truck);
     }
 
-    private void jsonToUser(JSONObject jsonUser){
+    private void jsonToUser(JSONObject jsonUser) {
         try {
             String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
             SimpleDateFormat sdf;
@@ -250,15 +273,15 @@ public class LoggedInUser {
             JSONArray JSONfoodTrucks = new JSONArray(jsonUser.get("ownedFoodTrucks").toString());
             JSONArray JSONfavorites = new JSONArray(jsonUser.get("favorites").toString());
 
-            for (int c  = 0; c < JSONreviews.length(); c++){
+            for (int c = 0; c < JSONreviews.length(); c++) {
                 this.reviews.add(JSONreviews.get(c).toString());
             }
 
-            for (int c  = 0; c < JSONfoodTrucks.length(); c++){
+            for (int c = 0; c < JSONfoodTrucks.length(); c++) {
                 this.foodTrucks.add(JSONfoodTrucks.get(c).toString());
             }
 
-            for (int c  = 0; c < JSONfavorites.length(); c++){
+            for (int c = 0; c < JSONfavorites.length(); c++) {
                 this.favorites.add(JSONfavorites.get(c).toString());
             }
 
@@ -266,60 +289,38 @@ public class LoggedInUser {
 
         }
     }
-   /* public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    /* public void setDateOfBirth(Date dateOfBirth) {
+         this.dateOfBirth = dateOfBirth;
+     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+     public void setEmail(String email) {
+         this.email = email;
+     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+     public void setFirstName(String firstName) {
+         this.firstName = firstName;
+     }
 
-    publicvoid setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
+     public void setGender(String gender) {
+         this.gender = gender;
+     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+     publicvoid setPhoneNum(String phoneNum) {
+         this.phoneNum = phoneNum;
+     }
 
-    public void setAddress(String city) {
-        this.city = city;
-    }*/
-   public int addFavorite(String foodTruckId){
-       HttpRequests reviewRequest = new HttpRequests();
-       if (foodTruckId != null) {
-           reviewRequest.execute(serverURL + "foodtrucks/" + foodTruckId +"?action=add", "GET");
-           String responseReview = null;
-           try {
-               responseReview = reviewRequest.get();
-           } catch (ExecutionException | InterruptedException e) {
-               e.printStackTrace();
-           }
-           try {
-               JSONObject jsonReview = new JSONObject(responseReview);
-           } catch (JSONException e){
+     public void setLastName(String lastName) {
+         this.lastName = lastName;
+     }
 
-           }
-       }
-       int statusCode = reviewRequest.getStatusCode();
-       if (statusCode == 200){
-           favorites.add(foodTruckId);
-       }
-       return statusCode;
-   }
-
-    public int deleteFavorite(String foodTruckId){
+     public void setAddress(String city) {
+         this.city = city;
+     }*/
+    public int addFavorite(String foodTruckId) {
         HttpRequests reviewRequest = new HttpRequests();
         if (foodTruckId != null) {
-            reviewRequest.execute(serverURL + "foodtrucks/" + foodTruckId +"?action=delete", "GET");
+            reviewRequest.execute(serverURL + "foodtrucks/" + foodTruckId + "?action=add", "GET");
             String responseReview = null;
             try {
                 responseReview = reviewRequest.get();
@@ -328,18 +329,41 @@ public class LoggedInUser {
             }
             try {
                 JSONObject jsonReview = new JSONObject(responseReview);
-            } catch (JSONException e){
+            } catch (JSONException e) {
 
             }
         }
         int statusCode = reviewRequest.getStatusCode();
-        if (statusCode == 200){
+        if (statusCode == 200) {
+            favorites.add(foodTruckId);
+        }
+        return statusCode;
+    }
+
+    public int deleteFavorite(String foodTruckId) {
+        HttpRequests reviewRequest = new HttpRequests();
+        if (foodTruckId != null) {
+            reviewRequest.execute(serverURL + "foodtrucks/" + foodTruckId + "?action=delete", "GET");
+            String responseReview = null;
+            try {
+                responseReview = reviewRequest.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                JSONObject jsonReview = new JSONObject(responseReview);
+            } catch (JSONException e) {
+
+            }
+        }
+        int statusCode = reviewRequest.getStatusCode();
+        if (statusCode == 200) {
             favorites.remove(foodTruckId);
         }
         return statusCode;
     }
 
-    public int update(HashMap<String, String> vals){
+    public int update(HashMap<String, String> vals) {
         JSONObject user = new JSONObject();
         if (vals != null) {
             for (String key : vals.keySet()) {
@@ -351,25 +375,25 @@ public class LoggedInUser {
         }
         HttpRequests updateRequest = new HttpRequests();
 
-            updateRequest.execute(serverURL + "profile", "PUT",user.toString(),accessToken);
-            String response= null;
-            try {
-                response = updateRequest.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                JSONObject jsonUser = new JSONObject(response);
-                jsonToUser(jsonUser);
-            } catch (JSONException e){
+        updateRequest.execute(serverURL + "profile", "PUT", user.toString(), accessToken);
+        String response = null;
+        try {
+            response = updateRequest.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONObject jsonUser = new JSONObject(response);
+            jsonToUser(jsonUser);
+        } catch (JSONException e) {
 
-            }
+        }
 
         int statusCode = updateRequest.getStatusCode();
         return statusCode;
     }
 
-    public int uploadProfilePic(){
+    public int uploadProfilePic() {
         HttpRequests imageRequests = new HttpRequests();
         imageRequests.execute(serverURL + "profile/upload", "PUT", null, accessToken, Config.profileImage);
         String response = "";
@@ -379,25 +403,29 @@ public class LoggedInUser {
             e.printStackTrace();
         }
 
-            HttpRequests userRequest = new HttpRequests();
-            userRequest.execute(serverURL + "users/" + this.id, "GET");
-            String responseReview = null;
-            try {
-                responseReview = userRequest.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                JSONObject JSONUser= new JSONObject(responseReview);
-                picture = JSONUser.getString("picture");
-            } catch (JSONException e){
+        HttpRequests userRequest = new HttpRequests();
+        userRequest.execute(serverURL + "users/" + this.id, "GET");
+        String responseReview = null;
+        try {
+            responseReview = userRequest.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONObject JSONUser = new JSONObject(responseReview);
+            picture = JSONUser.getString("picture");
+        } catch (JSONException e) {
 
-            }
+        }
 
         return imageRequests.getStatusCode();
     }
 
     public ArrayList<String> getReviews() {
         return reviews;
+    }
+
+    public String getPicture() {
+        return picture;
     }
 }
