@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -68,6 +69,10 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
         //todo distance is calculated incorrectly
         TextView truckDistance = (TextView)listItem.findViewById(R.id.truckDistance);
         truckDistance.setText("");
+
+        RatingBar rating = (RatingBar)listItem.findViewById(R.id.results_rating_bar);
+        rating.setIsIndicator(false);
+        rating.setRating(currentResult.getAvgRating());
 
         Button goToTruckView = (Button) listItem.findViewById(R.id.button);
         goToTruckView.setOnClickListener(new View.OnClickListener() {

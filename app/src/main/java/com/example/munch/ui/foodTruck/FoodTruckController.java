@@ -11,8 +11,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.data.model.Review;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FoodTruckController {
@@ -27,6 +29,21 @@ public class FoodTruckController {
         token = UserProfileFragment.currentUser.getAccessToken();
     }
 
+    public void addReview (String content, double rating){
+        String author = UserProfileFragment.currentUser.getId();
+        Review newReview = new Review(token, foodTruck.getId(),content, rating);
+        ArrayList<Review> allReviews = foodTruckViewModel.getReviews().getValue();
+        if (!newReview.getDate().equals("")){
+            int statusCode = foodTruck.getTruck(foodTruck.getId());
+            if (statusCode == 200) {
+                allReviews.add(newReview);
+                foodTruckViewModel.setReviews(allReviews);
+                foodTruckViewModel.setRating(foodTruck.getAvgRating());
+                foodTruckViewModel.setNumReviews(allReviews.size());
+            }
+        }
+    }
+
     public void favorite(String id){
         int statusCode = 0;
         if (UserProfileFragment.currentUser.getFavorites().contains(id)){
@@ -37,11 +54,15 @@ public class FoodTruckController {
         } else {
             statusCode = UserProfileFragment.currentUser.addFavorite(id);
             if (statusCode == 200) {
-                foodTruckViewModel.setFavorite(false);
+                foodTruckViewModel.setFavorite(true);
             }
         }
     }
-
+    public void setStatus(boolean status){
+        int statusCode = foodTruck.updateTruck(token,null,status,null);
+        if (statusCode == 200)
+            foodTruckViewModel.setStatus(status);
+    }
     public void saveEdit(String jsonField, String input){
         int statusCode = 0;
         HashMap<String, String> newVals = new HashMap<>();
@@ -68,7 +89,7 @@ public class FoodTruckController {
         }
     }
 
-    public void saveHours(String dayOfWeek, boolean closed, TimePicker startTime, TimePicker endTime){
+    public void saveHours(String dayOfWeek, boolean open, TimePicker startTime, TimePicker endTime){
         int statusCode = 0;
         String[][] hours = foodTruck.getHours();
         int dayInt = 0;
@@ -98,7 +119,7 @@ public class FoodTruckController {
             default:
                 System.out.println("error");
         }
-        if (closed){
+        if (!open){
             hours[dayInt][0] = "99:99";
             hours[dayInt][1] = "99:99";
         } else {
@@ -107,7 +128,7 @@ public class FoodTruckController {
         }
         statusCode = foodTruck.updateTruck(token,null,null, hours);
         if (statusCode == 200){
-            foodTruckViewModel.setHours(hours);
+            foodTruckViewModel.setHours(foodTruck.getRegHours());
         }
     }
 

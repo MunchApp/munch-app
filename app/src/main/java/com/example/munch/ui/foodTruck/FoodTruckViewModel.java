@@ -12,11 +12,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.munch.LocationCalculator;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.data.model.Review;
+import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class FoodTruckViewModel extends ViewModel {
 
     private MutableLiveData<String> phoneNumber;
     private MutableLiveData<String> description;
-    private MutableLiveData<String[][]> hours;
+    private MutableLiveData<String[]> hours;
     private MutableLiveData<String> website;
     private MutableLiveData<Boolean> status;
     private MutableLiveData<String> address;
@@ -38,6 +41,7 @@ public class FoodTruckViewModel extends ViewModel {
     private MutableLiveData<String> distance;
     private MutableLiveData<Boolean> favorite;
     private MutableLiveData<Boolean> editable;
+    private MutableLiveData<ArrayList<Review>> reviews;
 
     public FoodTruckViewModel(FoodTruck truck, Activity activity) {
         name = new MutableLiveData<>();
@@ -53,10 +57,11 @@ public class FoodTruckViewModel extends ViewModel {
         distance = new MutableLiveData<>();
         favorite = new MutableLiveData<>();
         editable = new MutableLiveData<>();
+        reviews = new MutableLiveData<>();
         name.setValue(truck.getName());
         phoneNumber.setValue(truck.getPhoneNumber());
         description.setValue(truck.getDescription());
-        hours.setValue(truck.getHours());
+        hours.setValue(truck.getRegHours());
         website.setValue(truck.getWebsite());
         status.setValue(truck.getStatus());
         address.setValue(truck.getAddress());
@@ -68,6 +73,15 @@ public class FoodTruckViewModel extends ViewModel {
         String dist = location.getDistance(truck.getAddress(),"Current Location");
         distance.setValue(dist);
         favorite.setValue(UserProfileFragment.currentUser.getFavorites().contains(truck.getId()));
+        ArrayList<String> listings = new ArrayList<>();
+        ArrayList<Review> reviewListings = new ArrayList<>();
+        listings = truck.getReviews();
+        if (listings.size() != 0) {
+            for (String s: listings){
+                reviewListings.add(new Review(s));
+            }
+        }
+        reviews.setValue(reviewListings);
     }
 
     //getters
@@ -79,7 +93,7 @@ public class FoodTruckViewModel extends ViewModel {
         return description;
     }
 
-    public MutableLiveData<String[][]> getHours() {
+    public MutableLiveData<String[]> getHours() {
         return hours;
     }
 
@@ -123,13 +137,17 @@ public class FoodTruckViewModel extends ViewModel {
         return editable;
     }
 
+    public MutableLiveData<ArrayList<Review>> getReviews() {
+        return reviews;
+    }
+
     //setters
 
     public void setPhotos(ArrayList<String> photos) {
         this.photos.setValue(photos);
     }
 
-    public void setHours(String[][] hours) {
+    public void setHours(String[] hours) {
         this.hours.setValue(hours);
     }
 
@@ -176,4 +194,10 @@ public class FoodTruckViewModel extends ViewModel {
     public void setEditable(Boolean editable) {
         this.editable.setValue(editable);
     }
+
+    public void setReviews(ArrayList<Review> reviews) {
+        this.reviews.setValue(reviews);
+    }
+
+
 }

@@ -87,6 +87,7 @@ public class ReviewListingAdapter extends RecyclerView.Adapter<ReviewListingAdap
         }
 
         RatingBar rating = (RatingBar)holder.view.findViewById(R.id.ratingbar_on_review);
+        rating.setIsIndicator(false);
         rating.setRating((float)currentReview.getRating());
 
     }

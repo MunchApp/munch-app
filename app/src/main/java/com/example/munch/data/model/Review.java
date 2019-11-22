@@ -23,7 +23,7 @@ public class Review {
         getReview(reviewId);
     }
     //constructor to define all fields but "forFoodtruck", just trying to make lists of these work in
-    public Review(String token, String author, String truckId, String review, double rating){
+    public Review(String token, String truckId, String review, double rating){
         JSONObject JSONReview = new JSONObject();
         try {
             JSONReview.put("foodTruck", truckId);

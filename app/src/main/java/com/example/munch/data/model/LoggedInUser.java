@@ -163,7 +163,7 @@ public class LoggedInUser {
         this.dateOfBirth_month = "";
         this.dateOfBirth_year = "";
         this.dateOfBirth_day = "";
-        this.id = "";
+        this.id = "NOT LOGGED IN";
         this.foodTrucks = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
         this.favorites = new ArrayList<String>();
@@ -234,6 +234,7 @@ public class LoggedInUser {
             this.email = jsonUser.get("email").toString();
             this.firstName = jsonUser.get("firstName").toString();
             this.lastName = jsonUser.get("lastName").toString();
+            this.id = jsonUser.get("id").toString();
             this.dateOfBirth_month = monthNames[month];
             this.dateOfBirth_day = String.valueOf(day);
             this.dateOfBirth_year = String.valueOf(year);
