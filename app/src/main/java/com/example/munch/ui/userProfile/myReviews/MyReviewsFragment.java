@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,8 +25,6 @@ public class MyReviewsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_list_truck, container, false);
         ListView reviewList = (ListView) root.findViewById(R.id.list_of_trucks);
         TextView title = (TextView) root.findViewById(R.id.text_list_prompt);
-        EditText hint = (EditText) root.findViewById(R.id.search_explore_pg1);
-        hint.setHint("SEARCH YOUR TRUCKS");
         title.setText("Your Reviews");
         ArrayList<String> listings = new ArrayList<String>();
         listings = UserProfileFragment.currentUser.getReviews();

@@ -1,19 +1,18 @@
 package com.example.munch.ui.userProfile;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.munch.R;
@@ -23,6 +22,7 @@ import com.example.munch.ui.login.LoginActivity;
 import com.example.munch.ui.userProfile.manageTruck.ManageTruckFragment;
 import com.example.munch.ui.userProfile.myReviews.MyReviewsFragment;
 import com.example.munch.ui.userProfile.personalInfo.PersonalInfoFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,6 +44,12 @@ public class UserProfileFragment extends Fragment {
         clickables.add(listTruck);
         clickables.add(personalInfo);
         clickables.add(manageTrucks);
+
+        ImageView proPic = root.findViewById(R.id.profile_picture);
+        Picasso.with(getContext()).load(UserProfileFragment.currentUser.getPicture())
+                .resize(100, 100)
+                .transform(new CircleTransform())
+                .into(proPic);
 
         firstAndLast.setText(currentUser.getFullName());
         if (currentUser.getLoggedIn()){

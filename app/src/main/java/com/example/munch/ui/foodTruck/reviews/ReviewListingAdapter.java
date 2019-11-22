@@ -4,13 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.munch.R;
@@ -19,12 +16,10 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 public class ReviewListingAdapter extends RecyclerView.Adapter<ReviewListingAdapter.MyViewHolder> {
     private List<Review> reviews;
     private Context context;
@@ -93,7 +88,12 @@ public class ReviewListingAdapter extends RecyclerView.Adapter<ReviewListingAdap
         rating.setIsIndicator(true);
         rating.setRating((float)currentReview.getRating());
 
-        Picasso.with(context).load(currentReview.getAuthorPicture())
+
+        String picture = currentReview.getAuthorPicture();
+        if (picture==null || picture.equals("")){
+            picture = "https://www.warnersstellian.com/Content/images/product_image_not_available.png";
+        }
+        Picasso.with(context).load(picture)
                 .resize(100, 100)
                 .centerCrop()
                 .into(proPic);
