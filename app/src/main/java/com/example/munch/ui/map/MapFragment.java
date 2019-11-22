@@ -475,6 +475,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             markey.showInfoWindow();
             markey.setIcon(BitmapDescriptorFromVector(getContext(), R.drawable.ft_truck));;
             lastClicked = markey;
+            LatLng center = markey.getPosition();
+            munMap.animateCamera(CameraUpdateFactory.newLatLng(center));
+
 
             return true;
         }
