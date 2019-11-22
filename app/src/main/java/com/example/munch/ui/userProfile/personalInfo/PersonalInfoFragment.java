@@ -48,6 +48,7 @@ public class PersonalInfoFragment extends Fragment {
         LinearLayout popup_layout = (LinearLayout) popup.findViewById(R.id.popup_edit);
 
         //Get Text Views
+
         TextView firstAndLastT = root.findViewById(R.id.first_and_last_name);
         TextView dobT = root.findViewById(R.id.pi_dob);
         TextView phoneNumT = root.findViewById(R.id.pi_phone_num);
@@ -70,6 +71,11 @@ public class PersonalInfoFragment extends Fragment {
 
             }
         });
+
+        Picasso.with(getContext()).load(UserProfileFragment.currentUser.getPicture())
+                .resize(100, 100)
+                .transform(new CircleTransform())
+                .into(proPic);
 
 
         //Set values
