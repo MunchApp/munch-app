@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,14 +77,18 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
         if (currentResult.getStatus()){
             truckStatusIcon.setVisibility(View.VISIBLE);
             gap.setVisibility(View.VISIBLE);
+            truckStatus.setVisibility(View.VISIBLE);
             ImageViewCompat.setImageTintList(truckStatusIcon, ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.onlineGreen)));
             truckStatus.setText("ONLINE");
         } else {
             truckStatusIcon.setVisibility(View.GONE);
+            truckStatus.setVisibility(View.GONE);
             gap.setVisibility(View.GONE);
-            /*ImageViewCompat.setImageTintList(truckStatusIcon, ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.offlineRed)));
-            truckStatus.setText("OFFLINE");*/
         }
+
+        RatingBar rating = (RatingBar)listItem.findViewById(R.id.truck_rating_bar);
+        rating.setIsIndicator(false);
+        rating.setRating(currentResult.getAvgRating());
 
         return listItem;
     }

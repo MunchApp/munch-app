@@ -176,6 +176,11 @@ public class FoodTruckFragment extends Fragment{
         setObservers();
         newReview(foodTruckController);
 
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               foodTruckController.setStatus(isChecked);
+            }
+        });
 
 
         //set heart
@@ -308,12 +313,12 @@ public class FoodTruckFragment extends Fragment{
         startTime.setIs24HourView(false);
         final TimePicker endTime = (TimePicker) popupView.findViewById(R.id.timePicker2);
         endTime.setIs24HourView(false);
-        final Switch closed = (Switch) popupView.findViewById(R.id.switch_open);
+        final Switch open = (Switch) popupView.findViewById(R.id.switch_open);
         final TextView startPrompt = (TextView) popupView.findViewById(R.id.start_prompt);
         final TextView stopPrompt = (TextView) popupView.findViewById(R.id.end_prompt);
         final TextView stringOpen = (TextView) popupView.findViewById(R.id.string_open);
 
-        closed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        open.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     startPrompt.setVisibility(View.VISIBLE);
@@ -354,7 +359,7 @@ public class FoodTruckFragment extends Fragment{
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         String dayOfWeek = day.getSelectedItem().toString();
-                        foodTruckController.saveHours(dayOfWeek,closed.getShowText(),startTime,endTime);
+                        foodTruckController.saveHours(dayOfWeek,open.isChecked(),startTime,endTime);
                         popupWindow.dismiss();
                     }
                 }
@@ -507,10 +512,16 @@ public class FoodTruckFragment extends Fragment{
             }
         };
 
-        final Observer<ArrayList<String[][]>> hoursObserver = new Observer<ArrayList<String[][]>>() {
+        final Observer<String[]> hoursObserver = new Observer<String[]>() {
             @Override
-            public void onChanged(@Nullable final ArrayList<String[][]> newReviews) {
-
+            public void onChanged(@Nullable final String[] newHours) {
+                sun.setText(newHours[0]);
+                mon.setText(newHours[1]);
+                tue.setText(newHours[2]);
+                wed.setText(newHours[3]);
+                thu.setText(newHours[4]);
+                fri.setText(newHours[6]);
+                sat.setText(newHours[6]);
             }
         };
 
@@ -527,6 +538,7 @@ public class FoodTruckFragment extends Fragment{
         foodTruckViewModel.getNumReviews().observe(this, numReviewsObserver);
         foodTruckViewModel.getDistance().observe(this, distanceObserver);
         foodTruckViewModel.getReviews().observe(this, reviewsObserver);
+        foodTruckViewModel.getHours().observe(this,hoursObserver);
     }
 
     private void newReview(final FoodTruckController foodTruckController){

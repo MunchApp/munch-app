@@ -30,7 +30,7 @@ public class FoodTruckViewModel extends ViewModel {
 
     private MutableLiveData<String> phoneNumber;
     private MutableLiveData<String> description;
-    private MutableLiveData<String[][]> hours;
+    private MutableLiveData<String[]> hours;
     private MutableLiveData<String> website;
     private MutableLiveData<Boolean> status;
     private MutableLiveData<String> address;
@@ -61,7 +61,7 @@ public class FoodTruckViewModel extends ViewModel {
         name.setValue(truck.getName());
         phoneNumber.setValue(truck.getPhoneNumber());
         description.setValue(truck.getDescription());
-        hours.setValue(truck.getHours());
+        hours.setValue(truck.getRegHours());
         website.setValue(truck.getWebsite());
         status.setValue(truck.getStatus());
         address.setValue(truck.getAddress());
@@ -93,7 +93,7 @@ public class FoodTruckViewModel extends ViewModel {
         return description;
     }
 
-    public MutableLiveData<String[][]> getHours() {
+    public MutableLiveData<String[]> getHours() {
         return hours;
     }
 
@@ -147,7 +147,7 @@ public class FoodTruckViewModel extends ViewModel {
         this.photos.setValue(photos);
     }
 
-    public void setHours(String[][] hours) {
+    public void setHours(String[] hours) {
         this.hours.setValue(hours);
     }
 
@@ -195,8 +195,8 @@ public class FoodTruckViewModel extends ViewModel {
         this.editable.setValue(editable);
     }
 
-    public void setReviews(Review review) {
-        this.reviews.getValue().add(review);
+    public void setReviews(ArrayList<Review> reviews) {
+        this.reviews.setValue(reviews);
     }
 
 

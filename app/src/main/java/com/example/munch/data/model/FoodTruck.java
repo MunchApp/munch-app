@@ -113,7 +113,7 @@ public class FoodTruck{
     }
 
     //Get existing truck from database
-    private void getTruck (String truckId){
+    public int getTruck (String truckId){
         this.id = truckId;
         HttpRequests getTruckRequests = new HttpRequests();
         getTruckRequests.execute(serverURL + "foodtrucks/" + truckId, "GET");
@@ -129,6 +129,7 @@ public class FoodTruck{
         }catch (JSONException e){
 
         }
+        return getTruckRequests.getStatusCode();
     }
     //Setters
     public void setAllValues (String id,Boolean status, String name, String address, float lat, float lng, String owner, String[][] hours,
@@ -145,13 +146,13 @@ public class FoodTruck{
         this.hours = hours;
         if (photos.size() < 3){
             if (photos.size() == 0){
-                photos.add(0, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+                photos.add(0, "https://www.warnersstellian.com/Content/images/product_image_not_available.png");
             }
             if (photos.size() == 1) {
-                photos.add(1, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+                photos.add(1, "https://www.warnersstellian.com/Content/images/product_image_not_available.png");
             }
             if (photos.size() == 2) {
-                photos.add(2, "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg");
+                photos.add(2, "https://www.warnersstellian.com/Content/images/product_image_not_available.png");
             }
         }
         this.photos = photos;
@@ -162,6 +163,7 @@ public class FoodTruck{
         this.tags = tags;
         this.avgRating = avgRating;
     }
+
 
 
     //Getters
