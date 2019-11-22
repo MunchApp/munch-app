@@ -242,50 +242,132 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 }
                 sb = "";
 
-                if (!(tagInputArray.size() == 0)) {
+                if (!(tagInputArray.size() == 0) || !locInput.equals("")) {
 
                     for (int i = 0; i < tagInputArray.size(); i++) {
                         sb += tagInputArray.get(i);
                         sb += "+";
                     }
-                    while (sb.charAt(0) == '+') {
-                        sb = sb.substring(1);
-                    }
-                    while (sb.charAt(sb.length() - 1) == '+') {
-                        sb = sb.substring(0, sb.length() - 1);
-                    }
 
-                    if (!sb.equals("")) {
-                        HttpRequests searchRequest = new HttpRequests();
-                        String serverURL = "https://munch-server.herokuapp.com/";
-                        searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
+
+                    if (!sb.equals("") || !locInput.equals("")) {
+                        if (!sb.equals("")) {
+                            while (sb.charAt(0) == '+') {
+                                sb = sb.substring(1);
+                            }
+                            while (sb.charAt(sb.length() - 1) == '+') {
+                                sb = sb.substring(0, sb.length() - 1);
+                            }
+                        }
+                        LocationCalculator locCal = new LocationCalculator(getContext());
+                        String lat = "";
+                        String lng = "";
+                        if (locText.getText().toString().equals("")){    //no location specified
+                            lat = Double.toString(locCal.getLat());
+                            lng = Double.toString(locCal.getLng());
+
+                        } else {
+                            String address = locText.getText().toString();
+                            String[] splitAddress = address.split(" ");
+                            String parsedAddress = splitAddress[0];
+                            String API_KEY = v.getResources().getString(R.string.GOOGLE_MAPS_API_KEY);
+                            for (int s = 1; s < splitAddress.length; s++){
+                                parsedAddress += "+" + splitAddress[s];
+                            }
+
+//                            parsedAddress = parsedAddress.split("\n")[0] + parsedAddress.split("\n")[1];
+                            String response = null;
+                            HttpRequests getTruckRequests = new HttpRequests();
+                            getTruckRequests.execute("https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress +
+                                    "&key=" + API_KEY, "GET");
+                            try {
+                                response = getTruckRequests.get();
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            try{
+                                JSONObject myResponse = new JSONObject(response);
+                                JSONArray results = myResponse.getJSONArray("results");
+                                for (int i = 0; i < results.length(); i++) {
+                                    JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");
+                                    lat = location.optString("lat");
+                                    lng = location.optString("lng");
+                                }
+                            }catch (JSONException e){
+
+                            }
+
+                        }
+
+                        resultsList = (ListView) getActivity().findViewById(R.id.search_results);
                         searchListings = new ArrayList<>();
-                        String responseSearch = null;
+                        foodTruckRequest = new HttpRequests();
+                        String serverURL = "https://munch-server.herokuapp.com/";
+                        if (searchText.getText().toString().equals("")){
+                            sb = "";
+                        }
+                        foodTruckRequest.execute(serverURL + "foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
+                        responseTruck = null;
                         try {
-                            responseSearch = searchRequest.get();
+                            responseTruck = foodTruckRequest.get();
                         } catch (ExecutionException | InterruptedException e) {
                             e.printStackTrace();
                         }
-
                         try {
-                            JSONArray searchData = new JSONArray(responseSearch);
-                            for (int i = 0; i < searchData.length(); i++) {
-                                JSONObject jsonobject = searchData.getJSONObject(i);
-                                String id = jsonobject.getString("id");
+                            JSONArray truckData = new JSONArray(responseTruck);
+                            for (int i = 0; i < truckData.length(); i++) {
+                                JSONObject jsonobject = truckData.getJSONObject(i);
+                                String truckID = jsonobject.getString("id");
 
-                                FoodTruck truckListing = new FoodTruck(id);
+                                FoodTruck truckListing = new FoodTruck(truckID);
                                 searchListings.add(truckListing);
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
+
+
+
+
+//
+//
+//
+//                        HttpRequests searchRequest = new HttpRequests();
+//                        String serverURL = "https://munch-server.herokuapp.com/";
+//                        searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
+//                        searchListings = new ArrayList<>();
+//                        String responseSearch = null;
+//                        try {
+//                            responseSearch = searchRequest.get();
+//                        } catch (ExecutionException | InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        try {
+//                            JSONArray searchData = new JSONArray(responseSearch);
+//                            for (int i = 0; i < searchData.length(); i++) {
+//                                JSONObject jsonobject = searchData.getJSONObject(i);
+//                                String id = jsonobject.getString("id");
+//
+//                                FoodTruck truckListing = new FoodTruck(id);
+//                                searchListings.add(truckListing);
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
                         SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
                         resultsList.setAdapter(mAdapter);
                         listing = searchListings;
                         forWindow = listing;
                         initialePopulation();
                     }
+                } else {
+                    populatePopularTrucksList(getView());
+                    initialePopulation();
                 }
 
             }
