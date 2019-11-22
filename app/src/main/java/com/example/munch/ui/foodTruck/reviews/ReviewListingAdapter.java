@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.munch.R;
 import com.example.munch.data.model.Review;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -73,6 +75,7 @@ public class ReviewListingAdapter extends RecyclerView.Adapter<ReviewListingAdap
 
         //Set the date in view
         TextView date = (TextView)holder.view.findViewById(R.id.dateofreview);
+        ImageView proPic = holder.view.findViewById(R.id.reviewerpic);
         date.setText(currentReview.getDate());
 
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -87,8 +90,15 @@ public class ReviewListingAdapter extends RecyclerView.Adapter<ReviewListingAdap
         }
 
         RatingBar rating = (RatingBar)holder.view.findViewById(R.id.ratingbar_on_review);
-        rating.setIsIndicator(false);
+        rating.setIsIndicator(true);
         rating.setRating((float)currentReview.getRating());
+
+        Picasso.with(context).load(currentReview.getAuthorPicture())
+                .resize(100, 100)
+                .centerCrop()
+                .into(proPic);
+
+
 
     }
 

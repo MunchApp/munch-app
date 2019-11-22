@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/munchOrange"
+    tools:context=".ui.foodTruck.createTruck.createTruckActivity2">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/munchGreenDark"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="5">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/init_prompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/hp_simplified_light_font"
+                    android:text="Tell Us About"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/init_prompt_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/hp_simplified_font"
+                    android:text="Your Hours"
+                    android:textColor="@color/munchOrange"
+                    android:textSize="60sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/init_prompt" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/sun_prompt"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#00FFFFFF"
+                    android:enabled="true"
+                    android:fontFamily="@font/rambla"
+                    android:text="S"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/mon_prompt"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#00FFFFFF"
+                    android:enabled="true"
+                    android:fontFamily="@font/rambla"
+                    android:text="M"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/tue_prompt"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#00FFFFFF"
+                    android:enabled="true"
+                    android:fontFamily="@font/rambla"
+                    android:text="T"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/wed_prompt"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#00FFFFFF"
+                    android:enabled="true"
+                    android:fontFamily="@font/rambla"
+                    android:text="W"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/thu_prompt"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#00FFFFFF"
+                    android:enabled="true"
+                    android:fontFamily="@font/rambla"
+                    android:text="T"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/fri_prompt"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#00FFFFFF"
+                    android:enabled="true"
+                    android:fontFamily="@font/rambla"
+                    android:text="F"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/sat_prompt"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#00FFFFFF"
+                    android:enabled="true"
+                    android:fontFamily="@font/rambla"
+                    android:text="S"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/pointer"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="-40dp"
+                android:rotation="-90"
+                app:srcCompat="@drawable/pointer"></ImageView>
+
+            <ScrollView
+                android:layout_width="360dp"
+                android:layout_height="400dp"
+                android:layout_gravity="center"
+                android:background="@color/munchOrangeLight">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/munchOrangeLight"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/day_prompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="250dp"
+                        android:fontFamily="@font/hp_simplified_font"
+                        android:text="Sunday"
+                        android:textColor="@color/munchOrangeDark"
+                        android:textSize="30sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/switch_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:fontFamily="@font/rambla"
+                            android:text="OPEN"
+                            android:textColor="@color/munchGreenDark"
+                            android:textSize="20sp" />
+
+                        <Switch
+                            android:id="@+id/switch_open"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:checked="true"
+                            android:fontFamily="@font/rambla"
+                            android:switchMinWidth="50dp"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:theme="@style/RatingBar" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/time_div"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:fontFamily="@font/rambla"
+                            android:text="OPENING TIME"
+                            android:textColor="@color/munchGreenDark"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:id="@+id/open_div"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal">
+
+                            <TimePicker
+                                android:id="@+id/timePicker1"
+                                android:layout_width="310dp"
+                                android:layout_height="wrap_content"
+                                android:numbersInnerTextColor="@color/munchGreenDark"
+                                android:numbersTextColor="@color/munchGreenDark"
+                                android:theme="@style/timePickerTheme2"
+                                android:timePickerMode="spinner" />
+                            <!-- <EditText
+                            android:id="@+id/open_hour"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@drawable/button_shape"
+                            android:backgroundTint="@color/munchGreyLight"
+                            android:fontFamily="@font/hp_simplified_font"
+                            android:gravity="center"
+                            android:text="12"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:textColor="@color/munchGrey"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/hp_simplified_font"
+                            android:text=":"
+                            android:textColor="@color/munchGrey"
+                            android:textSize="40sp" />
+
+                        <EditText
+                            android:id="@+id/open_min"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/button_shape"
+                            android:backgroundTint="@color/munchGreyLight"
+                            android:fontFamily="@font/hp_simplified_font"
+                            android:gravity="center"
+                            android:text="12"
+                            android:maxLength="2"
+                            android:inputType="number"
+                            android:textColor="@color/munchGrey"
+                            android:textSize="30sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/open_am"
+                                android:layout_width="40dp"
+                                android:layout_height="25dp"
+                                android:background="#00FFFFFF"
+                                android:fontFamily="@font/hp_simplified_font"
+                                android:text="AM"
+                                android:textColor="@color/munchGrey"
+                                android:textSize="22sp" />
+
+                            <Button
+                                android:id="@+id/open_pm"
+                                android:layout_width="40dp"
+                                android:layout_height="25dp"
+                                android:layout_marginTop="5dp"
+                                android:background="#00FFFFFF"
+                                android:fontFamily="@font/hp_simplified_font"
+                                android:text="PM"
+                                android:textColor="@color/munchGreyLight"
+                                android:textSize="22sp" />
+                        </LinearLayout>-->
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/rambla"
+                            android:text="CLOSING TIME"
+                            android:textColor="@color/munchGreenDark"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:id="@+id/close_div"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal">
+
+                            <TimePicker
+                                android:id="@+id/timePicker2"
+                                android:layout_width="310dp"
+                                android:layout_height="wrap_content"
+                                android:numbersInnerTextColor="@color/munchGreenDark"
+                                android:numbersTextColor="@color/munchGreenDark"
+                                android:theme="@style/timePickerTheme2"
+                                android:timePickerMode="spinner" />
+                            <!--     <EditText
+                        android:id="@+id/close_hour"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:maxLength="2"
+                        android:background="@drawable/button_shape"
+                        android:backgroundTint="@color/munchGreyLight"
+                        android:fontFamily="@font/hp_simplified_font"
+                        android:gravity="center"
+                        android:text="12"
+                        android:inputType="number"
+                        android:textColor="@color/munchGrey"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/hp_simplified_font"
+                        android:text=":"
+                        android:textColor="@color/munchGrey"
+                        android:textSize="40sp" />
+
+                    <EditText
+                        android:id="@+id/close_min"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:maxLength="2"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/button_shape"
+                        android:backgroundTint="@color/munchGreyLight"
+                        android:fontFamily="@font/hp_simplified_font"
+                        android:gravity="center"
+                        android:text="12"
+                        android:inputType="number"
+                        android:textColor="@color/munchGrey"
+                        android:textSize="30sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/close_am"
+                            android:layout_width="40dp"
+                            android:layout_height="25dp"
+                            android:background="#00FFFFFF"
+                            android:fontFamily="@font/rambla"
+                            android:text="AM"
+                            android:textColor="@color/munchGrey"
+                            android:textSize="22sp" />
+
+                        <Button
+                            android:id="@+id/close_pm"
+                            android:layout_width="40dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#00FFFFFF"
+                            android:fontFamily="@font/rambla"
+                            android:text="PM"
+                            android:textColor="@color/munchGreyLight"
+                            android:textSize="22sp" />
+                    </LinearLayout>-->
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <!--<Button
+                android:id="@+id/create_truck"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_shape"
+                android:backgroundTint="#FFFFFF"
+                android:enabled="true"
+                android:fontFamily="@font/rambla"
+                android:text="CREATE TRUCK"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />-->
+        </LinearLayout>
+
+    </LinearLayout>
+
+  <!-- <include
+        android:id="@+id/num_pad"
+        layout="@layout/num_pad"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />-->
+    <LinearLayout
+        android:layout_marginTop="@dimen/top_margin"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background = "@color/munchGreenDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <Button
+            android:id="@+id/create_truck"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:enabled="true"
+            android:fontFamily="@font/rambla"
+            android:text="CREATE TRUCK"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:backgroundTint="#FFFFFF"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

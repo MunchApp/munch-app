@@ -1,6 +1,7 @@
 package com.example.munch.data.model;
 
 import com.example.munch.HttpRequests;
+import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,8 +16,10 @@ public class Review {
     private String date;
     private String reviewBody;
     private double rating;
+    private String authorPicture;
     private String origin;
     private String forFoodTruck;
+    private String foodTruckName;
     String serverURL = "https://munch-server.herokuapp.com/";
     //constructor for already existing reviews
     public Review(String reviewId){
@@ -46,28 +49,21 @@ public class Review {
         } catch (JSONException e){
 
         }
+
         int status = reviewRequests.getStatusCode();
         System.out.println(status);
     }
 
     public String getAuthorName() {
-        if (!author.equals("")){
-            HttpRequests userRequest = new HttpRequests();
-            userRequest.execute(serverURL + "users/" + author, "GET");
-            String responseReview = null;
-            try {
-                responseReview = userRequest.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                JSONObject JSONUser= new JSONObject(responseReview);
-                authorName = JSONUser.getString("firstName") + " " + JSONUser.getString("lastName");
-            } catch (JSONException e){
 
-            }
-        }
         return authorName;
+    }
+    public String getAuthorPicture() {
+
+        if (authorPicture != null)
+            return authorPicture;
+        else
+            return "https://www.warnersstellian.com/Content/images/product_image_not_available.png";
     }
 
     private void getReview(String id){
@@ -88,6 +84,11 @@ public class Review {
 
             }
         }
+
+    }
+
+    public String getFoodTruckName() {
+        return foodTruckName;
     }
 
     private void jsonToReview (JSONObject jsonReview){
@@ -98,6 +99,7 @@ public class Review {
             reviewBody = jsonReview.getString("comment");
             rating = jsonReview.getDouble("rating");
             origin = jsonReview.getString("origin");
+            forFoodTruck = jsonReview.getString("foodTruck");
         } catch (JSONException e){
 
         }
@@ -113,6 +115,24 @@ public class Review {
             try {
                 JSONObject JSONUser= new JSONObject(responseReview);
                 authorName = JSONUser.getString("firstName") + " " + JSONUser.getString("lastName");
+                authorPicture = JSONUser.getString("picture");
+            } catch (JSONException e){
+
+            }
+        }
+        if (!forFoodTruck.equals("")){
+            HttpRequests truckRequest = new HttpRequests();
+            String token = UserProfileFragment.currentUser.getAccessToken();
+            truckRequest.execute(serverURL + "foodtrucks/" + forFoodTruck, "GET");
+            String responseReview = null;
+            try {
+                responseReview = truckRequest.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                JSONObject JSONUser= new JSONObject(responseReview);
+                foodTruckName = JSONUser.getString("name");
             } catch (JSONException e){
 
             }
@@ -152,6 +172,8 @@ public class Review {
     public void setRating(double rating) {
         this.rating = rating;
     }
+
+
 
 
 }

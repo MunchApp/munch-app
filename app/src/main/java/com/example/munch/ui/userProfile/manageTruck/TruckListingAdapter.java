@@ -1,5 +1,4 @@
 package com.example.munch.ui.userProfile.manageTruck;
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -87,9 +86,13 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
         }
 
         RatingBar rating = (RatingBar)listItem.findViewById(R.id.truck_rating_bar);
-        rating.setIsIndicator(false);
+        rating.setIsIndicator(true);
         rating.setRating(currentResult.getAvgRating());
+
+        TextView numReviews = (TextView)listItem.findViewById(R.id.num_reviews);
+        numReviews.setText(currentResult.getReviews().size() + " Reviews");
 
         return listItem;
     }
 }
+

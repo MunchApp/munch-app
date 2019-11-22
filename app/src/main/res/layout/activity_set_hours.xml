@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/munchOrange"
-    tools:context=".ui.foodTruck.createTruckActivity2">
+    tools:context=".ui.foodTruck.createTruck.createTruckActivity2">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,179 +16,185 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/init_prompt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="70dp"
-                android:fontFamily="@font/hp_simplified_light_font"
-                android:text="Tell Us About"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/init_prompt_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/hp_simplified_font"
-                android:text="Your Hours"
-                android:textColor="@color/munchOrange"
-                android:textSize="60sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/init_prompt" />
+                <TextView
+                    android:id="@+id/init_prompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/hp_simplified_light_font"
+                    android:text="Tell Us About"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-
-            <TextView
-                android:id="@+id/day_prompt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/rambla"
-                android:text="SUNDAY HOURS"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/init_prompt_2" />
-
-            <Switch
-                android:id="@+id/switch_open"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:switchMinWidth="50dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/day_prompt"
-                android:fontFamily="@font/rambla"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:checked="true" />
-
-            <TextView
-                android:id="@+id/string_open"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/rambla"
-                android:text="OPEN"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toRightOf="@id/switch_open"
-                app:layout_constraintTop_toTopOf="@id/switch_open"
-                app:layout_constraintBottom_toBottomOf="@id/switch_open"/>
-
-            <TextView
-                android:id="@+id/start_prompt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/rambla"
-                android:text="OPENING TIME"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switch_open" />
-
-            <Space
-                android:id="@+id/spacer1"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/timePicker1"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TimePicker
-                android:id="@+id/timePicker1"
-                android:layout_width="0dp"
-                app:layout_constraintHorizontal_weight="8"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@id/spacer1"
-                app:layout_constraintRight_toLeftOf="@id/spacer2"
-                app:layout_constraintTop_toBottomOf="@id/start_prompt"
-                android:theme="@style/timePickerTheme"
-                android:numbersTextColor="#FFFFFF"
-                android:numbersInnerTextColor="#FFFFFF"
-                android:timePickerMode="spinner"/>
-
-            <Space
-                android:id="@+id/spacer2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@id/timePicker1"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/init_prompt_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/hp_simplified_font"
+                    android:text="Your Hours"
+                    android:textColor="@color/munchOrange"
+                    android:textSize="60sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/init_prompt" />
 
 
-            <TextView
-                android:id="@+id/end_prompt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/rambla"
-                android:text="CLOSING TIME"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timePicker1" />
+                <TextView
+                    android:id="@+id/day_prompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/rambla"
+                    android:text="SUNDAY HOURS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/init_prompt_2" />
 
-            <Space
-                android:id="@+id/spacer3"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/timePicker2"
-                app:layout_constraintTop_toTopOf="parent" />
+                <Switch
+                    android:id="@+id/switch_open"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:checked="true"
+                    android:fontFamily="@font/rambla"
+                    android:switchMinWidth="50dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/day_prompt" />
 
-            <TimePicker
-                android:id="@+id/timePicker2"
-                android:layout_width="0dp"
-                app:layout_constraintHorizontal_weight="8"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@id/spacer3"
-                app:layout_constraintRight_toLeftOf="@id/spacer4"
-                app:layout_constraintTop_toBottomOf="@id/end_prompt"
-                android:theme="@style/timePickerTheme"
-                android:numbersTextColor="#FFFFFF"
-                android:numbersInnerTextColor="#FFFFFF"
-                android:timePickerMode="spinner"/>
 
-            <Space
-                android:id="@+id/spacer4"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@id/timePicker2"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/string_open"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/rambla"
+                    android:text="OPEN"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/switch_open"
+                    app:layout_constraintLeft_toRightOf="@id/switch_open"
+                    app:layout_constraintTop_toTopOf="@id/switch_open" />
 
-            <Space
-                android:id="@+id/spacer5"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/timePicker2"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/setHours"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/string_open"
+                    app:layout_constraintLeft_toLeftOf="parent">
+
+                    <TextView
+                        android:id="@+id/start_prompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="OPENING TIME"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Space
+                        android:id="@+id/spacer1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/timePicker1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TimePicker
+                        android:id="@+id/timePicker1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:numbersInnerTextColor="#FFFFFF"
+                        android:numbersTextColor="#FFFFFF"
+                        android:theme="@style/timePickerTheme"
+                        android:timePickerMode="spinner"
+                        app:layout_constraintHorizontal_weight="8"
+                        app:layout_constraintLeft_toRightOf="@id/spacer1"
+                        app:layout_constraintRight_toLeftOf="@id/spacer2"
+                        app:layout_constraintTop_toBottomOf="@id/start_prompt" />
+
+                    <Space
+                        android:id="@+id/spacer2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintLeft_toRightOf="@id/timePicker1"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/end_prompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/rambla"
+                        android:text="CLOSING TIME"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/timePicker1" />
+
+                    <Space
+                        android:id="@+id/spacer3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/timePicker2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TimePicker
+                        android:id="@+id/timePicker2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:numbersInnerTextColor="#FFFFFF"
+                        android:numbersTextColor="#FFFFFF"
+                        android:theme="@style/timePickerTheme"
+                        android:timePickerMode="spinner"
+                        app:layout_constraintHorizontal_weight="8"
+                        app:layout_constraintLeft_toRightOf="@id/spacer3"
+                        app:layout_constraintRight_toLeftOf="@id/spacer4"
+                        app:layout_constraintTop_toBottomOf="@id/end_prompt" />
+
+                    <Space
+                        android:id="@+id/spacer4"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintLeft_toRightOf="@id/timePicker2"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <Button
                 android:id="@+id/submit_time"
-                android:layout_width="0dp"
-                app:layout_constraintHorizontal_weight="8"
+                android:layout_width="310dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
@@ -199,28 +205,14 @@
                 android:text="Next"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintLeft_toRightOf="@id/spacer5"
-                app:layout_constraintRight_toLeftOf="@id/spacer6"
-                app:layout_constraintTop_toBottomOf="@id/timePicker2" />
-
-            <Space
-                android:id="@+id/spacer6"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@id/timePicker2"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintHorizontal_weight="8" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/submit_time" />
+                android:layout_gravity="center_horizontal" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
     </ScrollView>

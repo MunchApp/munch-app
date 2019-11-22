@@ -71,7 +71,7 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
         truckDistance.setText("");
 
         RatingBar rating = (RatingBar)listItem.findViewById(R.id.results_rating_bar);
-        rating.setIsIndicator(false);
+        rating.setIsIndicator(true);
         rating.setRating(currentResult.getAvgRating());
 
         Button goToTruckView = (Button) listItem.findViewById(R.id.button);

@@ -53,10 +53,10 @@
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".ui.foodTruck.createTruckActivity"
+            android:name=".ui.foodTruck.createTruck.createTruckActivity"
             android:label="CTA_1" />
         <activity
-            android:name=".ui.foodTruck.createTruckActivity2"
+            android:name=".ui.foodTruck.createTruck.createTruckActivity2"
             android:label="CTA_2" />
         <activity
             android:name=".MainActivity"

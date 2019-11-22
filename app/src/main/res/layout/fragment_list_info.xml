@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#FFFFFF"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/init_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/hp_simplified_light_font"
+                android:text="Learn About"
+                android:textColor="@color/munchGreenDark"
+                android:textSize="30sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/init_prompt_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="-20dp"
+                android:fontFamily="@font/hp_simplified_font"
+                android:text="Listing a Truck"
+                android:textColor="@color/munchOrange"
+                android:textSize="50sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/init_prompt" />
+
+            <TextView
+                android:id="@+id/body"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/hp_simplified_font"
+                android:text="Hi there! Welcome to Munch! \nAre you a Food Truck owner looking to reach more customers? Create a truck listing for your customers and food truck lovers to find. On your listing you can update your daily hours, or set your truck online for a special occasion.You can also receive reviews and feedback to better your business! List your truck today!
+"
+                android:textColor="@color/munchGrey"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/init_prompt" />
+            <Button
+                android:id="@+id/create_truck"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_shape"
+                android:enabled="true"
+                android:fontFamily="@font/rambla"
+                android:text="LIST A FOOD TRUCK"
+                android:textColor="@color/munchOrangeDark"
+                android:backgroundTint="@color/munchOrangeDark"
+                android:textSize="20sp"
+                app:layout_constraintHorizontal_weight="8" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

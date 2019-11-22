@@ -445,6 +445,7 @@ public class FoodTruckFragment extends Fragment{
         final Observer<Float> ratingObserver = new Observer<Float>() {
             @Override
             public void onChanged(@Nullable final Float newRating) {
+                rating.setIsIndicator(true);
                 rating.setRating(newRating);
 
             }

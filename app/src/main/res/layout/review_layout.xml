@@ -70,6 +70,20 @@
             app:srcCompat="@drawable/pp_janine" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-   
 
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="4.5"
+            android:background="@color/munchGreyLight" />
+    </LinearLayout>
 </LinearLayout>

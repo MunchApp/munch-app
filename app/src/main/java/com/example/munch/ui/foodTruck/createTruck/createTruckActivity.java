@@ -1,39 +1,20 @@
-package com.example.munch.ui.foodTruck;
+package com.example.munch.ui.foodTruck.createTruck;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Base64;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.Config;
-import com.example.munch.MainActivity;
 import com.example.munch.R;
-import com.example.munch.data.model.FoodTruck;
-import com.example.munch.ui.login.LoginActivity;
-import com.example.munch.ui.map.MapViewModel;
-import com.example.munch.ui.register.RegisterActivity;
-import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -79,7 +60,8 @@ public class createTruckActivity extends AppCompatActivity {
                         toMainIntent.putExtra("photo", "");
                         toMainIntent.putExtra("tags", tags.getText().toString());
                         //toMainIntent.putExtra("bitmap", encodeTobase64(selectedImage));
-                        Config.bitmapImage = encodeTobase64(selectedImage);
+                        if (selectedImage !=null)
+                            Config.bitmapImage = encodeTobase64(selectedImage);
                         startActivity(toMainIntent);
 
                     }
