@@ -94,11 +94,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     TextView sortByText;
     Spinner sortBySpinner;
-    public static final CharSequence[] sortList = {"Sort By", "Distance", "Rating", "Number of Reviews"};
 
-//    CheckBox mRating4;
-//    CheckBox mRating3;
-//    CheckBox mRating2;
     //endregion
 
 
@@ -107,7 +103,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frg);  //use SuppoprtMapFragment for using in fragment instead of activity  MapFragment = activity   SupportMapFragment = fragment
-        populatePopularTrucksList(root);
+//        populateClosestTrucksList(root);
         mapFragment.getMapAsync(this);
 
         searchText = root.findViewById(R.id.search_explore_pg1);
@@ -156,9 +152,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
         searchText.setClickable(true);
-        searchText.setOnClickListener(new View.OnClickListener() {
+        searchText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onFocusChange(View view, boolean b) {
                 AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
                 fadeOut.setDuration(1000);
                 AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
@@ -205,9 +201,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //endregion
 
         //region search and filter logic
+
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                searchText.clearFocus();
                 closeSearch(slideUpPanel,logoText,searchBar,locationBar,background,options);
                 locInput = locText.getText().toString();
                 String userInput = searchText.getText().toString();
@@ -275,7 +274,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                 parsedAddress += "+" + splitAddress[s];
                             }
 
-//                            parsedAddress = parsedAddress.split("\n")[0] + parsedAddress.split("\n")[1];
                             String response = null;
                             HttpRequests getTruckRequests = new HttpRequests();
                             getTruckRequests.execute("https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress +
@@ -303,9 +301,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         searchListings = new ArrayList<>();
                         foodTruckRequest = new HttpRequests();
                         String serverURL = "https://munch-server.herokuapp.com/";
-                        if (searchText.getText().toString().equals("")){
-                            sb = "";
-                        }
                         foodTruckRequest.execute(serverURL + "foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
                         responseTruck = null;
                         try {
@@ -366,7 +361,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         initialePopulation();
                     }
                 } else {
-                    populatePopularTrucksList(getView());
+                    populateClosestTrucksList(getView());
                     initialePopulation();
                 }
 
@@ -375,19 +370,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //endregion
 
         //region sort by logic
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.sort_options, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sortBySpinner.setPrompt("SORT");
-        sortBySpinner.setAdapter(
-                new NothingSelectedSpinnerAdapter(
-                        adapter,
-                        R.layout.contact_spinner_row_nothing_selected,
-                        getActivity()));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.sort_options, R.layout.spinner_layout);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+//        ArrayAdapter<String> adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, R.array.sort_options);
+//        sortBySpinner.setAdapter(
+//                new NothingSelectedSpinnerAdapter(
+//                        adapter,
+//                        R.layout.contact_spinner_row_nothing_selected,
+//                        getActivity()));
+        sortBySpinner.setAdapter(adapter);
         sortBySpinner.setOnItemSelectedListener(           //action triggered on button click
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if (position == 0 || position == 1){     //distance
+//                        if (position == 0){
+//                            populateClosestTrucksList(getView());
+//                        }
+                        if (position == 0){     //distance
                             LocationCalculator locCal = new LocationCalculator(getContext());
                             String lat = "";
                             String lng = "";
@@ -404,7 +403,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                     parsedAddress += "+" + splitAddress[s];
                                 }
 
-                                parsedAddress = parsedAddress.split("\n")[0] + parsedAddress.split("\n")[1];
                                 String response = null;
                                 HttpRequests getTruckRequests = new HttpRequests();
                                 getTruckRequests.execute("https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress +
@@ -463,7 +461,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             initialePopulation();
 
                         }
-                        if (position == 2){      //rating
+                        if (position == 1){      //rating
 
                             searchListings.sort(new Comparator<FoodTruck>() {
                                 @Override
@@ -482,7 +480,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             initialePopulation();
 
                         }
-                        if (position == 3){      //num reviews
+                        if (position == 2){      //num reviews
                             searchListings.sort(new Comparator<FoodTruck>() {
                                 @Override
                                 public int compare(FoodTruck data1, FoodTruck data2) {
@@ -503,7 +501,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-                        populatePopularTrucksList(getView());
+                        populateClosestTrucksList(getView());
                     }
 
                 });
@@ -572,9 +570,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         amerTags.add("Hot+Dogs");
         amerTags.add("Burgers");
         amerTags.add("Pizza");
-        amerTags.add("Sandwiches");
         amerTags.add("Hawaiian");
         amerTags.add("Steak");
+//        amerTags.add("");
 
         mAsianCheck = root.findViewById(R.id.catAsian);
         asianTags = new ArrayList<>();
@@ -640,8 +638,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         dessTags.add("Bakery");
         dessTags.add("Cakes");
         dessTags.add("Donuts");
-
-
     }
 
     private void closeSearch (SlidingUpPanelLayout slideUpPanel, TextView logoText,View searchBar,View locationBar, View background, View options){
@@ -690,7 +686,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         Sandwiches
          */
 
-    private void populatePopularTrucksList(View root) {
+    private void populateClosestTrucksList(View root) {
         resultsList = (ListView) root.findViewById(R.id.search_results);
         searchListings = new ArrayList<>();
         HttpRequests foodTruckRequest = new HttpRequests();
@@ -704,7 +700,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         try {
             JSONArray truckData = new JSONArray(responseTruck);
-            for (int i = 0; i < truckData.length(); i++) {
+            for (int i = 0; i < 10; i++) {
                 JSONObject jsonobject = truckData.getJSONObject(i);
                 String id = jsonobject.getString("id");
 
@@ -719,10 +715,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
         resultsList.setAdapter(mAdapter);
-
-        while (searchListings.size() < 10) {
-
-        }
 
         listing = searchListings;
         forWindow = listing;
