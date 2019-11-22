@@ -94,6 +94,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     TextView sortByText;
     Spinner sortBySpinner;
+    TextView noResultsText;
 
     //endregion
 
@@ -109,6 +110,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         searchText = root.findViewById(R.id.search_explore_pg1);
         locText = root.findViewById(R.id.location_explore_pg1);
         sortBySpinner = (Spinner) root.findViewById(R.id.spinner_sort);
+        noResultsText = root.findViewById(R.id.no_results_text);
 
         //region slidingPanel
         final SlidingUpPanelLayout slideUpPanel = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
@@ -354,8 +356,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();
 //                        }
+
+
+
                         SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
                         resultsList.setAdapter(mAdapter);
+                        if (searchListings.size() == 0){
+                            noResultsText.setVisibility(View.VISIBLE);
+                            sortBySpinner.setEnabled(false);
+                        } else {
+                            noResultsText.setVisibility(View.GONE);
+                            sortBySpinner.setEnabled(true);
+                        }
+
                         listing = searchListings;
                         forWindow = listing;
                         initialePopulation();
