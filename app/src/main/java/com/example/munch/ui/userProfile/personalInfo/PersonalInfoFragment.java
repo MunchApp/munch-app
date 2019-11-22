@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.munch.Config;
 import com.example.munch.R;
+import com.example.munch.ui.userProfile.CircleTransform;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.squareup.picasso.Picasso;
 
@@ -145,12 +146,12 @@ public class PersonalInfoFragment extends Fragment {
                     public void onClick(View view) {
                         HashMap<String, String> vals = new HashMap<>();
 
-                            String input = popupInput1.getText().toString();
-                            vals.put(jsonField, input);
-                            if (!popupInput2.getText().toString().equals("")) {
-                                input = popupInput2.getText().toString();
-                                vals.put(jsonField2, input);
-                            }
+                        String input = popupInput1.getText().toString();
+                        vals.put(jsonField, input);
+                        if (!popupInput2.getText().toString().equals("")) {
+                            input = popupInput2.getText().toString();
+                            vals.put(jsonField2, input);
+                        }
                         int responseCode = 0;
                         responseCode = UserProfileFragment.currentUser.update(vals);
 
@@ -198,6 +199,14 @@ public class PersonalInfoFragment extends Fragment {
                     if (selectedImage != null)
                         Config.profileImage = encodeTobase64(selectedImage);
                     UserProfileFragment.currentUser.uploadProfilePic();
+
+
+                    Picasso.with(getContext()).load(UserProfileFragment.currentUser.getPicture())
+                            .resize(100, 100)
+                            .transform(new CircleTransform())
+                            .into(proPic);
+
+
                 }
         }
     }
