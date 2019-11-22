@@ -570,8 +570,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             lastClicked = markey;
             LatLng center = markey.getPosition();
             munMap.animateCamera(CameraUpdateFactory.newLatLng(center));
-
-
+            munMap.setPadding(0, 400, 0, 0);
             return true;
         }
     };
