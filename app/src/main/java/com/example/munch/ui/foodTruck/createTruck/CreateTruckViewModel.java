@@ -1,4 +1,4 @@
-package com.example.munch.ui.foodTruck;
+package com.example.munch.ui.foodTruck.createTruck;
 
 
 import android.content.Context;
@@ -25,15 +25,66 @@ public class CreateTruckViewModel extends ViewModel {
     String name;
     String address;
     String[] photos;
-    String[][] hours;
+    Integer[][] hours;
     float[] location;
     ArrayList<String> tags;
 
+    private MutableLiveData<String> dayOfWeek;
+    private MutableLiveData<String> openAmpm;
+    private MutableLiveData<String> closeAmpm;
+    private MutableLiveData<Integer> intDay;
+
 
     public CreateTruckViewModel() {
-        hours = new String[7][2];
+        dayOfWeek = new MutableLiveData<>();
+        dayOfWeek.setValue("Monday");
+        openAmpm = new MutableLiveData<>();
+        openAmpm.setValue("am");
+        closeAmpm = new MutableLiveData<>();
+        closeAmpm.setValue("am");
+        intDay = new MutableLiveData<>();
+        intDay.setValue(0);
+        hours = new Integer[7][4];
+        for (Integer[] s: hours){
+            s[0] = 99;
+            s[1] = 99;
+            s[2] = 99;
+            s[3] = 99;
+        }
         location = new float[2];
         tags = new ArrayList<String>();
+    }
+
+    public MutableLiveData<String> getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public MutableLiveData<String> getCloseAmpm() {
+        return closeAmpm;
+    }
+
+    public MutableLiveData<String> getOpenAmpm() {
+        return openAmpm;
+    }
+
+    public MutableLiveData<Integer> getIntDay() {
+        return intDay;
+    }
+
+    public void setIntDay(int intDay) {
+        this.intDay.setValue(intDay);
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek.setValue(dayOfWeek);
+    }
+
+    public void setCloseAmpm(String ampm) {
+        this.closeAmpm.setValue(ampm);
+    }
+
+    public void setOpenAmpm(String ampm) {
+        this.openAmpm.setValue(ampm);
     }
 
     public String getName() {
@@ -48,7 +99,7 @@ public class CreateTruckViewModel extends ViewModel {
         return address;
     }
 
-    public String[][] getHours() {
+    public Integer[][] getHours() {
         return hours;
     }
 
@@ -56,9 +107,11 @@ public class CreateTruckViewModel extends ViewModel {
         this.name = name;
     }
 
-    public void setHours(int day, String start, String end) {
-        this.hours[day][0] = start;
-        this.hours[day][1] = end;
+    public void setHours(int day, int startH, int startM, int endH,int endM) {
+        this.hours[day][0] = startH;
+        this.hours[day][1] = startM;
+        this.hours[day][2] = endH;
+        this.hours[day][3] = endM;
     }
 
     public void setAddress(String address) {

@@ -28,6 +28,13 @@
         <item name="android:textColorPrimary">#FFFFFF</item>
     </style>
 
+    <style name="timePickerTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/hp_simplified_font</item>
+        <item name="android:textColor">@color/munchGreenDark</item>
+        <item name="android:textColorPrimary">@color/munchGreenDark</item>
+    </style>
+
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/munchGreyLight</item>
         <item name="colorControlActivated">@color/munchOrange</item>

@@ -1,5 +1,6 @@
 package com.example.munch.data.model;
 
+import com.example.munch.Config;
 import com.example.munch.HttpRequests;
 
 import org.json.JSONArray;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -26,6 +28,7 @@ public class LoggedInUser {
     private String refreshToken;
     private boolean loggedIn;
     private String email;   //edit
+    private String picture = "https://www.warnersstellian.com/Content/images/product_image_not_available.png";
     private String firstName;
     private String lastName;
     private String gender;
@@ -235,6 +238,7 @@ public class LoggedInUser {
             this.firstName = jsonUser.get("firstName").toString();
             this.lastName = jsonUser.get("lastName").toString();
             this.id = jsonUser.get("id").toString();
+            this.picture = jsonUser.get("picture").toString();
             this.dateOfBirth_month = monthNames[month];
             this.dateOfBirth_day = String.valueOf(day);
             this.dateOfBirth_year = String.valueOf(year);
@@ -333,5 +337,67 @@ public class LoggedInUser {
             favorites.remove(foodTruckId);
         }
         return statusCode;
+    }
+
+    public int update(HashMap<String, String> vals){
+        JSONObject user = new JSONObject();
+        if (vals != null) {
+            for (String key : vals.keySet()) {
+                try {
+                    user.put(key, vals.get(key));
+                } catch (JSONException ex) {
+                }
+            }
+        }
+        HttpRequests updateRequest = new HttpRequests();
+
+            updateRequest.execute(serverURL + "profile", "PUT",user.toString(),accessToken);
+            String response= null;
+            try {
+                response = updateRequest.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                JSONObject jsonUser = new JSONObject(response);
+                jsonToUser(jsonUser);
+            } catch (JSONException e){
+
+            }
+
+        int statusCode = updateRequest.getStatusCode();
+        return statusCode;
+    }
+
+    public int uploadProfilePic(){
+        HttpRequests imageRequests = new HttpRequests();
+        imageRequests.execute(serverURL + "profile/upload", "PUT", null, accessToken, Config.profileImage);
+        String response = "";
+        try {
+            response = imageRequests.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+            HttpRequests userRequest = new HttpRequests();
+            userRequest.execute(serverURL + "users/" + this.id, "GET");
+            String responseReview = null;
+            try {
+                responseReview = userRequest.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                JSONObject JSONUser= new JSONObject(responseReview);
+                picture = JSONUser.getString("picture");
+            } catch (JSONException e){
+
+            }
+
+        return imageRequests.getStatusCode();
+    }
+
+    public ArrayList<String> getReviews() {
+        return reviews;
     }
 }
