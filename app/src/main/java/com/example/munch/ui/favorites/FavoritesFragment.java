@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.data.model.MunchUser;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.example.munch.ui.userProfile.manageTruck.TruckListingAdapter;
 
@@ -27,7 +28,7 @@ public class FavoritesFragment extends Fragment {
         ListView myTrucksList = (ListView) root.findViewById(R.id.list_of_trucks);
         title.setText("Your Favorites");
         ArrayList<String> listings = new ArrayList<String>();
-        listings = UserProfileFragment.currentUser.getFavorites();
+        listings = MunchUser.getInstance().getFavorites();
         if (listings.size() != 0) {
             ArrayList<FoodTruck> truckListings = new ArrayList<FoodTruck>();
             for (String s: listings){

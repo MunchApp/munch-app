@@ -277,8 +277,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             }
 
                             String response = null;
-                            HttpRequests getTruckRequests = new HttpRequests();
-                            getTruckRequests.execute("https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress +
+                            HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.GOOGLE);
+                            getTruckRequests.execute(parsedAddress +
                                     "&key=" + API_KEY, "GET");
                             try {
                                 response = getTruckRequests.get();
@@ -301,9 +301,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                         resultsList = (ListView) getActivity().findViewById(R.id.search_results);
                         searchListings = new ArrayList<>();
-                        foodTruckRequest = new HttpRequests();
-                        String serverURL = "https://munch-server.herokuapp.com/";
-                        foodTruckRequest.execute(serverURL + "foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
+                        foodTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+                        foodTruckRequest.execute("foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
                         responseTruck = null;
                         try {
                             responseTruck = foodTruckRequest.get();
@@ -417,8 +416,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                 }
 
                                 String response = null;
-                                HttpRequests getTruckRequests = new HttpRequests();
-                                getTruckRequests.execute("https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress +
+                                HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.GOOGLE);
+                                getTruckRequests.execute(parsedAddress +
                                         "&key=" + API_KEY, "GET");
                                 try {
                                     response = getTruckRequests.get();
@@ -441,12 +440,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                             resultsList = (ListView) getActivity().findViewById(R.id.search_results);
                             searchListings = new ArrayList<>();
-                            foodTruckRequest = new HttpRequests();
-                            String serverURL = "https://munch-server.herokuapp.com/";
+                            foodTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
                             if (searchText.getText().toString().equals("")){
                                 sb = "";
                             }
-                            foodTruckRequest.execute(serverURL + "foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
+                            foodTruckRequest.execute("foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
                             responseTruck = null;
                             try {
                                 responseTruck = foodTruckRequest.get();
@@ -704,9 +702,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private void populateClosestTrucksList(View root) {
         resultsList = (ListView) root.findViewById(R.id.search_results);
         searchListings = new ArrayList<>();
-        HttpRequests foodTruckRequest = new HttpRequests();
-        String serverURL = "https://munch-server.herokuapp.com/";
-        foodTruckRequest.execute(serverURL + "foodtrucks", "GET");
+        HttpRequests foodTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+        foodTruckRequest.execute("foodtrucks", "GET");
         String responseTruck = null;
         try {
             responseTruck = foodTruckRequest.get();

@@ -144,8 +144,8 @@ public class CreateTruckViewModel extends ViewModel {
 
         parsedAddress = parsedAddress.split("\n")[0] + parsedAddress.split("\n")[1];
         String response = null;
-        HttpRequests getTruckRequests = new HttpRequests();
-        getTruckRequests.execute("https://maps.googleapis.com/maps/api/geocode/json?address=" + parsedAddress +
+        HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.GOOGLE);
+        getTruckRequests.execute(parsedAddress +
                 "&key=" + API_KEY, "GET");
         try {
             response = getTruckRequests.get();

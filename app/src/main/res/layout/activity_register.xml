@@ -267,71 +267,30 @@
                 android:layout_height="0dp"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/month"
+                app:layout_constraintRight_toLeftOf="@id/dob"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/month"
+            <DatePicker
+                android:id="@+id/dob"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#FFFFFF"
-                android:fontFamily="@font/hp_simplified_light_font"
-                android:textColor="@color/munchOrangeLight"
-                android:textColorHint="@color/munchOrangeLight"
-                app:layout_constraintHorizontal_weight="5"
+                android:layout_height="wrap_content"
+                android:numbersInnerTextColor="#FFFFFF"
+                android:numbersTextColor="#FFFFFF"
+                android:theme="@style/timePickerTheme"
+                app:layout_constraintHorizontal_weight="8"
                 app:layout_constraintLeft_toRightOf="@id/spacer7"
-                app:layout_constraintRight_toLeftOf="@id/day"
-                app:layout_constraintTop_toBottomOf="@+id/dob_prompt" />
-
-            <EditText
-                android:id="@+id/day"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#FFFFFF"
-                android:hint="DAY"
-                android:inputType="number"
-                android:maxLength="2"
-                android:background="@drawable/ic_input"
-                android:fontFamily="@font/hp_simplified_light_font"
-                android:textColor="@color/munchOrangeLight"
-                android:textColorHint="@color/munchOrangeLight"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@id/month"
-                app:layout_constraintRight_toLeftOf="@id/year"
-                app:layout_constraintTop_toBottomOf="@+id/dob_prompt" />
-
-            <EditText
-                android:id="@+id/year"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#FFFFFF"
-                android:hint="YEAR"
-                android:inputType="number"
-                android:maxLength="4"
-                android:background="@drawable/ic_input"
-                android:fontFamily="@font/hp_simplified_light_font"
-                android:textColor="@color/munchOrangeLight"
-                android:textColorHint="@color/munchOrangeLight"
-                app:layout_constraintHorizontal_weight="2"
-                app:layout_constraintLeft_toRightOf="@id/day"
                 app:layout_constraintRight_toLeftOf="@id/spacer8"
-                app:layout_constraintTop_toBottomOf="@+id/dob_prompt" />
+                app:layout_constraintTop_toBottomOf="@id/dob_prompt"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"/>
+
 
             <Space
                 android:id="@+id/spacer8"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@id/year"
+                app:layout_constraintLeft_toRightOf="@id/dob"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -360,7 +319,7 @@
                 app:layout_constraintLeft_toRightOf="@id/spacer5"
                 app:layout_constraintRight_toLeftOf="@id/spacer6"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/year" />
+                app:layout_constraintTop_toBottomOf="@id/dob" />
 
             <Space
                 android:id="@+id/spacer6"

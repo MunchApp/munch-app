@@ -45,6 +45,7 @@ import com.example.munch.LocationCalculator;
 import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.data.model.MunchUser;
 import com.example.munch.data.model.Review;
 import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
 import com.example.munch.ui.login.LoginActivity;
@@ -429,7 +430,7 @@ public class FoodTruckFragment extends Fragment{
         final Observer<Boolean> favoriteObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable final Boolean newFavorite) {
-                if (UserProfileFragment.currentUser.getLoggedIn()) {
+                if (MunchUser.getInstance().getLoggedIn()) {
                     heart.setVisibility(View.VISIBLE);
                     if (newFavorite) {
                         heart.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.fv_heart_filled));
@@ -561,7 +562,7 @@ public class FoodTruckFragment extends Fragment{
         final RatingBar rating = (RatingBar) popupView.findViewById(R.id.ratingbar_on_review);
         final EditText content = (EditText) popupView.findViewById(R.id.reviewContent);
 
-        if (!UserProfileFragment.currentUser.getLoggedIn()){
+        if (!MunchUser.getInstance().getLoggedIn()){
             postReview.setText("SIGN IN TO LEAVE A REVIEW");
             postReview.setOnClickListener(new View.OnClickListener() {
                 @Override

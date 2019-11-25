@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.munch.R;
 import com.example.munch.data.model.LoggedInUser;
+import com.example.munch.data.model.MunchUser;
 import com.example.munch.ui.foodTruck.createTruck.createTruckActivity;
 import com.example.munch.ui.login.LoginActivity;
 import com.example.munch.ui.userProfile.manageTruck.ManageTruckFragment;
@@ -27,39 +28,47 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class UserProfileFragment extends Fragment {
-    public static LoggedInUser currentUser = new LoggedInUser();
+
+    //public static LoggedInUser currentUser = new LoggedInUser();
+    private TextView personalInfo;
+    private TextView myReviews;
+    private TextView manageTrucks;
+    private TextView listTruck;
+    private TextView learnList;
+    private Button signInOut;
+    private TextView fullName;
+    private TextView location;
+    private ImageView profilePicture;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_user_profile, container, false);
-        final Button signInOut = root.findViewById(R.id.sign_in_out);
-        TextView personalInfo = root.findViewById(R.id.personal_information);
-        TextView manageTrucks = root.findViewById(R.id.manage_trucks);
-        TextView myReviews = root.findViewById(R.id.your_reviews);
-        TextView listTruck = root.findViewById(R.id.list_truck);
-        TextView learn= root.findViewById(R.id.learn_about_listing);
-        TextView firstAndLast = root.findViewById(R.id.first_and_last_name);
+        signInOut = root.findViewById(R.id.sign_in_out);
+        personalInfo = root.findViewById(R.id.personal_information);
+        manageTrucks = root.findViewById(R.id.manage_trucks);
+        myReviews = root.findViewById(R.id.your_reviews);
+        listTruck = root.findViewById(R.id.list_truck);
+        learnList= root.findViewById(R.id.learn_about_listing);
+        fullName = root.findViewById(R.id.first_and_last_name);
+        location = root.findViewById(R.id.city_and_state);
+
+
         ArrayList<TextView> clickables = new ArrayList<TextView>();
         clickables.add(listTruck);
         clickables.add(personalInfo);
         clickables.add(manageTrucks);
 
-        String picture = UserProfileFragment.currentUser.getPicture();
-        if (picture==null || picture.equals("")){
-            picture = "https://www.warnersstellian.com/Content/images/product_image_not_available.png";
-        }
-
-        ImageView proPic = root.findViewById(R.id.profile_picture);
-        Picasso.with(getContext()).load(picture)
+        profilePicture = root.findViewById(R.id.profile_picture);
+        Picasso.with(getContext()).load(MunchUser.getInstance().getPicture())
                 .resize(100, 100)
                 .transform(new CircleTransform())
-                .into(proPic);
+                .into(profilePicture);
 
-        firstAndLast.setText(currentUser.getFullName());
-        if (currentUser.getLoggedIn()){
+        fullName.setText(MunchUser.getInstance().getFullName());
+        if (MunchUser.getInstance().getLoggedIn()){
             signInOut.setText("SIGN OUT");
-            learn.setOnClickListener(           //action triggered on button click
+            learnList.setOnClickListener(           //action triggered on button click
                     new View.OnClickListener() {
                         public void onClick(View view) {
 
@@ -126,7 +135,7 @@ public class UserProfileFragment extends Fragment {
                             startActivity(toLoginPage);
 
                         } else {
-                            currentUser.signOut();
+                            MunchUser.getInstance().clear();
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             UserProfileFragment NAME = new UserProfileFragment();
