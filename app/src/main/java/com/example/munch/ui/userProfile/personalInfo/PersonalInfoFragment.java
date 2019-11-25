@@ -1,7 +1,6 @@
 package com.example.munch.ui.userProfile.personalInfo;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -72,7 +71,11 @@ public class PersonalInfoFragment extends Fragment {
             }
         });
 
-        Picasso.with(getContext()).load(UserProfileFragment.currentUser.getPicture())
+        String picture = UserProfileFragment.currentUser.getPicture();
+        if (picture==null || picture.equals("")){
+            picture = "https://www.warnersstellian.com/Content/images/product_image_not_available.png";
+        }
+        Picasso.with(getContext()).load(picture)
                 .resize(100, 100)
                 .transform(new CircleTransform())
                 .into(proPic);

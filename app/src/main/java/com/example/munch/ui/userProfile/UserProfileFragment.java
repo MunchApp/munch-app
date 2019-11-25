@@ -45,8 +45,13 @@ public class UserProfileFragment extends Fragment {
         clickables.add(personalInfo);
         clickables.add(manageTrucks);
 
+        String picture = UserProfileFragment.currentUser.getPicture();
+        if (picture==null || picture.equals("")){
+            picture = "https://www.warnersstellian.com/Content/images/product_image_not_available.png";
+        }
+
         ImageView proPic = root.findViewById(R.id.profile_picture);
-        Picasso.with(getContext()).load(UserProfileFragment.currentUser.getPicture())
+        Picasso.with(getContext()).load(picture)
                 .resize(100, 100)
                 .transform(new CircleTransform())
                 .into(proPic);
