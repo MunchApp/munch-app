@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.munch.Config;
 import com.example.munch.R;
+import com.example.munch.data.model.MunchUser;
 import com.example.munch.ui.userProfile.CircleTransform;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.squareup.picasso.Picasso;
@@ -72,21 +73,21 @@ public class PersonalInfoFragment extends Fragment {
             }
         });
 
-        Picasso.with(getContext()).load(UserProfileFragment.currentUser.getPicture())
+        Picasso.with(getContext()).load(MunchUser.getInstance().getPicture())
                 .resize(100, 100)
                 .transform(new CircleTransform())
                 .into(proPic);
 
 
         //Set values
-        firstAndLastT.setText(UserProfileFragment.currentUser.getFullName());
-        dobT.setText(UserProfileFragment.currentUser.getDateOfBirth());
-        if (UserProfileFragment.currentUser.getPhoneNum().equals("") || UserProfileFragment.currentUser.getPhoneNum() == null) {
+        firstAndLastT.setText(MunchUser.getInstance().getFullName());
+        dobT.setText(MunchUser.getInstance().getDateOfBirth());
+        if (MunchUser.getInstance().getPhoneNumber().equals("") || MunchUser.getInstance().getPhoneNumber() == null) {
             phoneNumT.setText("Tap the pencil to add a phone number");
         } else {
-            phoneNumT.setText(UserProfileFragment.currentUser.getPhoneNum());
+            phoneNumT.setText(MunchUser.getInstance().getPhoneNumber());
         }
-        emailT.setText(UserProfileFragment.currentUser.getEmail());
+        emailT.setText(MunchUser.getInstance().getEmail());
 
 
         //Pop-up on clicking on field
@@ -159,7 +160,7 @@ public class PersonalInfoFragment extends Fragment {
                             vals.put(jsonField2, input);
                         }
                         int responseCode = 0;
-                        responseCode = UserProfileFragment.currentUser.update(vals);
+                        responseCode = MunchUser.getInstance().updateUserInfo(vals);
 
                         if (responseCode == 200) {
                             if (prompt.equals("NAME")) {
@@ -204,10 +205,10 @@ public class PersonalInfoFragment extends Fragment {
                     }
                     if (selectedImage != null)
                         Config.profileImage = encodeTobase64(selectedImage);
-                    UserProfileFragment.currentUser.uploadProfilePic();
+                    MunchUser.getInstance().uploadProfilePic();
 
 
-                    Picasso.with(getContext()).load(UserProfileFragment.currentUser.getPicture())
+                    Picasso.with(getContext()).load(MunchUser.getInstance().getPicture())
                             .resize(100, 100)
                             .transform(new CircleTransform())
                             .into(proPic);

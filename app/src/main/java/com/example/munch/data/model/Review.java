@@ -35,8 +35,8 @@ public class Review {
         } catch (JSONException ex) {
             System.out.println("Post Review Failed");
         }
-        HttpRequests reviewRequests = new HttpRequests();
-        reviewRequests.execute(serverURL + "reviews", "POST", JSONReview.toString(), token);
+        HttpRequests reviewRequests = new HttpRequests(HttpRequests.Route.MUNCH);
+        reviewRequests.execute("reviews", "POST", JSONReview.toString(), token);
         String responseLogin = null;
         try {
             responseLogin = reviewRequests.get();
@@ -67,10 +67,10 @@ public class Review {
     }
 
     private void getReview(String id){
-        HttpRequests reviewRequest = new HttpRequests();
+        HttpRequests reviewRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         if (id != null) {
 
-            reviewRequest.execute(serverURL + "reviews/" + id, "GET");
+            reviewRequest.execute("reviews/" + id, "GET");
             String responseReview = null;
             try {
                 responseReview = reviewRequest.get();
@@ -104,8 +104,8 @@ public class Review {
 
         }
         if (!author.equals("")){
-            HttpRequests userRequest = new HttpRequests();
-            userRequest.execute(serverURL + "users/" + author, "GET");
+            HttpRequests userRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+            userRequest.execute("users/" + author, "GET");
             String responseReview = null;
             try {
                 responseReview = userRequest.get();
@@ -121,9 +121,9 @@ public class Review {
             }
         }
         if (!forFoodTruck.equals("")){
-            HttpRequests truckRequest = new HttpRequests();
-            String token = UserProfileFragment.currentUser.getAccessToken();
-            truckRequest.execute(serverURL + "foodtrucks/" + forFoodTruck, "GET");
+            HttpRequests truckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+            String token = MunchUser.getInstance().getAccessToken();
+            truckRequest.execute("foodtrucks/" + forFoodTruck, "GET");
             String responseReview = null;
             try {
                 responseReview = truckRequest.get();

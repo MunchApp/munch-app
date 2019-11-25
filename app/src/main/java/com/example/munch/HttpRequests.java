@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.mime.HttpMultipartMode;
 import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
@@ -25,24 +24,44 @@ import cz.msebera.android.httpclient.entity.mime.content.ContentBody;
 
 public class HttpRequests extends AsyncTask<String, Void, String> {
 
-    int statusCode;
-    public HttpRequests (){
-        statusCode = 0;
+    private int statusCode;
+    private String serverURL;
+    public enum Route
+    {
+        MUNCH, GOOGLE, DISTANCE;
     }
-    String boundary = "***" + System.currentTimeMillis() + "***";
-    String twoHyphens = "--";
-    String crlf = "\r\n";
-    String output = "";
+    public HttpRequests (Route route){
+        statusCode = 0;
+        switch (route)
+        {
+            case MUNCH:
+                serverURL = "https://munch-server.herokuapp.com/";
+                break;
+            case GOOGLE:
+                serverURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+                break;
+            case DISTANCE:
+                serverURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=";
+                break;
+        }
+    }
 
     @Override
     protected String doInBackground(String... strings) {
         StringBuffer response = new StringBuffer();
         try {
-
+            /*
+            String[
+            String[0] = route;
+            String[1] = method;
+            String[2] = JSONobject;
+            String[3] = access token;
+            String[4] = bitmap;
+            */
             String method = strings[1];
             String route = strings[0];
 
-            URL url = new URL(route);
+            URL url = new URL(serverURL + route);
 
             //Set up connection
             HttpURLConnection con = (HttpURLConnection) url.openConnection();

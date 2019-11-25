@@ -12,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.munch.MainActivity;
 import com.example.munch.R;
+import com.example.munch.data.model.MunchUser;
 import com.example.munch.ui.register.RegisterActivity;
 import com.example.munch.ui.userProfile.UserProfileFragment;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText usernameEditText = findViewById(R.id.username);
+        final EditText emailEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button login = findViewById(R.id.login);
         final TextView newAccount = findViewById(R.id.new_account);
@@ -36,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
                         Intent toRegPage = new Intent(LoginActivity.this, RegisterActivity.class);
-                        toRegPage.putExtra(USERNAME, usernameEditText.getText().toString());
+                        toRegPage.putExtra(USERNAME, emailEditText.getText().toString());
                         toRegPage.putExtra(PASSWORD, passwordEditText.getText().toString());
                         startActivity(toRegPage);
                     }
@@ -45,7 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(           //action triggered on button click
                 new View.OnClickListener() {
                     public void onClick(View view) {
-                        int statusCode = UserProfileFragment.currentUser.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                        HashMap<String, String> loginInfo = new HashMap<>();
+                        loginInfo.put("email", emailEditText.getText().toString());
+                        loginInfo.put("password", passwordEditText.getText().toString());
+                        int statusCode = MunchUser.getInstance().login(loginInfo);
                         if (statusCode != 200) {
                             CharSequence text = "Invalid email and/or password! Try Again!";
                             int duration = Toast.LENGTH_SHORT;

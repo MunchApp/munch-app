@@ -85,8 +85,8 @@ public class LocationCalculator implements LocationListener {
 
         String distance= "";
         if (fAddress != null) {
-            String getDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + orginAddress + "&destinations=" + fAddress + "&key=" + api_key;
-            HttpRequests distRequests = new HttpRequests();
+            String getDistance =orginAddress + "&destinations=" + fAddress + "&key=" + api_key;
+            HttpRequests distRequests = new HttpRequests(HttpRequests.Route.DISTANCE);
             distRequests.execute(getDistance, "GET");
             try {
                 response = distRequests.get();

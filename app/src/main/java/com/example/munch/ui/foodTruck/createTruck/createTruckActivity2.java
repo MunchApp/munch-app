@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.data.model.MunchUser;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import android.widget.TimePicker;
@@ -108,124 +109,17 @@ public class createTruckActivity2 extends AppCompatActivity {
                             finalHours[c][1] = parseTime(s[2], s[3]);
                             c++;
                         }
-                        String token = UserProfileFragment.currentUser.getAccessToken();
-                        String ownerId = UserProfileFragment.currentUser.getId();
+                        String token = MunchUser.getInstance().getAccessToken();
+                        String ownerId = MunchUser.getInstance().getId();
 
                         FoodTruck foodTruck = new FoodTruck(token, createTruckViewModel.getName(), createTruckViewModel.getAddress(), finalHours, ownerId, createTruckViewModel.getTag(), createTruckViewModel.getLocation(context));
-                        UserProfileFragment.currentUser.addTruck(foodTruck.getId());
+                       //todo only add if response is 200
+                        MunchUser.getInstance().addTruck(foodTruck.getId());
                         Intent toMainIntent = new Intent(createTruckActivity2.this, MainActivity.class);
                         startActivity(toMainIntent);
                     }
                 });
 
-
-
-
-        /*final TimePicker startTime = (TimePicker) findViewById(R.id.timePicker1);
-        startTime.setIs24HourView(false);
-        final TimePicker endTime = (TimePicker) findViewById(R.id.timePicker2);
-        endTime.setIs24HourView(false);
-        final TextView prompt = (TextView) findViewById(R.id.day_prompt);
-        final Button next = findViewById(R.id.submit_time);
-        final String[] days = {"SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"};
-        final Switch closed = (Switch) findViewById(R.id.switch_open);
-        final TextView startPrompt = (TextView) findViewById(R.id.start_prompt);
-        final TextView stopPrompt = (TextView) findViewById(R.id.end_prompt);
-        final TextView stringOpen = (TextView) findViewById(R.id.string_open);
-        newTruck.setTag(tags);
-        next.setVisibility(View.VISIBLE);
-        closed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    next.setX(50);
-                    startPrompt.setVisibility(View.VISIBLE);
-                    startTime.setVisibility(View.VISIBLE);
-                    endTime.setVisibility(View.VISIBLE);
-                    stopPrompt.setVisibility(View.VISIBLE);
-                    stringOpen.setText("OPEN");
-
-                } else {
-                    next.setVisibility(View.VISIBLE);
-                    startPrompt.setVisibility(View.GONE);
-                    startTime.setVisibility(View.GONE);
-                    endTime.setVisibility(View.GONE);
-                    stopPrompt.setVisibility(View.GONE);
-                    stringOpen.setText("CLOSED");
-                }
-            }
-        });
-        int day = 0;
-        prompt.setText(days[0] + " HOURS");
-        String[][] hours = new String[7][2];
-        final Context context = this;
-        next.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View view) {
-                        String day = prompt.getText().toString().split(" ")[0];
-                        switch(day)
-                        {
-                            case "SUNDAY":
-                                prompt.setText(days[1]+ " HOURS");
-                                if (!closed.isChecked()){
-                                    newTruck.setHours(0,"99:99","99:99");
-                                } else
-                                newTruck.setHours(0,parseTime(startTime),parseTime(endTime));
-                                break;
-                            case "MONDAY":
-                                prompt.setText(days[2]+ " HOURS");
-                                if (!closed.isChecked()){
-                                    newTruck.setHours(0,"99:99","99:99");
-                                } else
-                                newTruck.setHours(1,parseTime(startTime),parseTime(endTime));
-                                break;
-                            case "TUESDAY":
-                                prompt.setText(days[3]+ " HOURS");
-                                if (!closed.isChecked()){
-                                    newTruck.setHours(0,"99:99","99:99");
-                                } else
-                                newTruck.setHours(2,parseTime(startTime),parseTime(endTime));
-                                break;
-                            case "WEDNESDAY":
-                                prompt.setText(days[4]+ " HOURS");
-                                if (!closed.isChecked()){
-                                    newTruck.setHours(0,"99:99","99:99");
-                                } else
-                                newTruck.setHours(3,parseTime(startTime),parseTime(endTime));
-                                break;
-                            case "THURSDAY":
-                                prompt.setText(days[5]+ " HOURS");
-                                if (!closed.isChecked()){
-                                    newTruck.setHours(0,"99:99","99:99");
-                                } else
-                                newTruck.setHours(4,parseTime(startTime),parseTime(endTime));
-                                break;
-                            case "FRIDAY":
-                                prompt.setText(days[6]+ " HOURS");
-                                next.setText("CREATE TRUCK");
-                                if (!closed.isChecked()){
-                                    newTruck.setHours(0,"99:99","99:99");
-                                } else
-                                newTruck.setHours(5,parseTime(startTime),parseTime(endTime));
-                                break;
-                            case "SATURDAY":
-                                if (!closed.isChecked()){
-                                    newTruck.setHours(0,"99:99","99:99");
-                                } else
-                                newTruck.setHours(6,parseTime(startTime),parseTime(endTime));
-                                String token = UserProfileFragment.currentUser.getAccessToken();
-                                String ownerId = UserProfileFragment.currentUser.getId();
-
-                                FoodTruck foodTruck = new FoodTruck(token, newTruck.getName(), newTruck.getAddress(), newTruck.getHours(),ownerId, newTruck.getTag(), newTruck.getLocation(context));
-                                UserProfileFragment.currentUser.addTruck(foodTruck.getId());
-                                Intent toMainIntent = new Intent(createTruckActivity2.this, MainActivity.class);
-                                startActivity(toMainIntent);
-                                break;
-                            default:
-                                System.out.println("error");
-                        }
-                    }
-                }
-        );*/
     }
 
     private void setButtonDays(final CreateTruckViewModel createTruckViewModel, Button button, final ImageView pointer, final float pos, final String day, final int intDay) {

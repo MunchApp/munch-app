@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.munch.R;
+import com.example.munch.data.model.MunchUser;
 import com.example.munch.data.model.Review;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
@@ -27,7 +28,7 @@ public class MyReviewsFragment extends Fragment {
         TextView title = (TextView) root.findViewById(R.id.text_list_prompt);
         title.setText("Your Reviews");
         ArrayList<String> listings = new ArrayList<String>();
-        listings = UserProfileFragment.currentUser.getReviews();
+        listings = MunchUser.getInstance().getReviews();
         if (listings.size() != 0) {
             ArrayList<Review> reviewsListings = new ArrayList<Review>();
             for (String s: listings){

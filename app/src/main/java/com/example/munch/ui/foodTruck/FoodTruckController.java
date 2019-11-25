@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
+import com.example.munch.data.model.MunchUser;
 import com.example.munch.data.model.Review;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
@@ -26,11 +27,11 @@ public class FoodTruckController {
     public FoodTruckController(FoodTruckViewModel foodTruckViewModel, FoodTruck foodTruck){
         this.foodTruckViewModel = foodTruckViewModel;
         this.foodTruck = foodTruck;
-        token = UserProfileFragment.currentUser.getAccessToken();
+        token = MunchUser.getInstance().getAccessToken();
     }
 
     public void addReview (String content, double rating){
-        String author = UserProfileFragment.currentUser.getId();
+        String author = MunchUser.getInstance().getId();
         Review newReview = new Review(token, foodTruck.getId(),content, rating);
         ArrayList<Review> allReviews = foodTruckViewModel.getReviews().getValue();
         if (!newReview.getDate().equals("")){
@@ -46,13 +47,13 @@ public class FoodTruckController {
 
     public void favorite(String id){
         int statusCode = 0;
-        if (UserProfileFragment.currentUser.getFavorites().contains(id)){
-            statusCode = UserProfileFragment.currentUser.deleteFavorite(id);
+        if (MunchUser.getInstance().getFavorites().contains(id)){
+            statusCode = MunchUser.getInstance().favorite(id,"delete");
             if (statusCode == 200) {
                 foodTruckViewModel.setFavorite(false);
             }
         } else {
-            statusCode = UserProfileFragment.currentUser.addFavorite(id);
+            statusCode = MunchUser.getInstance().favorite(id, "add");
             if (statusCode == 200) {
                 foodTruckViewModel.setFavorite(true);
             }

@@ -86,8 +86,8 @@ public class FoodTruck{
 
 
         //Make httpRequest
-        HttpRequests httpRequests = new HttpRequests();
-        httpRequests.execute(serverURL + "foodtrucks", "POST", truck.toString(), token);
+        HttpRequests httpRequests = new HttpRequests(HttpRequests.Route.MUNCH);
+        httpRequests.execute("foodtrucks", "POST", truck.toString(), token);
         String response = null;
         try {
             response = httpRequests.get();
@@ -103,8 +103,8 @@ public class FoodTruck{
         //Return response
         int statusCode = httpRequests.getStatusCode();
 
-        HttpRequests imageRequests = new HttpRequests();
-        imageRequests.execute(serverURL + "foodtrucks/upload/" + this.id, "PUT", null, token, Config.bitmapImage);
+        HttpRequests imageRequests = new HttpRequests(HttpRequests.Route.MUNCH);
+        imageRequests.execute("foodtrucks/upload/" + this.id, "PUT", null, token, Config.bitmapImage);
         try {
             response = imageRequests.get();
         } catch (ExecutionException | InterruptedException e) {
@@ -115,8 +115,8 @@ public class FoodTruck{
     //Get existing truck from database
     public int getTruck (String truckId){
         this.id = truckId;
-        HttpRequests getTruckRequests = new HttpRequests();
-        getTruckRequests.execute(serverURL + "foodtrucks/" + truckId, "GET");
+        HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.MUNCH);
+        getTruckRequests.execute("foodtrucks/" + truckId, "GET");
         String response = null;
         try {
             response = getTruckRequests.get();
@@ -345,8 +345,8 @@ public class FoodTruck{
             }
 
         }
-        HttpRequests getTruckRequests = new HttpRequests();
-        getTruckRequests.execute(serverURL + "foodtrucks/" + id, "PUT", truck.toString(), token);
+        HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.MUNCH);
+        getTruckRequests.execute("foodtrucks/" + id, "PUT", truck.toString(), token);
         String response = null;
         try {
             response = getTruckRequests.get();
