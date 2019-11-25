@@ -31,9 +31,6 @@ public class MunchUser {
     //Front End Only
     private String accessToken;
     private Boolean loggedIn;
-    private String dobMonth;
-    private String dobDay;
-    private String dobYear;
 
 
     private MunchUser() {
@@ -59,9 +56,6 @@ public class MunchUser {
         this.state = null;
         this.phoneNumber = null;
         this.email = null;
-        this.dobMonth = null;
-        this.dobYear = null;
-        this.dobDay = null;
         this.id = null;
         this.foodTrucks = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
@@ -246,18 +240,6 @@ public class MunchUser {
 
     public ArrayList<String> getFavorites() {
         return favorites;
-    }
-
-    public String getDobDay() {
-        return dobDay;
-    }
-
-    public String getDobMonth() {
-        return dobMonth;
-    }
-
-    public String getDobYear() {
-        return dobYear;
     }
 
     public String getFullName() {

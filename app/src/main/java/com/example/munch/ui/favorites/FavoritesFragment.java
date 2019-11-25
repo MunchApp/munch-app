@@ -39,22 +39,4 @@ public class FavoritesFragment extends Fragment {
         }
         return root;
     }
-
-    //Code to make the first image in favorites list be clickable TODO:Obviously implement so that its dynamic and also for every image
-    /*private void clickable(View root){
-        imageClick = (ImageView) root.findViewById(R.id.main_image);
-        imageClick.bringToFront();
-        imageClick.setClickable(true);
-        imageClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                FoodTruckFragment NAME = new FoodTruckFragment();
-                fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
-                fragmentTransaction.commit();
-            }
-        });
-
-    }*/
 }
