@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.data.model.MunchUser;
-import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import java.util.ArrayList;
 

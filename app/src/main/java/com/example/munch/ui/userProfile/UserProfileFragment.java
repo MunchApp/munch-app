@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.munch.R;
-import com.example.munch.data.model.LoggedInUser;
 import com.example.munch.data.model.MunchUser;
 import com.example.munch.ui.foodTruck.createTruck.createTruckActivity;
 import com.example.munch.ui.login.LoginActivity;
