@@ -30,7 +30,7 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
     private List<FoodTruck> searchList;
 //    private ImageView image1;
 
-    public SearchListingAdapter(Context context, ArrayList<FoodTruck> list) {
+    SearchListingAdapter(Context context, ArrayList<FoodTruck> list) {
         super(context, 0, list);
         mContext = context;
         searchList = list;
@@ -89,53 +89,8 @@ public class SearchListingAdapter extends ArrayAdapter<FoodTruck> {
         });
 
 
-//        Button goToTruckView = (Button) listItem.findViewById(R.id.button);
-//        goToTruckView.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-//                Fragment myFragment = new FoodTruckFragment();
-//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
-//
-////                Fragment newFragment = new FoodTruckFragment();
-////                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-////
-////                transaction.replace(R.id.m, newFragment);
-////                transaction.addToBackStack(null);
-//
-//// Commit the transaction
-////                transaction.commit();
-//            }
-//        });
 
-        //TODO implement getting phone number and rating in the right format
-
-//        populateOfFoodTruck(currentResult, MapFragment.munMap);
         return listItem;
     }
 
-
-//    public void getBitmapFromURL(String url, int id) throws IOException {
-//        ImageLoader imageLoader = ImageLoader.getInstance();
-//        imageLoader.loadImage(url, new SimpleImageLoadingListener() {
-//            @Override
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                ImageView im = view.findViewById(id);
-//                im.setImageBitmap(loadedImage);
-//            }
-//        });
-//    }
-
-
-//    private void populateOfFoodTruck(FoodTruck truck, GoogleMap mMap){
-//        populateTruckPin(truck.getLatitude(), truck.getLongitude(), truck.getName(), truck.getId(), mMap);
-//    }
-//
-//    public void populateTruckPin(float lat, float lng, String name, String id, GoogleMap myMap){
-//        //Todo set create pin from truck info
-//        //helper function for populateNearbyTrucks
-////        MapFragment.munMap.clear();
-//        MapFragment.munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
-//    }
 }

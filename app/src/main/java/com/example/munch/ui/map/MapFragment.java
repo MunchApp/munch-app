@@ -61,7 +61,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<String> tagInputArray;
     private  ListView resultsList;
 
-    private CheckBox mAmercianCheck;
+    private CheckBox mAmericanCheck;
     private ArrayList<String> amerTags;
     private CheckBox mAsianCheck;
     private ArrayList<String> asianTags;
@@ -260,7 +260,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private ArrayList<String> formatTags() {
         tagInputArray.clear();
-        if (mAmercianCheck.isChecked()){
+        if (mAmericanCheck.isChecked()){
             tagInputArray.addAll(amerTags);
         }
         if (mAsianCheck.isChecked()){
@@ -397,7 +397,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void initializeCategoryTags(View root) {
-        mAmercianCheck = root.findViewById(R.id.catAmerican);
+        mAmericanCheck = root.findViewById(R.id.catAmerican);
         amerTags = new ArrayList<>();
         amerTags.add("American");
         amerTags.add("Hot+Dogs");
