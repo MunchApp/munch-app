@@ -11,14 +11,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.R;
 import com.example.munch.data.model.MunchUser;
+import com.example.munch.ui.MyViewModelFactory;
+import com.example.munch.ui.foodTruck.FoodTruckController;
+import com.example.munch.ui.foodTruck.FoodTruckViewModel;
 import com.example.munch.ui.foodTruck.createTruck.createTruckActivity;
-import com.example.munch.ui.login.LoginActivity;
+import com.example.munch.ui.userProfile.learnAboutListing.ListInfoFragment;
+import com.example.munch.ui.userProfile.login.LoginActivity;
 import com.example.munch.ui.userProfile.manageTruck.ManageTruckFragment;
 import com.example.munch.ui.userProfile.myReviews.MyReviewsFragment;
 import com.example.munch.ui.userProfile.personalInfo.PersonalInfoFragment;
@@ -28,7 +35,7 @@ import java.util.ArrayList;
 
 public class UserProfileFragment extends Fragment {
 
-    //public static LoggedInUser currentUser = new LoggedInUser();
+    private UserProfileViewModel userProfileViewModel;
     private TextView personalInfo;
     private TextView myReviews;
     private TextView manageTrucks;
@@ -51,20 +58,20 @@ public class UserProfileFragment extends Fragment {
         learnList= root.findViewById(R.id.learn_about_listing);
         fullName = root.findViewById(R.id.first_and_last_name);
         location = root.findViewById(R.id.city_and_state);
-
+        profilePicture = root.findViewById(R.id.profile_picture);
 
         ArrayList<TextView> clickables = new ArrayList<TextView>();
         clickables.add(listTruck);
         clickables.add(personalInfo);
         clickables.add(manageTrucks);
 
-        profilePicture = root.findViewById(R.id.profile_picture);
-        Picasso.with(getContext()).load(MunchUser.getInstance().getPicture())
-                .resize(100, 100)
-                .transform(new CircleTransform())
-                .into(profilePicture);
+        userProfileViewModel =
+                ViewModelProviders.of(this,new MyViewModelFactory(null,getActivity())).get(UserProfileViewModel.class);
+        final UserProfileController userProfileController = new UserProfileController(userProfileViewModel);
 
-        fullName.setText(MunchUser.getInstance().getFullName());
+        userProfileController.updateViewModel();
+        setObservers();
+
         if (MunchUser.getInstance().getLoggedIn()){
             signInOut.setText("SIGN OUT");
             learnList.setOnClickListener(           //action triggered on button click
@@ -147,4 +154,49 @@ public class UserProfileFragment extends Fragment {
         return root;
     }
 
+    private void setObservers() {
+        final Observer<String> firstNameObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newFirstName) {
+                fullName.setText(newFirstName + " " + userProfileViewModel.getLastName().getValue());
+            }
+        };
+
+        final Observer<String> lastNameObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newLastName) {
+                fullName.setText(userProfileViewModel.getFirstName().getValue() + " " + newLastName);
+            }
+        };
+
+        final Observer<String> cityObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newCity) {
+                location.setText(newCity +", " + userProfileViewModel.getState());
+            }
+        };
+
+        final Observer<String> stateObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newState) {
+                location.setText(userProfileViewModel.getCity().getValue() + ", " + userProfileViewModel.getState().getValue());
+            }
+        };
+
+        final Observer<String> pictureObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newPicture) {
+                Picasso.with(getContext()).load(newPicture)
+                        .resize(100, 100)
+                        .transform(new CircleTransform())
+                        .into(profilePicture);
+            }
+        };
+
+        userProfileViewModel.getFirstName().observe(this, firstNameObserver);
+        userProfileViewModel.getLastName().observe(this, lastNameObserver);
+        userProfileViewModel.getCity().observe(this,cityObserver);
+        userProfileViewModel.getState().observe(this,stateObserver);
+        userProfileViewModel.getPicture().observe(this,pictureObserver);
+    }
 }

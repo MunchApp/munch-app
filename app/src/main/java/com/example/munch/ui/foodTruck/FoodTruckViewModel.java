@@ -28,7 +28,6 @@ import java.util.List;
 
 public class FoodTruckViewModel extends ViewModel {
 
-
     private MutableLiveData<String> phoneNumber;
     private MutableLiveData<String> description;
     private MutableLiveData<String[]> hours;

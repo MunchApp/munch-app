@@ -1,6 +1,7 @@
 package com.example.munch.data.model;
 
 import com.example.munch.HttpRequests;
+import com.example.munch.MunchTools;
 import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import org.json.JSONException;
@@ -37,18 +38,8 @@ public class Review {
         }
         HttpRequests reviewRequests = new HttpRequests(HttpRequests.Route.MUNCH);
         reviewRequests.execute("reviews", "POST", JSONReview.toString(), token);
-        String responseLogin = null;
-        try {
-            responseLogin = reviewRequests.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            JSONObject jsonReview = new JSONObject(responseLogin);
-            jsonToReview(jsonReview);
-        } catch (JSONException e){
-
-        }
+        String responseLogin = MunchTools.callMunchRoute(reviewRequests);
+        jsonToReview(responseLogin);
 
         int status = reviewRequests.getStatusCode();
         System.out.println(status);
@@ -66,33 +57,25 @@ public class Review {
             return "https://www.warnersstellian.com/Content/images/product_image_not_available.png";
     }
 
-    private void getReview(String id){
+    private int getReview(String id){
         HttpRequests reviewRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         if (id != null) {
-
             reviewRequest.execute("reviews/" + id, "GET");
-            String responseReview = null;
-            try {
-                responseReview = reviewRequest.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                JSONObject jsonReview = new JSONObject(responseReview);
-                jsonToReview(jsonReview);
-            } catch (JSONException e){
-
-            }
+            String responseReview = MunchTools.callMunchRoute(reviewRequest);
+            jsonToReview(responseReview);
         }
 
+        int statusCode = reviewRequest.getStatusCode();
+        return statusCode;
     }
 
     public String getFoodTruckName() {
         return foodTruckName;
     }
 
-    private void jsonToReview (JSONObject jsonReview){
+    private void jsonToReview (String response){
         try {
+            JSONObject jsonReview = new JSONObject(response);
             author = jsonReview.getString("reviewer");
             authorName = jsonReview.getString("reviewerName");
             date = jsonReview.getString("date");
@@ -106,36 +89,17 @@ public class Review {
         if (!author.equals("")){
             HttpRequests userRequest = new HttpRequests(HttpRequests.Route.MUNCH);
             userRequest.execute("users/" + author, "GET");
-            String responseReview = null;
-            try {
-                responseReview = userRequest.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                JSONObject JSONUser= new JSONObject(responseReview);
-                authorName = JSONUser.getString("firstName") + " " + JSONUser.getString("lastName");
-                authorPicture = JSONUser.getString("picture");
-            } catch (JSONException e){
-
-            }
+            String responseReview = MunchTools.callMunchRoute(userRequest);
+            authorName = MunchTools.getValueFromJson("firstName",responseReview)+ " " + MunchTools.getValueFromJson("lastName", responseReview);
+            authorPicture = MunchTools.getValueFromJson("lastName", responseReview);
         }
+
         if (!forFoodTruck.equals("")){
             HttpRequests truckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
             String token = MunchUser.getInstance().getAccessToken();
             truckRequest.execute("foodtrucks/" + forFoodTruck, "GET");
-            String responseReview = null;
-            try {
-                responseReview = truckRequest.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                JSONObject JSONUser= new JSONObject(responseReview);
-                foodTruckName = JSONUser.getString("name");
-            } catch (JSONException e){
-
-            }
+            String responseReview = MunchTools.callMunchRoute(truckRequest);
+            foodTruckName = MunchTools.getValueFromJson("name", responseReview);
         }
 
     }
@@ -144,6 +108,8 @@ public class Review {
     public String getAuthor() {
         return author;
     }
+
+    public String getForFoodTruck() {return getForFoodTruck();}
 
     public void setAuthor(String author) {
         this.author = author;

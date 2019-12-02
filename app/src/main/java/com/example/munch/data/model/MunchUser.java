@@ -2,6 +2,7 @@ package com.example.munch.data.model;
 
 import com.example.munch.Config;
 import com.example.munch.HttpRequests;
+import com.example.munch.MunchTools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,13 +28,11 @@ public class MunchUser {
     private ArrayList<String> reviews;
     private ArrayList<String> foodTrucks;
     private ArrayList<String> favorites;
+    private ArrayList<String> tempPhotos;
 
     //Front End Only
     private String accessToken;
     private Boolean loggedIn;
-    private String dobMonth;
-    private String dobDay;
-    private String dobYear;
 
 
     private MunchUser() {
@@ -59,25 +58,25 @@ public class MunchUser {
         this.state = null;
         this.phoneNumber = null;
         this.email = null;
-        this.dobMonth = null;
-        this.dobYear = null;
-        this.dobDay = null;
         this.id = null;
         this.foodTrucks = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
         this.favorites = new ArrayList<String>();
+        this.tempPhotos = new ArrayList<String>();
     }
 
     public int login(HashMap<String, String> loginInfo) {
         JSONObject jsonLoginInfo = new JSONObject(loginInfo);
         HttpRequests loginRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         loginRequest.execute("login", "POST", jsonLoginInfo.toString());
-        String loginResponse = callMunchRoute(loginRequest);
-        accessToken = getValueFromJson("token", loginResponse);
-        String jsonUser = getValueFromJson("userObject", loginResponse);
+        String loginResponse = MunchTools.callMunchRoute(loginRequest);
+        accessToken = MunchTools.getValueFromJson("token", loginResponse);
+        String jsonUser = MunchTools.getValueFromJson("userObject", loginResponse);
         jsonToUser(jsonUser);
 
         int statusCode = loginRequest.getStatusCode();
+        if (statusCode == 200)
+            this.loggedIn = true;
         return statusCode;
     }
 
@@ -85,7 +84,7 @@ public class MunchUser {
         JSONObject jsonRegisterInfo = new JSONObject(registerInfo);
         HttpRequests registerRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         registerRequest.execute("register", "POST", jsonRegisterInfo.toString());
-        callMunchRoute(registerRequest);
+        MunchTools.callMunchRoute(registerRequest);
 
         int statusCode = registerRequest.getStatusCode();
         return statusCode;
@@ -94,12 +93,12 @@ public class MunchUser {
     public int favorite(String foodTruckId, String action) {
         HttpRequests favoriteRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         favoriteRequest.execute("foodtrucks/" + foodTruckId + "?action=" + action, "GET");
-        callMunchRoute(favoriteRequest);
+        MunchTools.callMunchRoute(favoriteRequest);
 
         int statusCode = favoriteRequest.getStatusCode();
         if (statusCode == 200 && action.equals("add")) {
             favorites.add(foodTruckId);
-        } else if (statusCode == 200 && action.equals("delete")){
+        } else if (statusCode == 200 && action.equals("delete")) {
             favorites.remove(foodTruckId);
         }
         return statusCode;
@@ -109,47 +108,30 @@ public class MunchUser {
         JSONObject jsonUser = new JSONObject(newUserInfo);
         HttpRequests updateRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         updateRequest.execute("profile", "PUT", jsonUser.toString(), accessToken);
-        String updateResponse = callMunchRoute(updateRequest);
-        jsonToUser(updateResponse);
+        String updateResponse = MunchTools.callMunchRoute(updateRequest);
+
+        HttpRequests userRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+        userRequest.execute("users/" + this.id, "GET");
+        String userResponse = MunchTools.callMunchRoute(userRequest);
+        jsonToUser(userResponse);
 
         int statusCode = updateRequest.getStatusCode();
         return statusCode;
     }
 
-    public int uploadProfilePic() {
+    public int uploadProfilePic(String bitmap) {
         HttpRequests imageRequest = new HttpRequests(HttpRequests.Route.MUNCH);
-        imageRequest.execute("profile/upload", "PUT", null, accessToken, Config.profileImage);
-        callMunchRoute(imageRequest);
+        imageRequest.execute("profile/upload", "PUT", null, accessToken, bitmap);
+        MunchTools.callMunchRoute(imageRequest);
 
         HttpRequests userRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         userRequest.execute("users/" + this.id, "GET");
-        String userResponse = callMunchRoute(userRequest);
-        this.picture = getValueFromJson("picture", userResponse);
-
+        String userResponse = MunchTools.callMunchRoute(userRequest);
+        this.picture = MunchTools.getValueFromJson("picture", userResponse);
         int statusCode = imageRequest.getStatusCode();
         return statusCode;
     }
 
-    private String callMunchRoute(HttpRequests request) {
-        String response = null;
-        try {
-            response = request.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    private String getValueFromJson(String value, String response) {
-        String returnValue = "";
-        try {
-            JSONObject jsonToken = new JSONObject(response);
-            returnValue = jsonToken.get(value).toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return returnValue;
-    }
 
     private void jsonToUser(String response) {
         try {
@@ -187,8 +169,17 @@ public class MunchUser {
         }
     }
 
-    public void addTruck(String foodTruckId){
+    public void addTruck(String foodTruckId) {
         this.foodTrucks.add(foodTruckId);
+    }
+
+    public void addTempPhoto(String tempPhoto) {
+        this.tempPhotos.add(tempPhoto);
+    }
+
+    public void deleteTempPhoto(String tempPhoto) {
+        if (this.tempPhotos.contains(tempPhoto))
+            this.tempPhotos.remove(tempPhoto);
     }
 
     //Getters
@@ -248,19 +239,11 @@ public class MunchUser {
         return favorites;
     }
 
-    public String getDobDay() {
-        return dobDay;
-    }
-
-    public String getDobMonth() {
-        return dobMonth;
-    }
-
-    public String getDobYear() {
-        return dobYear;
-    }
-
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public ArrayList<String> getTempPhotos() {
+        return tempPhotos;
     }
 }

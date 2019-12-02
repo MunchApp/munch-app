@@ -1,4 +1,4 @@
-package com.example.munch.ui.userProfile;
+package com.example.munch.ui.userProfile.learnAboutListing;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.example.munch.ui.login;
+package com.example.munch.ui.userProfile.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.munch.MainActivity;
 import com.example.munch.R;
 import com.example.munch.data.model.MunchUser;
-import com.example.munch.ui.register.RegisterActivity;
-import com.example.munch.ui.userProfile.UserProfileFragment;
+import com.example.munch.ui.userProfile.UserProfileController;
+import com.example.munch.ui.userProfile.register.RegisterActivity;
 
 import java.util.HashMap;
 
@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (statusCode != 200) {
                             CharSequence text = "Invalid email and/or password! Try Again!";
                             int duration = Toast.LENGTH_SHORT;
-
                             Toast toast = Toast.makeText(LoginActivity.this, text, duration);
                             toast.show();
 

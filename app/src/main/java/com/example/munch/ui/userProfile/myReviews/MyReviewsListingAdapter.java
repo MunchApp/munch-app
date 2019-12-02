@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.munch.MunchTools;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.data.model.Review;
@@ -63,24 +64,16 @@ public class MyReviewsListingAdapter extends ArrayAdapter<Review> {
         //Set the date in view
         TextView date = (TextView)listItem.findViewById(R.id.dateofreview);
         ImageView proPic = listItem.findViewById(R.id.reviewerpic);
-        date.setText(currentReview.getDate());
+        date.setText(MunchTools.ISOtoReg(currentReview.getDate()));
 
-        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        DateFormat df2 = new SimpleDateFormat("MM/dd/yy h:mm a");
-        String string1 = currentReview.getDate();
-        try {
-            Date result1 = df1.parse(string1);
-            String formattedDate = df2.format(result1);
-            date.setText(formattedDate);
 
-        } catch (ParseException e) {
-        }
 
         RatingBar rating = (RatingBar)listItem.findViewById(R.id.ratingbar_on_review);
         rating.setIsIndicator(true);
         rating.setRating((float)currentReview.getRating());
 
-        Picasso.with(mContext).load(currentReview.getAuthorPicture())
+        FoodTruck reviewed = new FoodTruck(currentReview.getForFoodTruck());
+        Picasso.with(mContext).load(reviewed.getPhotos().get(0))
                 .resize(100, 100)
                 .centerCrop()
                 .into(proPic);
