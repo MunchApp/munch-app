@@ -1,29 +1,21 @@
-package com.example.munch.ui.register;
+package com.example.munch.ui.userProfile.register;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.example.munch.MainActivity;
+import com.example.munch.MunchTools;
 import com.example.munch.R;
 import com.example.munch.data.model.MunchUser;
-import com.example.munch.ui.userProfile.UserProfileFragment;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 
@@ -81,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
                             registerInfo.put("firstName", firstNameInput.getText().toString());
                             registerInfo.put("lastName", lastNameInput.getText().toString());
                             registerInfo.put("password", passwordInput.getText().toString());
-                            registerInfo.put("dateOfBirth", toISODate(dobInput));
+                            registerInfo.put("dateOfBirth", MunchTools.toISODate(dobInput));
                             registerInfo.put("email", emailInput.getText().toString());
 
                             int statusCode = MunchUser.getInstance().register(registerInfo);
@@ -96,14 +88,5 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private String toISODate(DatePicker dateInput){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(dateInput.getYear(), dateInput.getMonth(), dateInput.getDayOfMonth(), 00, 00, 00);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Date date = calendar.getTime();
-        SimpleDateFormat sdf;
-        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        String isoDOB = sdf.format(date);
-        return isoDOB;
-    }
+
 }

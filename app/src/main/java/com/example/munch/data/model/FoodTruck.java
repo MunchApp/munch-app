@@ -6,6 +6,7 @@ import android.util.Base64;
 
 import com.example.munch.Config;
 import com.example.munch.HttpRequests;
+import com.example.munch.MunchTools;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -70,45 +71,33 @@ public class FoodTruck{
         this.photos = new ArrayList<String>();
         this.reviews = new ArrayList<String>();
         this.tags = new ArrayList<String>();
+
+
         //Creating JSON Object to pass in Request
         JSONObject truck = new JSONObject();
         try {
             truck.put("name", name);
             truck.put("address", address);
-            //truck.put("photos", new JSONArray(photos));
             truck.put("hours", new JSONArray(hours));
             truck.put("tags", new JSONArray(tags));
             truck.put("location", new JSONArray(location));
-            //truck.put("owner", owner);
         } catch (JSONException ex) {
             System.out.println("Truck Creation Failed");
         }
 
+        HttpRequests createTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+        createTruckRequest.execute("foodtrucks", "POST", truck.toString(), token);
+        String createTruckResponse = MunchTools.callMunchRoute(createTruckRequest);
+        jsonToFoodTruck(createTruckResponse);
 
-        //Make httpRequest
-        HttpRequests httpRequests = new HttpRequests(HttpRequests.Route.MUNCH);
-        httpRequests.execute("foodtrucks", "POST", truck.toString(), token);
-        String response = null;
-        try {
-            response = httpRequests.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try{
-            JSONObject jsonTruck = new JSONObject(response);
-            jsonToFoodTruck(jsonTruck);
-        }catch (JSONException e){
-
-        }
-        //Return response
-        int statusCode = httpRequests.getStatusCode();
-
-        HttpRequests imageRequests = new HttpRequests(HttpRequests.Route.MUNCH);
-        imageRequests.execute("foodtrucks/upload/" + this.id, "PUT", null, token, Config.bitmapImage);
-        try {
-            response = imageRequests.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
+        int statusCode = createTruckRequest.getStatusCode();
+        while (MunchUser.getInstance().getTempPhotos().size() > 0) {
+            String bitmap = MunchUser.getInstance().getTempPhotos().get(0);
+            HttpRequests imageRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+            imageRequest.execute("foodtrucks/upload/" + this.id, "PUT", null, token, bitmap);
+            MunchTools.callMunchRoute(imageRequest);
+            if (imageRequest.getStatusCode() == 200)
+                MunchUser.getInstance().deleteTempPhoto(bitmap);
         }
     }
 
@@ -117,54 +106,12 @@ public class FoodTruck{
         this.id = truckId;
         HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.MUNCH);
         getTruckRequests.execute("foodtrucks/" + truckId, "GET");
-        String response = null;
-        try {
-            response = getTruckRequests.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try{
-            JSONObject jsonTruck = new JSONObject(response);
-            jsonToFoodTruck(jsonTruck);
-        }catch (JSONException e){
+        String getTruckResponse = MunchTools.callMunchRoute(getTruckRequests);
+        jsonToFoodTruck(getTruckResponse);
 
-        }
-        return getTruckRequests.getStatusCode();
+        int statusCode =getTruckRequests.getStatusCode();
+        return statusCode;
     }
-    //Setters
-    public void setAllValues (String id,Boolean status, String name, String address, float lat, float lng, String owner, String[][] hours,
-                              ArrayList<String> photos, ArrayList<String> reviews, String phoneNumber, String website, String description,
-                              ArrayList<String> tags, float avgRating){
-        // todo edit values
-        this.id = id;
-        this.status = status;
-        this.name = name;
-        this.address = address;
-        this.lat = lat;
-        this.lng = lng;
-        this.owner = owner;
-        this.hours = hours;
-        if (photos.size() < 3){
-            if (photos.size() == 0){
-                photos.add(0, "https://www.warnersstellian.com/Content/images/product_image_not_available.png");
-            }
-            if (photos.size() == 1) {
-                photos.add(1, "https://www.warnersstellian.com/Content/images/product_image_not_available.png");
-            }
-            if (photos.size() == 2) {
-                photos.add(2, "https://www.warnersstellian.com/Content/images/product_image_not_available.png");
-            }
-        }
-        this.photos = photos;
-        this.reviews = reviews;
-        this.phoneNumber = phoneNumber;
-        this.website = website;
-        this.description = description;
-        this.tags = tags;
-        this.avgRating = avgRating;
-    }
-
-
 
     //Getters
     public String getId() {
@@ -219,8 +166,9 @@ public class FoodTruck{
         visible = true;
     }
 
-    private void jsonToFoodTruck (JSONObject jsonTruck) {
+    private void jsonToFoodTruck (String response) {
         try {
+            JSONObject jsonTruck = new JSONObject(response);
             this.id = jsonTruck.get("id").toString();
             this.name = jsonTruck.get("name").toString();
             this.address = jsonTruck.get("address").toString();
@@ -297,30 +245,13 @@ public class FoodTruck{
            if (hours[c][0].equals("99:99") || hours[c][1].equals("99:99"))
                regHours[c] = "CLOSED TODAY";
            else
-            regHours[c] =  milToReg(hours[c][0]) + " to " + milToReg(hours[c][1]);
+            regHours[c] =  MunchTools.milToReg(hours[c][0]) + " to " + MunchTools.milToReg(hours[c][1]);
 
         }
         return regHours;
     }
 
-    private String milToReg(String time){
-        int hours = Integer.valueOf(time.split(":")[0]);
-        String min = time.split(":")[1];
-        String ampm = "";
-        if (hours < 12) {
-            ampm = "AM";
-        } else {
-            ampm = "PM";
-            hours-=12;
-        }
 
-        if (hours == 0){
-            hours = 12;
-        }
-
-
-        return hours + ":" + min + " " +ampm;
-    }
     public int updateTruck(String token, HashMap<String, String> vals, Boolean online, String[][] hours){
         JSONObject truck = new JSONObject();
         if (online != null){
@@ -345,25 +276,12 @@ public class FoodTruck{
             }
 
         }
-        HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.MUNCH);
-        getTruckRequests.execute("foodtrucks/" + id, "PUT", truck.toString(), token);
-        String response = null;
-        try {
-            response = getTruckRequests.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try{
-            JSONObject jsonTruck = new JSONObject(response);
-            jsonToFoodTruck(jsonTruck);
-        }catch (JSONException e){
-        }
+        HttpRequests updateTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+        updateTruckRequest.execute("foodtrucks/" + id, "PUT", truck.toString(), token);
+        String updateTruckResponse = MunchTools.callMunchRoute(updateTruckRequest);
         getTruck(id);
-        return getTruckRequests.getStatusCode();
-    }
-    private JSONObject foodTruckToJson () {
-        //todo implement this function and add parameters
-        return null;
+        int statusCode = updateTruckRequest.getStatusCode();
+        return statusCode;
     }
 
 }

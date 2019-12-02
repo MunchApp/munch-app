@@ -45,12 +45,12 @@
 
         <activity android:name=".ui.foodTruck.FoodTruckFragment" />
         <activity
-            android:name=".ui.register.RegisterActivity"
+            android:name=".ui.userProfile.register.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_register"
             android:theme="@style/FullscreenTheme" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.userProfile.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
             android:name=".ui.foodTruck.createTruck.createTruckActivity"

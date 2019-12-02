@@ -14,7 +14,9 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.munch.Config;
+import com.example.munch.MunchTools;
 import com.example.munch.R;
+import com.example.munch.data.model.MunchUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -60,8 +62,10 @@ public class createTruckActivity extends AppCompatActivity {
                         toMainIntent.putExtra("photo", "");
                         toMainIntent.putExtra("tags", tags.getText().toString());
                         //toMainIntent.putExtra("bitmap", encodeTobase64(selectedImage));
-                        if (selectedImage !=null)
-                            Config.bitmapImage = encodeTobase64(selectedImage);
+                        if (selectedImage !=null) {
+                            String bitmap = MunchTools.encodeTobase64(selectedImage);
+                            MunchUser.getInstance().addTempPhoto(bitmap);
+                        }
                         startActivity(toMainIntent);
 
                     }
@@ -91,15 +95,7 @@ public class createTruckActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
-    public static String encodeTobase64(Bitmap image)
-    {
-        Bitmap immagex=image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immagex.compress(Bitmap.CompressFormat.JPEG, 60, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
-        return imageEncoded;
-    }
+
 
 
 }

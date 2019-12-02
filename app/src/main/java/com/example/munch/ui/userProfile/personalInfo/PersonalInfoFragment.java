@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.UnicodeSet;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
@@ -22,14 +23,21 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.munch.Config;
+import com.example.munch.MunchTools;
 import com.example.munch.R;
 import com.example.munch.data.model.MunchUser;
+import com.example.munch.ui.MyViewModelFactory;
 import com.example.munch.ui.userProfile.CircleTransform;
+import com.example.munch.ui.userProfile.UserProfileController;
 import com.example.munch.ui.userProfile.UserProfileFragment;
+import com.example.munch.ui.userProfile.UserProfileViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -38,24 +46,39 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 public class PersonalInfoFragment extends Fragment {
+    private UserProfileViewModel userProfileViewModel;
+    private UserProfileController userProfileController;
     private final int SELECT_PHOTO = 1;
     private Bitmap selectedImage;
-    private ImageView proPic;
+    private ImageView profilePicture;
+    private TextView location;
+    private TextView fullName;
+    private TextView phoneNumber;
+    private TextView dateOfBirth;
+    private TextView email;
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_personal_info, container, false);
         View popup = inflater.inflate(R.layout.popup_edit_field, container, false);
         LinearLayout popup_layout = (LinearLayout) popup.findViewById(R.id.popup_edit);
+        userProfileViewModel =
+                ViewModelProviders.of(this,new MyViewModelFactory(null,getActivity())).get(UserProfileViewModel.class);
+        userProfileController = new UserProfileController(userProfileViewModel);
+        userProfileController.updateViewModel();
 
         //Get Text Views
 
-        TextView firstAndLastT = root.findViewById(R.id.first_and_last_name);
-        TextView dobT = root.findViewById(R.id.pi_dob);
-        TextView phoneNumT = root.findViewById(R.id.pi_phone_num);
-        TextView emailT = root.findViewById(R.id.pi_email);
-        TextView cityStateT = root.findViewById(R.id.city_and_state);
-        proPic = (ImageView) root.findViewById(R.id.profile_picture);
+        fullName = root.findViewById(R.id.first_and_last_name);
+        dateOfBirth = root.findViewById(R.id.pi_dob);
+        phoneNumber = root.findViewById(R.id.pi_phone_num);
+        email = root.findViewById(R.id.pi_email);
+        location  = root.findViewById(R.id.city_and_state);
+        profilePicture = (ImageView) root.findViewById(R.id.profile_picture);
+
+        setObservers();
+
         ImageView firstAndLast = root.findViewById(R.id.edit_name);
         ImageView dob = root.findViewById(R.id.edit_dob);
         dob.setVisibility(View.INVISIBLE);
@@ -73,28 +96,13 @@ public class PersonalInfoFragment extends Fragment {
             }
         });
 
-        Picasso.with(getContext()).load(MunchUser.getInstance().getPicture())
-                .resize(100, 100)
-                .transform(new CircleTransform())
-                .into(proPic);
-
-
-        //Set values
-        firstAndLastT.setText(MunchUser.getInstance().getFullName());
-        dobT.setText(MunchUser.getInstance().getDateOfBirth());
-        if (MunchUser.getInstance().getPhoneNumber().equals("") || MunchUser.getInstance().getPhoneNumber() == null) {
-            phoneNumT.setText("Tap the pencil to add a phone number");
-        } else {
-            phoneNumT.setText(MunchUser.getInstance().getPhoneNumber());
-        }
-        emailT.setText(MunchUser.getInstance().getEmail());
 
 
         //Pop-up on clicking on field
-        showPopup(firstAndLast, firstAndLastT, "NAME", "firstName", "lastName");
-        showPopup(dob, dobT, "DATE OF BIRTH", "dateOfBirth", null);
-        showPopup(phoneNum, phoneNumT, "PHONE", "phoneNumber", null);
-        showPopup(cityState, cityStateT, "CITY AND STATE", "city", "state");
+        showPopup(firstAndLast, fullName, "NAME", "firstName", "lastName");
+        showPopup(dob, dateOfBirth, "DATE OF BIRTH", "dateOfBirth", null);
+        showPopup(phoneNum, phoneNumber, "PHONE", "phoneNumber", null);
+        showPopup(cityState, location, "CITY AND STATE", "city", "state");
 
 
         return root;
@@ -159,19 +167,7 @@ public class PersonalInfoFragment extends Fragment {
                             input = popupInput2.getText().toString();
                             vals.put(jsonField2, input);
                         }
-                        int responseCode = 0;
-                        responseCode = MunchUser.getInstance().updateUserInfo(vals);
-
-                        if (responseCode == 200) {
-                            if (prompt.equals("NAME")) {
-                                edittedfield.setText(popupInput1.getText().toString() + " " + popupInput2.getText().toString());
-                            }
-                            if (prompt.equals("CITY AND STATE")) {
-                                edittedfield.setText(popupInput1.getText().toString() + ", " + popupInput2.getText().toString());
-                            } else {
-                                edittedfield.setText(popupInput1.getText().toString());
-                            }
-                        }
+                        userProfileController.updateValue(vals);
                         popupWindow.dismiss();
 
                     }
@@ -199,31 +195,81 @@ public class PersonalInfoFragment extends Fragment {
                         final Uri imageUri = imageReturnedIntent.getData();
                         final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                         selectedImage = BitmapFactory.decodeStream(imageStream);
-                        //imageView.setImageBitmap(selectedImage);
+                        userProfileController.updateProfilePicture(selectedImage);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-                    if (selectedImage != null)
-                        Config.profileImage = encodeTobase64(selectedImage);
-                    MunchUser.getInstance().uploadProfilePic();
-
-
-                    Picasso.with(getContext()).load(MunchUser.getInstance().getPicture())
-                            .resize(100, 100)
-                            .transform(new CircleTransform())
-                            .into(proPic);
 
 
                 }
         }
     }
 
-    public static String encodeTobase64(Bitmap image) {
-        Bitmap immagex = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immagex.compress(Bitmap.CompressFormat.JPEG, 60, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-        return imageEncoded;
+    private void setObservers() {
+        final Observer<String> firstNameObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newFirstName) {
+                fullName.setText(newFirstName + " " + userProfileViewModel.getLastName().getValue());
+            }
+        };
+
+        final Observer<String> lastNameObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newLastName) {
+                fullName.setText(userProfileViewModel.getFirstName().getValue() + " " + newLastName);
+            }
+        };
+
+        final Observer<String> cityObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newCity) {
+                location.setText(newCity +", " + userProfileViewModel.getState());
+            }
+        };
+
+        final Observer<String> stateObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newState) {
+                location.setText(userProfileViewModel.getCity().getValue() + ", " + userProfileViewModel.getState().getValue());
+            }
+        };
+
+        final Observer<String> pictureObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newPicture) {
+                Picasso.with(getContext()).load(newPicture)
+                        .resize(100, 100)
+                        .transform(new CircleTransform())
+                        .into(profilePicture);
+            }
+        };
+        final Observer<String> emailObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newEmail) {
+                email.setText(newEmail);
+            }
+        };
+        final Observer<String> phoneObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newPhone) {
+                phoneNumber.setText(newPhone);
+            }
+        };
+
+
+        final Observer<String> dobObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newDOB) {
+                dateOfBirth.setText(MunchTools.ISOtoReg(newDOB));
+            }
+        };
+        userProfileViewModel.getPhoneNumber().observe(this,phoneObserver);
+        userProfileViewModel.getEmail().observe(this,emailObserver);
+        userProfileViewModel.getDateOfBirth().observe(this,dobObserver);
+        userProfileViewModel.getFirstName().observe(this, firstNameObserver);
+        userProfileViewModel.getLastName().observe(this, lastNameObserver);
+        userProfileViewModel.getCity().observe(this,cityObserver);
+        userProfileViewModel.getState().observe(this,stateObserver);
+        userProfileViewModel.getPicture().observe(this,pictureObserver);
     }
 }
