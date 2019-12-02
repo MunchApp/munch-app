@@ -21,15 +21,11 @@ public class SearchLogic{
     private static SearchLogic search_instance = new SearchLogic();
 
     private String searchFormatted = "";
-    private ArrayList<String> tagInputArray;
     private ArrayList<FoodTruck> searchListings;
-
-    private HttpRequests foodTruckRequest;
 
 
     // private constructor restricted to this class itself
     private SearchLogic() {
-        tagInputArray = new ArrayList<>();
         searchListings = new ArrayList<>();
 
     }
@@ -46,9 +42,6 @@ public class SearchLogic{
     ArrayList<FoodTruck> sortByDistance(String locInput) {
         String userLat = locInput.split("&")[0];
         String userLng = locInput.split("&")[1];
-//                            if (searchText.getText().toString().equals("")){
-//                                searchFormatted = "";
-//                            }
         return getResultsList(searchFormatted, userLat, userLng);
     }
 
@@ -76,7 +69,7 @@ public class SearchLogic{
 
     ArrayList<FoodTruck> getResultsList(String searchFormatted, String userLat, String userLng) {
         searchListings = new ArrayList<>();
-        foodTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
+        HttpRequests foodTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         foodTruckRequest.execute("foodtrucks?query=" + searchFormatted + "&lat=" + userLat + "&lon=" + userLng, "GET");
         String responseTruck = null;
         try {
