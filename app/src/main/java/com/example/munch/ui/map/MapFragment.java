@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,22 +44,15 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.concurrent.ExecutionException;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     //region global variables
-    public ImageView firstIm;
     static GoogleMap munMap;
-    String sb;
+    private String searchFormatted = "";
 
-    private ArrayList<FoodTruck> listing;
+    static ArrayList<FoodTruck> listing;
     static ArrayList<FoodTruck> forWindow;
 
     private Marker lastClicked;
@@ -111,6 +103,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locText = root.findViewById(R.id.location_explore_pg1);
         sortBySpinner = (Spinner) root.findViewById(R.id.spinner_sort);
         noResultsText = root.findViewById(R.id.no_results_text);
+
+        final Search searchTool = Search.getInstance(root);
+        searchTool.performSearch("", "", "");
 
         //region slidingPanel
         final SlidingUpPanelLayout slideUpPanel = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
@@ -172,27 +167,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 if (locationBar.getVisibility() == View.GONE) {
                     locationBar.setVisibility(View.VISIBLE);
                     locationBar.startAnimation(fadeIn);
+                    background.setVisibility(View.VISIBLE);
+                    int negHeight = background.getHeight() * -1;
+                    TranslateAnimation animate = new TranslateAnimation(
+                            0,
+                            0,
+                            negHeight,
+                            0);
+                    animate.setDuration(1000);
+                    animate.setFillAfter(true);
+                    background.startAnimation(animate);
+                    options.setVisibility(View.VISIBLE);
+                    options.startAnimation(fadeIn);
                 }
-                background.setVisibility(View.VISIBLE);
-                int negHeight = background.getHeight() * -1;
-                TranslateAnimation animate = new TranslateAnimation(
-                        0,
-                        0,
-                        negHeight,
-                        0);
-                animate.setDuration(1000);
-                animate.setFillAfter(true);
-                background.startAnimation(animate);
-                options.setVisibility(View.VISIBLE);
-                options.startAnimation(fadeIn);
+
             }
         });
 
         TextView close = (TextView)root.findViewById(R.id.close_button);
-        TextView search = (TextView)root.findViewById(R.id.search_button);
-        tagInputArray = new ArrayList<>();
-
-        initializeCategoryTags(root);
+        final TextView search = (TextView)root.findViewById(R.id.search_button);
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,175 +201,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchText.clearFocus();
-                closeSearch(slideUpPanel,logoText,searchBar,locationBar,background,options);
-                locInput = locText.getText().toString();
-                String userInput = searchText.getText().toString();
-                tagInputArray.clear();
-                String formattedInput = userInput.replaceAll(" ", "+");
-                if (!formattedInput.equals("")) {
-                    tagInputArray.add(formattedInput);
-                }
-                if (mAmercianCheck.isChecked()){
-                    tagInputArray.addAll(amerTags);
-                }
-                if (mAsianCheck.isChecked()){
-                    tagInputArray.addAll(asianTags);
-                }
-                if (mBarbequeCheck.isChecked()){
-                    tagInputArray.addAll(barbTags);
-                }
-                if (mSouthernCheck.isChecked()){
-                    tagInputArray.addAll(southTags);
-                }
-                if (mBreakfastCheck.isChecked()){
-                    tagInputArray.addAll(breakTags);
-                }
-                if (mMexicanCheck.isChecked()){
-                    tagInputArray.addAll(mexiTags);
-                }
-                if (mSeafoodCheck.isChecked()){
-                    tagInputArray.addAll(seaTags);
-                }
-                if (mDessertCheck.isChecked()){
-                    tagInputArray.addAll(dessTags);
-                }
-                sb = "";
-
-                if (!(tagInputArray.size() == 0) || !locInput.equals("")) {
-
-                    for (int i = 0; i < tagInputArray.size(); i++) {
-                        sb += tagInputArray.get(i);
-                        sb += "+";
-                    }
-
-
-                    if (!sb.equals("") || !locInput.equals("")) {
-                        if (!sb.equals("")) {
-                            while (sb.charAt(0) == '+') {
-                                sb = sb.substring(1);
-                            }
-                            while (sb.charAt(sb.length() - 1) == '+') {
-                                sb = sb.substring(0, sb.length() - 1);
-                            }
-                        }
-                        LocationCalculator locCal = new LocationCalculator(getContext());
-                        String lat = "";
-                        String lng = "";
-                        if (locText.getText().toString().equals("")){    //no location specified
-                            lat = Double.toString(locCal.getLat());
-                            lng = Double.toString(locCal.getLng());
-
-                        } else {
-                            String address = locText.getText().toString();
-                            String[] splitAddress = address.split(" ");
-                            String parsedAddress = splitAddress[0];
-                            String API_KEY = v.getResources().getString(R.string.GOOGLE_MAPS_API_KEY);
-                            for (int s = 1; s < splitAddress.length; s++){
-                                parsedAddress += "+" + splitAddress[s];
-                            }
-
-                            String response = null;
-                            HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.GOOGLE);
-                            getTruckRequests.execute(parsedAddress +
-                                    "&key=" + API_KEY, "GET");
-                            try {
-                                response = getTruckRequests.get();
-                            } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            try{
-                                JSONObject myResponse = new JSONObject(response);
-                                JSONArray results = myResponse.getJSONArray("results");
-                                for (int i = 0; i < results.length(); i++) {
-                                    JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");
-                                    lat = location.optString("lat");
-                                    lng = location.optString("lng");
-                                }
-                            }catch (JSONException e){
-
-                            }
-
-                        }
-
-                        resultsList = (ListView) getActivity().findViewById(R.id.search_results);
-                        searchListings = new ArrayList<>();
-                        foodTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
-                        foodTruckRequest.execute("foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
-                        responseTruck = null;
-                        try {
-                            responseTruck = foodTruckRequest.get();
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            JSONArray truckData = new JSONArray(responseTruck);
-                            for (int i = 0; i < truckData.length(); i++) {
-                                JSONObject jsonobject = truckData.getJSONObject(i);
-                                String truckID = jsonobject.getString("id");
-
-                                FoodTruck truckListing = new FoodTruck(truckID);
-                                searchListings.add(truckListing);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-
-
-
-//
-//
-//
-//                        HttpRequests searchRequest = new HttpRequests();
-//                        String serverURL = "https://munch-server.herokuapp.com/";
-//                        searchRequest.execute(serverURL + "foodtrucks?query=" + sb, "GET");
-//                        searchListings = new ArrayList<>();
-//                        String responseSearch = null;
-//                        try {
-//                            responseSearch = searchRequest.get();
-//                        } catch (ExecutionException | InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        try {
-//                            JSONArray searchData = new JSONArray(responseSearch);
-//                            for (int i = 0; i < searchData.length(); i++) {
-//                                JSONObject jsonobject = searchData.getJSONObject(i);
-//                                String id = jsonobject.getString("id");
-//
-//                                FoodTruck truckListing = new FoodTruck(id);
-//                                searchListings.add(truckListing);
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-
-
-
-                        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
-                        resultsList.setAdapter(mAdapter);
-                        if (searchListings.size() == 0){
-                            noResultsText.setVisibility(View.VISIBLE);
-                            sortBySpinner.setEnabled(false);
-                        } else {
-                            noResultsText.setVisibility(View.GONE);
-                            sortBySpinner.setEnabled(true);
-                        }
-
-                        listing = searchListings;
-                        forWindow = listing;
-                        initialePopulation();
-                    }
-                } else {
-                    populateClosestTrucksList(getView());
-                    initialePopulation();
-                }
-
+                closeSearch(slideUpPanel, logoText, searchBar, locationBar, background, options);
+                searchTool.makeSearch();
+                populateMap();
+                sortBySpinner.setSelection(0);
             }
         });
         //endregion
@@ -384,135 +212,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //region sort by logic
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.sort_options, R.layout.spinner_layout);
         adapter.setDropDownViewResource(R.layout.spinner_item);
-//        ArrayAdapter<String> adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, R.array.sort_options);
-//        sortBySpinner.setAdapter(
-//                new NothingSelectedSpinnerAdapter(
-//                        adapter,
-//                        R.layout.contact_spinner_row_nothing_selected,
-//                        getActivity()));
         sortBySpinner.setAdapter(adapter);
         sortBySpinner.setOnItemSelectedListener(           //action triggered on button click
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                        if (position == 0){
-//                            populateClosestTrucksList(getView());
-//                        }
                         if (position == 0){     //distance
-                            LocationCalculator locCal = new LocationCalculator(getContext());
-                            String lat = "";
-                            String lng = "";
-                            if (locText.getText().toString().equals("")){    //no location specified
-                                lat = Double.toString(locCal.getLat());
-                                lng = Double.toString(locCal.getLng());
-
-                            } else {
-                                String address = locText.getText().toString();
-                                String[] splitAddress = address.split(" ");
-                                String parsedAddress = splitAddress[0];
-                                String API_KEY = view.getResources().getString(R.string.GOOGLE_MAPS_API_KEY);
-                                for (int s = 1; s < splitAddress.length; s++){
-                                    parsedAddress += "+" + splitAddress[s];
-                                }
-
-                                String response = null;
-                                HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.GOOGLE);
-                                getTruckRequests.execute(parsedAddress +
-                                        "&key=" + API_KEY, "GET");
-                                try {
-                                    response = getTruckRequests.get();
-                                } catch (ExecutionException | InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                try{
-                                    JSONObject myResponse = new JSONObject(response);
-                                    JSONArray results = myResponse.getJSONArray("results");
-                                    for (int i = 0; i < results.length(); i++) {
-                                        JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");
-                                        lat = location.optString("lat");
-                                        lng = location.optString("lng");
-                                    }
-                                }catch (JSONException e){
-
-                                }
-
-                            }
-
-                            resultsList = (ListView) getActivity().findViewById(R.id.search_results);
-                            searchListings = new ArrayList<>();
-                            foodTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
-                            if (searchText.getText().toString().equals("")){
-                                sb = "";
-                            }
-                            foodTruckRequest.execute("foodtrucks?query=" + sb + "&lat=" + lat + "&lon=" + lng, "GET");
-                            responseTruck = null;
-                            try {
-                                responseTruck = foodTruckRequest.get();
-                            } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                JSONArray truckData = new JSONArray(responseTruck);
-                                for (int i = 0; i < truckData.length(); i++) {
-                                    JSONObject jsonobject = truckData.getJSONObject(i);
-                                    String truckID = jsonobject.getString("id");
-
-                                    FoodTruck truckListing = new FoodTruck(truckID);
-                                    searchListings.add(truckListing);
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
-                            resultsList.setAdapter(mAdapter);
-                            listing = searchListings;
-                            forWindow = listing;
-                            initialePopulation();
-
+                            searchTool.sortByDistance();
+                            populateMap();
                         }
                         if (position == 1){      //rating
-
-                            searchListings.sort(new Comparator<FoodTruck>() {
-                                @Override
-                                public int compare(FoodTruck data1, FoodTruck data2) {
-                                    if( data1.getAvgRating() < data2.getAvgRating() )
-                                        return 1;
-                                    else
-                                        return -1;
-                                }
-                            });
-
-                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
-                            resultsList.setAdapter(mAdapter);
-                            listing = searchListings;
-                            forWindow = listing;
-                            initialePopulation();
-
+                            searchTool.sortByRating();
+                            populateMap();
                         }
                         if (position == 2){      //num reviews
-                            searchListings.sort(new Comparator<FoodTruck>() {
-                                @Override
-                                public int compare(FoodTruck data1, FoodTruck data2) {
-                                    if( data1.getReviews().size() < data2.getReviews().size() )
-                                        return 1;
-                                    else
-                                        return -1;
-                                }
-                            });
 
-                            SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
-                            resultsList.setAdapter(mAdapter);
-                            listing = searchListings;
-                            forWindow = listing;
-                            initialePopulation();
+                            searchTool.sortByNumReviews();
+                            populateMap();
                         }
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-                        populateClosestTrucksList(getView());
+//                        searchTool.replaceMethod();
+                        searchTool.performSearch("", "", "");
+                        populateMap();
                     }
 
                 });
@@ -521,6 +245,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         return root;
     }
+
 
     @Override
     public void onMapReady(GoogleMap mMap) {
@@ -535,7 +260,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11.0f));
         munMap = mMap;
 
-        initialePopulation();
+        populateMap();
         munMap.setInfoWindowAdapter(new CustomInfoWindowAdaptor(getContext()));
         munMap.setOnMarkerClickListener(myMarkerClick);
         munMap.setOnInfoWindowClickListener(myWindowClick);
@@ -574,86 +299,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     };
 
 
-
-
-    private void initializeCategoryTags(View root) {
-        mAmercianCheck = root.findViewById(R.id.catAmerican);
-        amerTags = new ArrayList<>();
-        amerTags.add("American");
-        amerTags.add("Hot+Dogs");
-        amerTags.add("Burgers");
-        amerTags.add("Pizza");
-        amerTags.add("Hawaiian");
-        amerTags.add("Steak");
-//        amerTags.add("");
-
-        mAsianCheck = root.findViewById(R.id.catAsian);
-        asianTags = new ArrayList<>();
-        asianTags.add("Asian");
-        asianTags.add("Thai");
-        asianTags.add("Korean");
-        asianTags.add("Japanese");
-        asianTags.add("Asian+Fusion");
-        asianTags.add("Vietnamese");
-        asianTags.add("Chinese");
-        asianTags.add("Indian");
-        asianTags.add("Filipino");
-//        asianTags.add("");
-//        asianTags.add("");
-
-        mBarbequeCheck = root.findViewById(R.id.catBarbeque);
-        barbTags = new ArrayList<>();
-        barbTags.add("Barbeque");
-        barbTags.add("Barbecue");
-        barbTags.add("Korean+Barbeque");
-        barbTags.add("Brisket");
-
-        mSouthernCheck = root.findViewById(R.id.catSouthern);
-        southTags = new ArrayList<>();
-        southTags.add("Southern");
-        southTags.add("Potatoes");
-//        southTags.add("");
-//        southTags.add("");
-
-
-        mBreakfastCheck = root.findViewById(R.id.catBreakfast);
-        breakTags = new ArrayList<>();
-        breakTags.add("Breakfast");
-        breakTags.add("Brunch");
-        breakTags.add("Eggs");
-        breakTags.add("Pancakes");
-//        breakTags.add("");
-
-        mMexicanCheck = root.findViewById(R.id.catMexican);
-        mexiTags = new ArrayList<>();
-        mexiTags.add("Mexican");
-        mexiTags.add("Latin");
-        mexiTags.add("Tacos");
-        mexiTags.add("Burritos");
-        mexiTags.add("Quesadillas");
-//        mexiTags.add("");
-//        mexiTags.add("");
-
-        mSeafoodCheck = root.findViewById(R.id.catSeafood);
-        seaTags = new ArrayList<>();
-        seaTags.add("Seafood");
-        seaTags.add("Fish");
-        seaTags.add("Shrimp");
-        seaTags.add("Sushi");
-//        seaTags.add("");
-
-        mDessertCheck = root.findViewById(R.id.catDessert);
-        dessTags = new ArrayList<>();
-        dessTags.add("Dessert");
-        dessTags.add("Ice+Cream");
-        dessTags.add("Crepes");
-        dessTags.add("Sweet");
-        dessTags.add("Bakery");
-        dessTags.add("Cakes");
-        dessTags.add("Donuts");
-    }
-
     private void closeSearch (SlidingUpPanelLayout slideUpPanel, TextView logoText,View searchBar,View locationBar, View background, View options){
+        searchText.clearFocus();
         AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
         fadeOut.setDuration(1000);
         AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
@@ -687,74 +334,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         options.setVisibility(View.GONE);
     }
 
-    //sort by distance, rating, and most reviewed
-    //filter by rating, food tags and categories
-        /*
-        Hawaiian    Seafood Southern
-        Brazilian
-        Burgers
-        Korean
-        Barbeque
-        Chinese
-        Sandwiches
-         */
-
-    private void populateClosestTrucksList(View root) {
-        resultsList = (ListView) root.findViewById(R.id.search_results);
-        searchListings = new ArrayList<>();
-        HttpRequests foodTruckRequest = new HttpRequests(HttpRequests.Route.MUNCH);
-        foodTruckRequest.execute("foodtrucks", "GET");
-        String responseTruck = null;
-        try {
-            responseTruck = foodTruckRequest.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            JSONArray truckData = new JSONArray(responseTruck);
-            for (int i = 0; i < 10; i++) {
-                JSONObject jsonobject = truckData.getJSONObject(i);
-                String id = jsonobject.getString("id");
-
-                FoodTruck truckListing = new FoodTruck(id);
-//                populateOfFoodTruck(truckListing);
-                searchListings.add(truckListing);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
-        resultsList.setAdapter(mAdapter);
-
-        listing = searchListings;
-        forWindow = listing;
-    }
-
-//    private ArrayList<FoodTruck> sampleTrucks() {
-//        //creates dummy trucks for map pin testing
-//        ArrayList<FoodTruck> testTrucks = new ArrayList<>();
-//
-//        for (int i = 0; i < 5; i++) {
-//            FoodTruck tester = new FoodTruck("identification" + i, "testTruck" + i, 30.2672f + i * 0.1f, -97.7431f - i * .1f);
-//            testTrucks.add(tester);
-//        }
-//        return testTrucks;
-//    }
-//
-//    private void repopulateFromList(ArrayList<FoodTruck> nearby) {
-//        //Clears map of pins and populates with new list
-//        //place pins on map from ArrayList of trucks
-//        munMap.clear();
-//        if (nearby != null) {
-//            for (int i = 0; i < 3; i++) {
-//                populateFromFT(nearby.get(i));
-//            }
-//        }
-//    }
-
-    private void initialePopulation() {
+    private void populateMap() {
         //initial Food Truck Population
         munMap.clear();
         lastClicked = null;
@@ -767,11 +347,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private FoodTruck getTruckFromMarker(Marker myMark) {
-        //Returns FoodTruck from a marker
-        //Assumes FoodTruck is in listing ArrayList
-        //The arrayList listing cannot be null or crashes
-
-
         for (int i = 0; i < listing.size(); i++) {
             if (listing.get(i).getMarker().equals(myMark)) {
                 return listing.get(i);
@@ -779,18 +354,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         return listing.get(0);
     }
-
-
-//    private void populateTrucksFromList(ArrayList<FoodTruck> nearby) {
-//        //Todo  input list of trucks output pins on map
-//        //place pins on map from ArrayList of trucks
-//        if (nearby != null) {
-//            for (int i = 0; i < 2; i++) {
-//                populateFromFT(nearby.get(i));
-//            }
-//        }
-//    }
-
 
     private void populateFromFT(FoodTruck truck){
         //creates new marker for FoodTruck and displays them on map
@@ -807,19 +370,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-//    private void hideFTMarker(FoodTruck truck){
-//        //hides a specific FoodTrucks marker from the map
-//        truck.getMarker().setVisible(false);
-//        truck.setVisibilityOff();
-//    }
-//
-//    private void displayFTMarker(FoodTruck truck){
-//        //displays a specific FoodTrucks marker on the map
-//        truck.getMarker().setVisible(true);
-//        truck.setVisibilityOn();
-//    }
-
-
 
     private BitmapDescriptor BitmapDescriptorFromVector(Context context, int vectorResId){
         Drawable vectorDrawable= ContextCompat.getDrawable(context, vectorResId);
@@ -830,79 +380,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
-
-
-
-
-
-
-
-//    private void populateTrucksFromTag(ArrayList<FoodTruck> nearby, String tag){
-//        //place pins on map from ArrayList of trucks
-//        for(int i = 0; i < listing.size(); i++){
-//            if(listing.get(i).getTags() == null){
-//                boolean flag = false;
-//                for(int j = 0; j <  listing.get(i).getTags().size(); j++){
-//                      if(listing.get(i).getTags().get(j) == tag){
-//                            flag = true;
-//                      }
-//                if(flag = true){
-//                      displayFTMarker(listing.get(i);
-//                  }
-//                }
-//
-//            }
-//        }
-//            }
-//        }
-//    }
-
-///////////////TRASH    Below
-//    private void populateOfFoodTruck(FoodTruck truck){
-//        populateTruckPin(truck.getLatitude(), truck.getLongitude(), truck.getName(), truck.getId());
-//    }
-
-//    private void popFoodTruck(MarkerOptions markO){
-//        //May delete
-//        munMap.addMarker(markO);
-//    }
-
-//    public void populateTruckPin(float lat, float lng, String name, String id){
-//        //Todo set create pin from truck info
-//        //helper function for populateNearbyTrucks
-//
-//        Marker marker = munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
-//
-////        marker.set
-////        MarkerOptions markeres = new MarkerOptions().position(new LatLng(30.3152, (-97.0726))).title("TestTruck2");
-//////        munMap.addMarker(markeres);
-////        munMap.addMarker(markeres);
-//
-////        MarkerOptions markeres = new MarkerOptions().position(new LatLng(lat, lng)).title("TestTruck2");
-//////        munMap.addMarker(markeres);
-////        Marker market = munMap.addMarker(markeres);
-//
-////        if i set the title as the id, i can find the name, or i can find the info in the text window
-//
-////
-//    }
-
-//    private void populateSearchedTruckPin(float lat, float lng, String name, String id){
-//        //Todo set pin for single truck found through searchbar
-//        //sets pin for truck found from searching
-////        munMap.clear();
-////        Marker markered =
-//                munMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(name));
-////        markered.showInfoWindow();
-////        munMap.setOnMarkerClickListener(onMarkerClickedListener);
-//    }
-//
-//
-//    private void populatePins() {
-//        //TODO get pins for existing food trucks to populate initial map
-//        munMap.clear();
-//        munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.17265)).title("TestTruck"));
-//        munMap.addMarker(new MarkerOptions().position(new LatLng(37.415229, -122.07265)).title("TestTruck2"));
-//    }
-
 }

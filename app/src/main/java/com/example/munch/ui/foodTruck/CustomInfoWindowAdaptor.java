@@ -10,11 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.munch.R;
-import com.example.munch.data.model.FoodTruck;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.Marker;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,35 +45,9 @@ public class CustomInfoWindowAdaptor implements GoogleMap.InfoWindowAdapter {
         ImageView tvImage = (ImageView) view.findViewById(R.id.windowpic);
 
         if(image != "None"){
-            //no picture
-//            String newSnippet = "Rating: " + rating + "\n";
-
-//        }
-//        else{
-            //picture
-//            String newSnippet = "Rating: " + rating + "\n";
 
             Bitmap logo = getBitmapFromURL(image);
-//            if(logo != null){
-                tvImage.setImageBitmap(logo);
-//            }
-
-
-//            Picasso.with(mWindow.getContext()).load(image).into(tvImage);
-
-//            Bitmap logo = null;
-//            try{
-//                InputStream is = new URL(image).openStream();
-//                /*
-//                    decodeStream(InputStream is)
-//                        Decode an input stream into a bitmap.
-//                 */
-//                logo = BitmapFactory.decodeStream(is);
-//            }catch(Exception e){ // Catch the download exception
-//                e.printStackTrace();
-//            }
-//
-//            tvImage.setImageBitmap(logo);
+            tvImage.setImageBitmap(logo);
         }
 
         String newSnippet = "Rating: " + rating + "\n";
