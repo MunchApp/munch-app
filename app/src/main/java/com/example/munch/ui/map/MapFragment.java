@@ -26,7 +26,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.munch.HttpRequests;
 import com.example.munch.LocationCalculator;
 import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
@@ -49,44 +48,43 @@ import java.util.ArrayList;
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     //region global variables
-    static GoogleMap munMap;
+    private static GoogleMap munMap;
     private String searchFormatted = "";
 
-    static ArrayList<FoodTruck> listing;
-    static ArrayList<FoodTruck> forWindow;
+    private ArrayList<FoodTruck> listing;
+    private static ArrayList<FoodTruck> forWindow;
 
     private Marker lastClicked;
 
-    EditText searchText;
-    EditText locText;
-    ArrayList<String> tagInputArray;
-    ListView resultsList;
+    private EditText searchText;
+    private EditText locText;
+    private ArrayList<String> tagInputArray;
+    private  ListView resultsList;
 
-    CheckBox mAmercianCheck;
-    ArrayList<String> amerTags;
-    CheckBox mAsianCheck;
-    ArrayList<String> asianTags;
-    CheckBox mBarbequeCheck;
-    ArrayList<String> barbTags;
-    CheckBox mSouthernCheck;
-    ArrayList<String> southTags;
-    CheckBox mBreakfastCheck;
-    ArrayList<String> breakTags;
-    CheckBox mMexicanCheck;
-    ArrayList<String> mexiTags;
-    CheckBox mSeafoodCheck;
-    ArrayList<String> seaTags;
-    CheckBox mDessertCheck;
-    ArrayList<String> dessTags;
-    ArrayList<FoodTruck> searchListings;
-    String locInput;
-    String responseTruck;
+    private CheckBox mAmercianCheck;
+    private ArrayList<String> amerTags;
+    private CheckBox mAsianCheck;
+    private ArrayList<String> asianTags;
+    private CheckBox mBarbequeCheck;
+    private ArrayList<String> barbTags;
+    private CheckBox mSouthernCheck;
+    private ArrayList<String> southTags;
+    private CheckBox mBreakfastCheck;
+    private ArrayList<String> breakTags;
+    private CheckBox mMexicanCheck;
+    private ArrayList<String> mexiTags;
+    private CheckBox mSeafoodCheck;
+    private ArrayList<String> seaTags;
+    private CheckBox mDessertCheck;
+    private ArrayList<String> dessTags;
 
-    HttpRequests foodTruckRequest;
+    private ArrayList<FoodTruck> searchListings;
+    private String locInput;
 
-    TextView sortByText;
-    Spinner sortBySpinner;
-    TextView noResultsText;
+    private Spinner sortBySpinner;
+    private TextView noResultsText;
+
+    private final SearchLogic searchLogic = SearchLogic.getInstance();
 
     //endregion
 
@@ -103,9 +101,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locText = root.findViewById(R.id.location_explore_pg1);
         sortBySpinner = (Spinner) root.findViewById(R.id.spinner_sort);
         noResultsText = root.findViewById(R.id.no_results_text);
-
-        final Search searchTool = Search.getInstance(root);
-        searchTool.performSearch("", "", "");
+        resultsList = root.findViewById(R.id.search_results);
+        initializeCategoryTags(root);
+        tagInputArray = new ArrayList<>();
+        searchListings = new ArrayList<>();
 
         //region slidingPanel
         final SlidingUpPanelLayout slideUpPanel = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
@@ -202,9 +201,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 closeSearch(slideUpPanel, logoText, searchBar, locationBar, background, options);
-                searchTool.makeSearch();
-                populateMap();
+
+                searchFormatted = searchLogic.formatSearchInput(searchText.getText().toString(), formatTags());
+                locInput = searchLogic.formatLocationInput(v, locText.getText().toString());
+                String userLat = locInput.split("&")[0];
+                String userLng = locInput.split("&")[1];
+                searchListings = searchLogic.getResultsList(searchFormatted, userLat, userLng);
+                updateListings();
                 sortBySpinner.setSelection(0);
+                if (searchListings.size() == 0){
+                    noResultsText.setVisibility(View.VISIBLE);
+                    sortBySpinner.setEnabled(false);
+                } else {
+                    noResultsText.setVisibility(View.GONE);
+                    sortBySpinner.setEnabled(true);
+                }
             }
         });
         //endregion
@@ -218,25 +229,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if (position == 0){     //distance
-                            searchTool.sortByDistance();
-                            populateMap();
+                            locInput = searchLogic.formatLocationInput(view, locText.getText().toString());
+                            searchListings = searchLogic.sortByDistance(locInput);
+                            updateListings();
                         }
                         if (position == 1){      //rating
-                            searchTool.sortByRating();
-                            populateMap();
+                            searchListings = searchLogic.sortByRating();
+                            updateListings();
                         }
                         if (position == 2){      //num reviews
 
-                            searchTool.sortByNumReviews();
-                            populateMap();
+                            searchListings = searchLogic.sortByNumReviews();
+                            updateListings();
                         }
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
 //                        searchTool.replaceMethod();
-                        searchTool.performSearch("", "", "");
-                        populateMap();
+                        searchListings = searchLogic.getResultsList("", "", "");
+                        updateListings();
                     }
 
                 });
@@ -244,6 +256,44 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
 
         return root;
+    }
+
+    private ArrayList<String> formatTags() {
+        tagInputArray.clear();
+        if (mAmercianCheck.isChecked()){
+            tagInputArray.addAll(amerTags);
+        }
+        if (mAsianCheck.isChecked()){
+            tagInputArray.addAll(asianTags);
+        }
+        if (mBarbequeCheck.isChecked()){
+            tagInputArray.addAll(barbTags);
+        }
+        if (mSouthernCheck.isChecked()){
+            tagInputArray.addAll(southTags);
+        }
+        if (mBreakfastCheck.isChecked()){
+            tagInputArray.addAll(breakTags);
+        }
+        if (mMexicanCheck.isChecked()){
+            tagInputArray.addAll(mexiTags);
+        }
+        if (mSeafoodCheck.isChecked()){
+            tagInputArray.addAll(seaTags);
+        }
+        if (mDessertCheck.isChecked()){
+            tagInputArray.addAll(dessTags);
+        }
+        return tagInputArray;
+    }
+
+    public void updateListings() {
+        SearchListingAdapter mAdapter = new SearchListingAdapter(getActivity(), searchListings);
+        resultsList.setAdapter(mAdapter);
+        listing = searchListings;
+        forWindow = listing;
+        populateMap();
+
     }
 
 
@@ -344,6 +394,83 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             }
         }
+    }
+
+    private void initializeCategoryTags(View root) {
+        mAmercianCheck = root.findViewById(R.id.catAmerican);
+        amerTags = new ArrayList<>();
+        amerTags.add("American");
+        amerTags.add("Hot+Dogs");
+        amerTags.add("Burgers");
+        amerTags.add("Pizza");
+        amerTags.add("Hawaiian");
+        amerTags.add("Steak");
+//        amerTags.add("");
+
+        mAsianCheck = root.findViewById(R.id.catAsian);
+        asianTags = new ArrayList<>();
+        asianTags.add("Asian");
+        asianTags.add("Thai");
+        asianTags.add("Korean");
+        asianTags.add("Japanese");
+        asianTags.add("Asian+Fusion");
+        asianTags.add("Vietnamese");
+        asianTags.add("Chinese");
+        asianTags.add("Indian");
+        asianTags.add("Filipino");
+//        asianTags.add("");
+//        asianTags.add("");
+
+        mBarbequeCheck = root.findViewById(R.id.catBarbeque);
+        barbTags = new ArrayList<>();
+        barbTags.add("Barbeque");
+        barbTags.add("Barbecue");
+        barbTags.add("Korean+Barbeque");
+        barbTags.add("Brisket");
+
+        mSouthernCheck = root.findViewById(R.id.catSouthern);
+        southTags = new ArrayList<>();
+        southTags.add("Southern");
+        southTags.add("Potatoes");
+//        southTags.add("");
+//        southTags.add("");
+
+
+        mBreakfastCheck = root.findViewById(R.id.catBreakfast);
+        breakTags = new ArrayList<>();
+        breakTags.add("Breakfast");
+        breakTags.add("Brunch");
+        breakTags.add("Eggs");
+        breakTags.add("Pancakes");
+//        breakTags.add("");
+
+        mMexicanCheck = root.findViewById(R.id.catMexican);
+        mexiTags = new ArrayList<>();
+        mexiTags.add("Mexican");
+        mexiTags.add("Latin");
+        mexiTags.add("Tacos");
+        mexiTags.add("Burritos");
+        mexiTags.add("Quesadillas");
+//        mexiTags.add("");
+//        mexiTags.add("");
+
+        mSeafoodCheck = root.findViewById(R.id.catSeafood);
+        seaTags = new ArrayList<>();
+        seaTags.add("Seafood");
+        seaTags.add("Fish");
+        seaTags.add("Shrimp");
+        seaTags.add("Sushi");
+//        seaTags.add("");
+
+        mDessertCheck = root.findViewById(R.id.catDessert);
+        dessTags = new ArrayList<>();
+        dessTags.add("Dessert");
+        dessTags.add("Ice+Cream");
+        dessTags.add("Crepes");
+        dessTags.add("Sweet");
+        dessTags.add("Bakery");
+        dessTags.add("Cakes");
+        dessTags.add("Donuts");
     }
 
     private FoodTruck getTruckFromMarker(Marker myMark) {
