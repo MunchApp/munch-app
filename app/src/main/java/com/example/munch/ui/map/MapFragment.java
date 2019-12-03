@@ -57,7 +57,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private Marker lastClicked;
 
     private EditText searchText;
-    private EditText locText;
+    public static EditText locText;
     private ArrayList<String> tagInputArray;
     private  ListView resultsList;
 

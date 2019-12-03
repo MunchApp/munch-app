@@ -1,28 +1,20 @@
 package com.example.munch;
 
-import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 public class LocationCalculator implements LocationListener {
@@ -71,6 +63,41 @@ public class LocationCalculator implements LocationListener {
 
         if (orginAddress.equals("Current Location"))
             orginAddress = lat+ "," +lng;
+        else{
+
+            String[] splitAddress = orginAddress.split(" ");
+            String parsedAddress = splitAddress[0];
+            String API_KEY = "AIzaSyDCfklzAyR6bKuqfZPbp2UcfLSj960ezag";
+            for (int s = 1; s < splitAddress.length; s++) {
+                parsedAddress += "+" + splitAddress[s];
+            }
+
+            String response = null;
+            HttpRequests getTruckRequests = new HttpRequests(HttpRequests.Route.GOOGLE);
+            getTruckRequests.execute(parsedAddress +
+                    "&key=" + API_KEY, "GET");
+            try {
+                response = getTruckRequests.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            String latitude = "";
+            String longitude = "";
+            try {
+                JSONObject myResponse = new JSONObject(response);
+                JSONArray results = myResponse.getJSONArray("results");
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");
+                    latitude = location.optString("lat");
+                    longitude = location.optString("lng");
+                }
+            } catch (JSONException e) {
+
+            }
+
+            orginAddress = latitude + "," + longitude;
+
+        }
         String[] dAddress = destAddress.split(" ");
         String fAddress = dAddress[0];
         for (int c = 1; c < dAddress.length; c++){

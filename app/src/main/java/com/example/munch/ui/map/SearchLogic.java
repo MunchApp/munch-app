@@ -94,7 +94,7 @@ public class SearchLogic{
     }
 
 
-    String formatLocationInput(View v, String locInput) {
+    public String formatLocationInput(View v, String locInput) {
         LocationCalculator locCal = new LocationCalculator(v.getContext());
         String lat = "";
         String lng = "";

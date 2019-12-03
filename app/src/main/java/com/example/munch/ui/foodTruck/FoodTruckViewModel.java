@@ -2,26 +2,15 @@ package com.example.munch.ui.foodTruck;
 
 
 import android.app.Activity;
-import android.media.Rating;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.munch.LocationCalculator;
-import com.example.munch.R;
 import com.example.munch.data.model.FoodTruck;
 import com.example.munch.data.model.MunchUser;
 import com.example.munch.data.model.Review;
-import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
-import com.example.munch.ui.userProfile.UserProfileFragment;
+import com.example.munch.ui.map.MapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +59,13 @@ public class FoodTruckViewModel extends ViewModel {
         numReviews.setValue(truck.getReviews().size());
         editable.setValue(truck.getOwner().equals(MunchUser.getInstance().getId()));
         LocationCalculator location = new LocationCalculator(activity);
-        String dist = location.getDistance(truck.getAddress(),"Current Location");
+        String originAddress;
+        if (MapFragment.locText.getText().toString().equals("")){
+            originAddress = "Current Location";
+        } else {
+            originAddress = MapFragment.locText.getText().toString();
+        }
+        String dist = location.getDistance(truck.getAddress(), originAddress);
         distance.setValue(dist);
         favorite.setValue(MunchUser.getInstance().getFavorites().contains(truck.getId()));
         ArrayList<String> listings = new ArrayList<>();
