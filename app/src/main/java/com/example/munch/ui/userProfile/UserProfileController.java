@@ -1,7 +1,6 @@
 package com.example.munch.ui.userProfile;
 import android.graphics.Bitmap;
 
-import com.example.munch.Config;
 import com.example.munch.MunchTools;
 import com.example.munch.data.model.MunchUser;
 
@@ -18,8 +17,15 @@ public class UserProfileController {
         MunchUser currentUser = MunchUser.getInstance();
         userProfileViewModel.setLoggedIn(currentUser.getLoggedIn());
         if (userProfileViewModel.getLoggedIn().getValue()) {
-            userProfileViewModel.setCity(currentUser.getCity());
+            if (!(currentUser.getCity()==null))
+                userProfileViewModel.setCity(currentUser.getCity());
+            else
+                userProfileViewModel.setCity("Austin");
+            if (!(currentUser.getState()==null))
             userProfileViewModel.setState(currentUser.getState());
+            else
+                userProfileViewModel.setState("Texas");
+            userProfileViewModel.setPhoneNumber(currentUser.getPhoneNumber());
             userProfileViewModel.setFirstName(currentUser.getFirstName());
             userProfileViewModel.setLastName(currentUser.getLastName());
             userProfileViewModel.setLoggedIn(currentUser.getLoggedIn());

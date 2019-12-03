@@ -1,6 +1,5 @@
 package com.example.munch.data.model;
 
-import com.example.munch.Config;
 import com.example.munch.HttpRequests;
 import com.example.munch.MunchTools;
 
@@ -10,7 +9,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 public class MunchUser {
     private volatile static MunchUser uniqueInstance;
@@ -85,7 +83,10 @@ public class MunchUser {
         HttpRequests registerRequest = new HttpRequests(HttpRequests.Route.MUNCH);
         registerRequest.execute("register", "POST", jsonRegisterInfo.toString());
         MunchTools.callMunchRoute(registerRequest);
-
+        HashMap<String, String> credentials = new HashMap<>();
+        credentials.put("email", registerInfo.get("email"));
+        credentials.put("password",  registerInfo.get("password"));
+        login(credentials);
         int statusCode = registerRequest.getStatusCode();
         return statusCode;
     }
@@ -111,9 +112,10 @@ public class MunchUser {
         String updateResponse = MunchTools.callMunchRoute(updateRequest);
 
         HttpRequests userRequest = new HttpRequests(HttpRequests.Route.MUNCH);
-        userRequest.execute("users/" + this.id, "GET");
+        userRequest.execute("profile", "GET", null, accessToken);
         String userResponse = MunchTools.callMunchRoute(userRequest);
         jsonToUser(userResponse);
+
 
         int statusCode = updateRequest.getStatusCode();
         return statusCode;

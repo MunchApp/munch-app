@@ -1,16 +1,13 @@
 package com.example.munch.ui.userProfile.personalInfo;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.text.UnicodeSet;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,18 +26,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.munch.Config;
 import com.example.munch.MunchTools;
 import com.example.munch.R;
-import com.example.munch.data.model.MunchUser;
 import com.example.munch.ui.MyViewModelFactory;
 import com.example.munch.ui.userProfile.CircleTransform;
 import com.example.munch.ui.userProfile.UserProfileController;
-import com.example.munch.ui.userProfile.UserProfileFragment;
 import com.example.munch.ui.userProfile.UserProfileViewModel;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -255,7 +248,6 @@ public class PersonalInfoFragment extends Fragment {
                 phoneNumber.setText(newPhone);
             }
         };
-
 
         final Observer<String> dobObserver = new Observer<String>() {
             @Override

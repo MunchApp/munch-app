@@ -9,12 +9,6 @@
     android:orientation="vertical"
     tools:context=".ui.foodTruck.createTruck.createTruckActivity">
 
-    <include
-        android:id="@+id/profile_header"
-        layout="@layout/profile_header"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
-    </include>
 
     <ScrollView
         android:layout_width="match_parent"

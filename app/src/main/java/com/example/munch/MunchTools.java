@@ -76,7 +76,7 @@ public class MunchTools {
 
     public static String ISOtoReg (String string1){
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        DateFormat df2 = new SimpleDateFormat("MM/dd/yy h:mm a");
+        DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy");
         try {
             Date result1 = df1.parse(string1);
             String formattedDate = df2.format(result1);
