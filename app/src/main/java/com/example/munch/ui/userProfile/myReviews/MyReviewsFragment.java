@@ -29,15 +29,12 @@ public class MyReviewsFragment extends Fragment {
         title.setText("Your Reviews");
         ArrayList<String> listings = new ArrayList<String>();
         listings = MunchUser.getInstance().getReviews();
-        if (listings.size() != 0) {
-            ArrayList<Review> reviewsListings = new ArrayList<Review>();
-            for (String s: listings){
-                reviewsListings.add(new Review(s));
-            }
-            MyReviewsListingAdapter mAdapter = new MyReviewsListingAdapter(getActivity(), reviewsListings);
-            reviewList.setAdapter(mAdapter);
+        ArrayList<Review> reviewsListings = new ArrayList<Review>();
+        for (int k = listings.size()-1; k >=0; k--) {
+            reviewsListings.add(new Review(listings.get(k)));
         }
-
+        MyReviewsListingAdapter mAdapter = new MyReviewsListingAdapter(getActivity(), reviewsListings);
+        reviewList.setAdapter(mAdapter);
         return root;
     }
 }

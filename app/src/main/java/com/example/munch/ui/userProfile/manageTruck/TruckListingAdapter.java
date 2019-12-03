@@ -92,6 +92,8 @@ public class TruckListingAdapter extends ArrayAdapter<FoodTruck> {
         TextView numReviews = (TextView)listItem.findViewById(R.id.num_reviews);
         numReviews.setText(currentResult.getReviews().size() + " Reviews");
 
+        
+
         return listItem;
     }
 }

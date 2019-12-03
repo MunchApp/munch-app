@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.munch.MunchTools;
 import com.example.munch.R;
 import com.example.munch.data.model.Review;
 import com.squareup.picasso.Picasso;
@@ -71,18 +72,8 @@ public class ReviewListingAdapter extends RecyclerView.Adapter<ReviewListingAdap
         //Set the date in view
         TextView date = (TextView)holder.view.findViewById(R.id.dateofreview);
         ImageView proPic = holder.view.findViewById(R.id.reviewerpic);
-        date.setText(currentReview.getDate());
+        date.setText(MunchTools.ISOtoReg(currentReview.getDate()));
 
-        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        DateFormat df2 = new SimpleDateFormat("MM/dd/yy h:mm a");
-        String string1 = currentReview.getDate();
-        try {
-            Date result1 = df1.parse(string1);
-            String formattedDate = df2.format(result1);
-            date.setText(formattedDate);
-
-        } catch (ParseException e) {
-        }
 
         RatingBar rating = (RatingBar)holder.view.findViewById(R.id.ratingbar_on_review);
         rating.setIsIndicator(true);

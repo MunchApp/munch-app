@@ -42,6 +42,7 @@ import com.example.munch.data.model.Review;
 import com.example.munch.ui.MyViewModelFactory;
 import com.example.munch.ui.foodTruck.reviews.ReviewListingAdapter;
 import com.example.munch.ui.userProfile.login.LoginActivity;
+import com.example.munch.ui.userProfile.myReviews.MyReviewsListingAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -387,6 +388,9 @@ public class FoodTruckFragment extends Fragment{
             @Override
             public void onChanged(@Nullable final String newWebsite) {
                 website.setText(newWebsite);
+                if (newWebsite.equals("")){
+                    website.setText("website not available");
+                }
             }
         };
 
@@ -394,6 +398,10 @@ public class FoodTruckFragment extends Fragment{
             @Override
             public void onChanged(@Nullable final String newDescription) {
                 descrip.setText(newDescription);
+                if (newDescription.equals("")){
+                    descrip.setText("description not available");
+                }
+
             }
         };
 
@@ -401,6 +409,9 @@ public class FoodTruckFragment extends Fragment{
             @Override
             public void onChanged(@Nullable final String newPhoneNumber) {
                 phone.setText(newPhoneNumber);
+                if (newPhoneNumber.equals("")){
+                    phone.setText("phone number not available");
+                }
             }
         };
 
@@ -502,8 +513,13 @@ public class FoodTruckFragment extends Fragment{
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 allReviews.setLayoutManager(layoutManager);
+
+                ArrayList<Review> reviewsListings = new ArrayList<Review>();
+                for (int k = newReviews.size()-1; k >=0; k--) {
+                    reviewsListings.add(newReviews.get(k));
+                }
                 if (newReviews.size() != 0) {
-                    ReviewListingAdapter mAdapter = new ReviewListingAdapter(newReviews,getContext());
+                    ReviewListingAdapter mAdapter = new ReviewListingAdapter(reviewsListings,getContext());
                     allReviews.setAdapter(mAdapter);
                 }
             }

@@ -202,28 +202,40 @@ public class PersonalInfoFragment extends Fragment {
         final Observer<String> firstNameObserver = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String newFirstName) {
-                fullName.setText(newFirstName + " " + userProfileViewModel.getLastName().getValue());
+                String displayedName = newFirstName + " " + userProfileViewModel.getLastName().getValue();
+                if (displayedName.length() > 14)
+                    displayedName = displayedName.substring(0,14);
+                fullName.setText(displayedName);
             }
         };
 
         final Observer<String> lastNameObserver = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String newLastName) {
-                fullName.setText(userProfileViewModel.getFirstName().getValue() + " " + newLastName);
+                String displayedName = userProfileViewModel.getFirstName().getValue() + " " + newLastName;
+                if (displayedName.length() > 14)
+                    displayedName = displayedName.substring(0,14);
+                fullName.setText(displayedName);
             }
         };
 
         final Observer<String> cityObserver = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String newCity) {
-                location.setText(newCity +", " + userProfileViewModel.getState());
+                String displayedName = newCity +", " + userProfileViewModel.getState();
+                if (displayedName.length() > 14)
+                    displayedName = displayedName.substring(0,14);
+                location.setText(displayedName);
             }
         };
 
         final Observer<String> stateObserver = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String newState) {
-                location.setText(userProfileViewModel.getCity().getValue() + ", " + userProfileViewModel.getState().getValue());
+                String displayedName = userProfileViewModel.getCity().getValue() + ", " + userProfileViewModel.getState().getValue();
+                if (displayedName.length() > 14)
+                    displayedName = displayedName.substring(0,14);
+                location.setText(displayedName);
             }
         };
 
