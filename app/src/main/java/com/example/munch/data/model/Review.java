@@ -2,12 +2,9 @@ package com.example.munch.data.model;
 
 import com.example.munch.HttpRequests;
 import com.example.munch.MunchTools;
-import com.example.munch.ui.userProfile.UserProfileFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.concurrent.ExecutionException;
 
 public class Review {
 
@@ -91,7 +88,7 @@ public class Review {
             userRequest.execute("users/" + author, "GET");
             String responseReview = MunchTools.callMunchRoute(userRequest);
             authorName = MunchTools.getValueFromJson("firstName",responseReview)+ " " + MunchTools.getValueFromJson("lastName", responseReview);
-            authorPicture = MunchTools.getValueFromJson("lastName", responseReview);
+            authorPicture = MunchTools.getValueFromJson("picture", responseReview);
         }
 
         if (!forFoodTruck.equals("")){
@@ -109,7 +106,7 @@ public class Review {
         return author;
     }
 
-    public String getForFoodTruck() {return getForFoodTruck();}
+    public String getForFoodTruck() {return forFoodTruck;}
 
     public void setAuthor(String author) {
         this.author = author;
