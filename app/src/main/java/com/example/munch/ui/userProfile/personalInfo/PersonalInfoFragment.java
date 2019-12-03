@@ -226,6 +226,9 @@ public class PersonalInfoFragment extends Fragment {
                 if (displayedName.length() > 14)
                     displayedName = displayedName.substring(0,14);
                 location.setText(displayedName);
+                if (newCity.equals("")){
+                    location.setText("Austin, Texas");
+                }
             }
         };
 
@@ -236,6 +239,9 @@ public class PersonalInfoFragment extends Fragment {
                 if (displayedName.length() > 14)
                     displayedName = displayedName.substring(0,14);
                 location.setText(displayedName);
+                if (newState.equals("")){
+                    location.setText("Austin, Texas");
+                }
             }
         };
 

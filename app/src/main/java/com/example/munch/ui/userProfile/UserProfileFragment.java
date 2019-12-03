@@ -172,6 +172,9 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onChanged(@Nullable final String newCity) {
                 location.setText(newCity +", " + userProfileViewModel.getState());
+                if (newCity.equals("")){
+                    location.setText("Austin, Texas");
+                }
             }
         };
 
@@ -179,6 +182,9 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onChanged(@Nullable final String newState) {
                 location.setText(userProfileViewModel.getCity().getValue() + ", " + userProfileViewModel.getState().getValue());
+                if (newState.equals("")){
+                    location.setText("Austin, Texas");
+                }
             }
         };
 
