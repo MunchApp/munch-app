@@ -32,6 +32,7 @@ public class ExploreFragment extends Fragment {
                     search.setHint("");
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.addToBackStack("explore");
                     MapFragment map = new MapFragment();
                     ExploreFragment explore = new ExploreFragment();
                     fragmentTransaction.replace(((ViewGroup)getView().getParent()).getId(), map);

@@ -21,8 +21,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.munch.R;
 import com.example.munch.data.model.MunchUser;
 import com.example.munch.ui.MyViewModelFactory;
-import com.example.munch.ui.foodTruck.FoodTruckController;
-import com.example.munch.ui.foodTruck.FoodTruckViewModel;
 import com.example.munch.ui.foodTruck.createTruck.createTruckActivity;
 import com.example.munch.ui.userProfile.learnAboutListing.ListInfoFragment;
 import com.example.munch.ui.userProfile.login.LoginActivity;
@@ -124,6 +122,7 @@ public class UserProfileFragment extends Fragment {
                         public void onClick(View view) {
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.addToBackStack("user");
                             ManageTruckFragment NAME = new ManageTruckFragment();
                             fragmentTransaction.replace(R.id.nav_host_fragment, NAME);
                             fragmentTransaction.commit();
